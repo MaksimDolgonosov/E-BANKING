@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Июл 12 2024 г., 11:59
+-- Время создания: Июл 14 2024 г., 16:44
 -- Версия сервера: 5.7.24
 -- Версия PHP: 8.0.1
 
@@ -57,7 +57,7 @@ CREATE TABLE `history` (
   `id` int(11) NOT NULL,
   `total` int(13) NOT NULL,
   `title` varchar(50) NOT NULL,
-  `date` date NOT NULL,
+  `date` varchar(10) NOT NULL,
   `payment` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -77,8 +77,8 @@ INSERT INTO `history` (`user_id`, `id`, `total`, `title`, `date`, `payment`) VAL
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `account` varchar(25) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `account` varchar(50) NOT NULL,
   `phone` varchar(14) NOT NULL,
   `name` varchar(25) NOT NULL,
   `surname` varchar(30) NOT NULL
@@ -89,7 +89,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `password`, `account`, `phone`, `name`, `surname`) VALUES
-(1, 'max_air@bk.ru', '263832', '222222222222222', '80375445164007', 'Максим', 'Долгоносов');
+(1, 'max_air@bk.ru', '263832', '222222222222222', '80375445164007', 'Максим', 'Долгоносов'),
+(2, 'dsaonfgs@dsgs.er', '$2b$05$gsRrtJfwlWaEDqGo1gwU1.soo3laqjl9JgfKHUprYTR7vrOVotMPG', '15ba0395-b0ad-49e7-ac33-afcbaf69223e', '', 'Maksim', ' Dauhanosav');
 
 --
 -- Индексы сохранённых таблиц
@@ -121,7 +122,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
