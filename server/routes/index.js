@@ -1,3 +1,4 @@
+/* eslint-disable */
 const Router = require("express");
 const router = new Router();
 //subroutes
@@ -11,6 +12,7 @@ const historyRouter = require("./historyRouter");
 router.use('/user', userRouter);
 router.use('/card', cardRouter);
 router.use('/history', historyRouter);
+
 
 
 
