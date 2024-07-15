@@ -13,7 +13,7 @@ class UserController {
         if (!email || !password) {
             return next(ApiError.badRequest("Неверный логин или пароль"))
         }
-        const candidate = await awaitsyncConn.query(`SELECT * FROM user where email = '${email}'`);
+        const candidate = await syncConn.query(`SELECT * FROM user where email = '${email}'`);
 
         if (candidate.length > 0) {
             return next(ApiError.badRequest("Пользователь с таким email уже существует!"))
@@ -46,13 +46,11 @@ class UserController {
         res.json({ token })
     }
     async check(req, res, next) {
-        const { id } = req.query;
-        if (!id) {
-            return next(ApiError.badRequest("Не задан id-параметр"))
-        }
-        res.json(id)
+        console.log(req)
+        const token = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET_KEY, { expiresIn: "24h" });
+        res.json({token})
     }
 }
 
 
-module.exports = new UserController();
+module.exports = new UserController(); 
