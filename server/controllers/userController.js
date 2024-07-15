@@ -4,29 +4,46 @@ const jwt = require("jsonwebtoken");
 const syncConn = require("../db");
 const uuid = require("uuid");
 
+
+
+
 class UserController {
     async registration(req, res, next) {
         const { email, password, name, surname } = req.body;
         if (!email || !password) {
             return next(ApiError.badRequest("Неверный логин или пароль"))
         }
-        const candidate = syncConn.query(`SELECT * FROM user where email = '${email}'`);
-        console.log(candidate.length===0)
+        const candidate = await awaitsyncConn.query(`SELECT * FROM user where email = '${email}'`);
 
         if (candidate.length > 0) {
             return next(ApiError.badRequest("Пользователь с таким email уже существует!"))
         }
-        const hashPassword = await bcrypt.hash(password, 5);
+        const hashPassword = await bcrypt.hash(password.toString(), 5);
+
 
         const account = uuid.v4();
         console.log(hashPassword.length)
         const user = await syncConn.query(`INSERT INTO user (id, email, password, account, phone, name, surname) VALUES (${null},'${email}','${hashPassword}','${account}','','${name}','${surname}')`);
-        const jwtUser = jwt.sign({ id: user.id, email }, process.env.SECRET_KEY);
-        res.json(user)
+        console.log(user)
+        const token = jwt.sign({ id: user.insertId, email }, process.env.SECRET_KEY, { expiresIn: "24h" });
+        res.json({ token })
     }
 
     async login(req, res) {
+        const { email, password } = req.body;
 
+        const candidate = await syncConn.query(`SELECT * FROM user where email = '${email}'`);
+
+        if (candidate.length === 0) {
+            return next(ApiError.internal("Пользователя с таким email не существует!"));
+        }
+        let comparePassword = bcrypt.compareSync(password, candidate[0].password);
+        if (!comparePassword) {
+            return next(ApiError.internal("Неверный пароль!"));
+        }
+        const token = jwt.sign({ id: candidate[0].id, email }, process.env.SECRET_KEY, { expiresIn: "24h" });
+
+        res.json({ token })
     }
     async check(req, res, next) {
         const { id } = req.query;
