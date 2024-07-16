@@ -7,7 +7,7 @@
 
     &__wrapper {
         position: relative;
-        width: 1100px;
+        width: 1200px;
         height: 100%;
         padding: 0 16px;
         margin: 0 auto;
@@ -20,11 +20,10 @@
 
     &__logo {
         width: 107px;
-        height: 100%;
 
         a {
             display: block;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: rgb(255, 255, 255);
             text-decoration: none;
@@ -36,31 +35,47 @@
         position: relative;
         margin-right: auto;
         margin-left: 15px;
-        font-size: 18px;
+        font-size: 16px;
+        font-weight: 500;
 
 
         span {
-            margin: 0 15px;
+            margin-left: 25px;
             line-height: 75px;
             cursor: pointer;
             color: rgb(255, 255, 255);
-            transition: .5s all;
-
-            &::after {
-                // content: url("data:image/svg+xml; utf8, <тут_код_svg>");
-                content: "";
-                display: block;
-                position: absolute;
-                width: 16px;
-                height: 16px;
-                top: 0px;
-                right: 0px;
-                background: url("../../assets/icons/arrow-down.png") no-repeat 100%/cover;
-            }
+            transition: .3s all;
+            // &::after {
+            //     // content: url("data:image/svg+xml; utf8, <тут_код_svg>");
+            //     content: "";
+            //     display: block;
+            //     position: absolute;
+            //     width: 16px;
+            //     height: 16px;
+            //     top: 0px;
+            //     right: 0px;
+            //     background: url("../../assets/icons/arrow-down.png") no-repeat 100%/cover;
+            // }
 
             &:hover {
-                color: #702ff4;
+                color: #000000;
                 transition: .4s all;
+
+                svg {
+                    fill: rgb(0, 0, 0);
+                    transform: rotate(180deg);
+                    transition: .3s all;
+                }
+            }
+
+
+            svg {
+                width: 16px;
+                height: 16px;
+                fill: rgb(255, 255, 255);
+                margin-left: 4px;
+                vertical-align: middle;
+                transition: .3s all;
             }
 
         }
@@ -68,12 +83,70 @@
 
     &__btns {
         display: flex;
-        text-align: center;
+        align-items: center;
         justify-content: space-between;
 
-        button {
+        // button {
+        //     display: block;
+
+        // }
+    }
+
+    &__btn_reg {
+        width: 133px;
+        height: 42px;
+        margin-right: 10px;
+        background-color: rgba(255, 255, 255, 0);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 10px;
+        transition: .3s all;
+
+        a {
             display: block;
-            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
+            line-height: 42px;
+            transition: .3s all;
+        }
+
+        &:hover {
+            background-color: rgb(255, 255, 255);
+            filter: brightness(0.97);
+            transition: .3s all;
+            a {
+                color: #702ff4;
+                transition: .3s all;
+            }
+            
+        }
+    }
+
+    &__btn_log {
+        display: block;
+        margin-right: 30px;
+        width: 80px;
+        height: 42px;
+        background-color: rgb(255, 255, 255);
+        border: none;
+        border-radius: 10px;
+        transition: .3s all;
+
+        a {
+            display: block;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: #702ff4;
+            line-height: 42px;
+        }
+
+        &:hover {
+            filter: brightness(0.97);
+            transition: .3s all;
         }
     }
 }

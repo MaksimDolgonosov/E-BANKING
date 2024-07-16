@@ -1,5 +1,6 @@
 import './header.scss'
 import { Link } from "react-router-dom";
+import Arrow from "../../assets/icons/drop-down-arrow-small.svg";
 
 
 // import Logo from "../../assets/images/logo.svg"
@@ -13,18 +14,19 @@ const Header: React.FC = () => {
                 <div className="header__logo">
                     <Link to="/">
                         <span>E-banking</span>
-                        {/* <svg width="57" height="40" viewBox="0 0 57 40" fill="black" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M36.33 0c-11.14 0-20 8.987-20 20 0 11.14 8.987 20 20 20 11.012 0 20-8.987 20-20s-8.988-20-20-20zm0 27.342c-4.051 0-7.47-3.418-7.47-7.469 0-4.05 3.419-7.468 7.47-7.468 4.05 0 7.468 3.418 7.468 7.468-.127 4.178-3.418 7.469-7.469 7.469zM16.203"></path>
-                    </svg> */}
                     </Link>
                 </div>
                 <div className="header__links">
-                    <span className="header__link_buying">Для покупок</span>
-                    <span className="header__btn_business">Для бизнеса</span>
+                    <span className="header__link_buying">Для покупок
+                        <svg className="header__link_img" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M483.072 714.496l30.165333 30.208 415.957334-415.829333a42.837333 42.837333 0 0 0 0-60.288 42.538667 42.538667 0 0 0-60.330667-0.042667l-355.541333 355.413333-355.242667-355.413333a42.496 42.496 0 0 0-60.288 0 42.837333 42.837333 0 0 0-0.085333 60.330667l383.701333 383.872 1.706667 1.749333z" /></svg>
+                    </span>
+                    <span className="header__btn_business">Для бизнеса
+                        <svg className="header__link_img" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M483.072 714.496l30.165333 30.208 415.957334-415.829333a42.837333 42.837333 0 0 0 0-60.288 42.538667 42.538667 0 0 0-60.330667-0.042667l-355.541333 355.413333-355.242667-355.413333a42.496 42.496 0 0 0-60.288 0 42.837333 42.837333 0 0 0-0.085333 60.330667l383.701333 383.872 1.706667 1.749333z" /></svg>
+                    </span>
                 </div>
                 <div className="header__btns">
-                    <button className="header__btn_reg">Регистрация</button>
-                    <button className="header__btn_log">Войти</button>
+                    <button className="header__btn_reg"><Link to="/registration">Регистрация</Link></button>
+                    <button className="header__btn_log"><Link to="/login">Войти</Link></button>
                 </div>
             </div>
         </header>
