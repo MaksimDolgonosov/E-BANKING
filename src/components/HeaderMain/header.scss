@@ -1,0 +1,79 @@
+.header {
+    position: relative;
+    height: 75px;
+    background-color: rgba(255, 255, 255, 0);
+    transition: .4s all;
+    z-index: 3;
+
+    &__wrapper {
+        position: relative;
+        width: 1100px;
+        height: 100%;
+        padding: 0 16px;
+        margin: 0 auto;
+        display: flex;
+        text-align: center;
+        justify-content: space-between;
+        background-color: #702ff4;
+        z-index: 2;
+    }
+
+    &__logo {
+        width: 107px;
+        height: 100%;
+
+        a {
+            display: block;
+            font-size: 20px;
+            font-weight: 700;
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            line-height: 75px;
+        }
+    }
+
+    &__links {
+        position: relative;
+        margin-right: auto;
+        margin-left: 15px;
+        font-size: 18px;
+
+
+        span {
+            margin: 0 15px;
+            line-height: 75px;
+            cursor: pointer;
+            color: rgb(255, 255, 255);
+            transition: .5s all;
+
+            &::after {
+                // content: url("data:image/svg+xml; utf8, <тут_код_svg>");
+                content: "";
+                display: block;
+                position: absolute;
+                width: 16px;
+                height: 16px;
+                top: 0px;
+                right: 0px;
+                background: url("../../assets/icons/arrow-down.png") no-repeat 100%/cover;
+            }
+
+            &:hover {
+                color: #702ff4;
+                transition: .4s all;
+            }
+
+        }
+    }
+
+    &__btns {
+        display: flex;
+        text-align: center;
+        justify-content: space-between;
+
+        button {
+            display: block;
+            font-size: 16px;
+        }
+    }
+}

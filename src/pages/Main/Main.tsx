@@ -1,9 +1,14 @@
 import Header from "../../components/HeaderMain/Header";
+import "./main.scss";
+
 
 const MainPage: React.FC = () => {
 
     return (
-        <Header />
+        <div className="main">
+            <Header />
+        </div>
+
     )
 
 }
