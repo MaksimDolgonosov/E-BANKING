@@ -1,8 +1,8 @@
 .header {
     position: relative;
     height: 75px;
-    background-color: rgba(255, 255, 255, 0);
-    transition: .4s all;
+    background-color: #ffffff00;
+    transition: .3s all;
     z-index: 3;
 
     &__wrapper {
@@ -15,7 +15,9 @@
         text-align: center;
         justify-content: space-between;
         background-color: #702ff4;
+        // background-color: rgb(255, 255, 255);
         z-index: 2;
+        transition: .3s all;
     }
 
     &__logo {
@@ -28,6 +30,10 @@
             color: rgb(255, 255, 255);
             text-decoration: none;
             line-height: 75px;
+
+            span {
+                transition: .3s all;
+            }
         }
     }
 
@@ -37,42 +43,51 @@
         margin-left: 15px;
         font-size: 16px;
         font-weight: 500;
+        z-index: 3;
 
+        &_bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            z-index: 0;
+            background-color: rgba(255, 255, 255, 0);
+            transition: .3s all;
+        }
 
         span {
+            position: relative;
             margin-left: 25px;
             line-height: 75px;
             cursor: pointer;
             color: rgb(255, 255, 255);
             transition: .3s all;
-            // &::after {
-            //     // content: url("data:image/svg+xml; utf8, <тут_код_svg>");
-            //     content: "";
-            //     display: block;
-            //     position: absolute;
-            //     width: 16px;
-            //     height: 16px;
-            //     top: 0px;
-            //     right: 0px;
-            //     background: url("../../assets/icons/arrow-down.png") no-repeat 100%/cover;
-            // }
+            z-index: 5;
 
             &:hover {
                 color: #000000;
                 transition: .4s all;
 
                 svg {
-                    fill: rgb(0, 0, 0);
+                    // fill: rgb(0, 0, 0);
                     transform: rotate(180deg);
                     transition: .3s all;
                 }
             }
 
+            // &:hover ~ .header__links_bg {
+            //     background-color: rgb(255, 255, 255);
+            // }
+
 
             svg {
                 width: 16px;
                 height: 16px;
-                fill: rgb(255, 255, 255);
+                // fill: rgb(255, 255, 255);
                 margin-left: 4px;
                 vertical-align: middle;
                 transition: .3s all;
@@ -85,11 +100,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-
-        // button {
-        //     display: block;
-
-        // }
     }
 
     &__btn_reg {
@@ -116,11 +126,12 @@
             background-color: rgb(255, 255, 255);
             filter: brightness(0.97);
             transition: .3s all;
+
             a {
                 color: #702ff4;
                 transition: .3s all;
             }
-            
+
         }
     }
 
@@ -142,6 +153,7 @@
             font-weight: 600;
             color: #702ff4;
             line-height: 42px;
+            transition: .3s all;
         }
 
         &:hover {
