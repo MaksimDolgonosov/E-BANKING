@@ -14,9 +14,9 @@
         display: flex;
         text-align: center;
         justify-content: space-between;
-        background-color: #702ff4;
+        // background-color: #702ff4;
         // background-color: rgb(255, 255, 255);
-        z-index: 2;
+        z-index: 11;
         transition: .3s all;
     }
 
@@ -106,7 +106,7 @@
         width: 133px;
         height: 42px;
         margin-right: 10px;
-        background-color: rgba(255, 255, 255, 0);
+        background: padding-box, rgba(255, 255, 255, 0);
         border: 1px solid rgba(255, 255, 255, 0.5);
         border-radius: 10px;
         transition: .3s all;
@@ -123,8 +123,8 @@
         }
 
         &:hover {
-            background-color: rgb(255, 255, 255);
-            filter: brightness(0.97);
+            background: padding-box, rgb(255, 255, 255);
+            filter: brightness(0.95);
             transition: .3s all;
 
             a {
@@ -157,7 +157,7 @@
         }
 
         &:hover {
-            filter: brightness(0.97);
+            filter: brightness(0.95);
             transition: .3s all;
         }
     }
