@@ -10,13 +10,19 @@ const Header: React.FC = () => {
     const [activeHeader, setActiveHeader] = useState(false);
     const [activeReg, setActiveReg] = useState(false);
 
-    const styleReg = () => {
+    const styleRegBG = () => {
         if (activeHeader && !activeReg) {
             return { backgroundColor: "#00000018", color: "black" }
         } else if (!activeHeader && activeReg) {
-            return { backgroundColor: "#ffffff00" }
-        } else if (!activeHeader && !activeReg) {
-            
+            return { backgroundColor: "#ffffffe8" }
+        }
+    }
+
+    const styleRegC = () => {
+        if (activeHeader && !activeReg) {
+            return { color: "black" }
+        } else if (!activeHeader && activeReg) {
+            return { color: "#702ff4" }
         }
     }
 
@@ -47,12 +53,12 @@ const Header: React.FC = () => {
                 <div className="header__btns">
                     <button
 
-
+                        style={styleRegBG()}
                         // style={activeHeader ? { backgroundColor: "#00000018", filter: "brightness(0.97)", color: "black" } : { backgroundColor: "#ffffff00" }} 
                         onMouseEnter={() => setActiveReg(true)}
                         onMouseLeave={() => setActiveReg(false)}
                         className="header__btn_reg">
-                        <Link to="/registration" style={activeHeader ? { color: "black" } : { color: "white" }}>Регистрация</Link></button>
+                        <Link to="/registration" style={styleRegC()}>Регистрация</Link></button>
                     <button style={activeHeader ? { backgroundColor: "#702ff4" } : { backgroundColor: "#ffffff" }} className="header__btn_log"><Link to="/login" style={activeHeader ? { color: "#ffffff" } : { color: "#702ff4" }}>Войти</Link></button>
 
                 </div>
