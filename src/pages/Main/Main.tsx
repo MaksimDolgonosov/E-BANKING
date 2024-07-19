@@ -6,9 +6,9 @@ const MainPage: React.FC = () => {
 
     return (
         <div className="main">
-            <HeaderBoot/>
-            {/* <Header /> */}
-            <Promo/>
+            {/* <HeaderBoot/> */}
+            <Header />
+            {/* <Promo /> */}
         </div>
 
     )

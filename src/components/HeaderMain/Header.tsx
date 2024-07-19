@@ -62,6 +62,11 @@ const Header: React.FC = () => {
                     <button style={activeHeader ? { backgroundColor: "#702ff4" } : { backgroundColor: "#ffffff" }} className="header__btn_log"><Link to="/login" style={activeHeader ? { color: "#ffffff" } : { color: "#702ff4" }}>Войти</Link></button>
 
                 </div>
+                <div className="header__burger">
+                    <div id='burger_1'></div>
+                    <div id='burger_2'></div>
+                    <div id='burger_3'></div>
+                </div>
             </div>
         </header >
     )
