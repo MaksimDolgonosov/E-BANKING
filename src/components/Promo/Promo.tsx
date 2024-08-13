@@ -1,5 +1,5 @@
 import "./promo.scss"
-import Cards from "../../assets/images/cards.png";
+import Cards from "../../assets/images/cards1.png";
 import { Link } from "react-router-dom";
 
 

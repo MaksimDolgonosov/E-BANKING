@@ -1,14 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './header.scss'
 import { Link } from "react-router-dom";
 
 
 // import Logo from "../../assets/images/logo.svg"
+interface IHeader {
+    onToggleBurger: (state: boolean) => void;
+};
 
-
-const Header: React.FC = () => {
+const Header: React.FC<IHeader> = ({ onToggleBurger }) => {
     const [activeHeader, setActiveHeader] = useState(false);
     const [activeReg, setActiveReg] = useState(false);
+    const [activeBurger, setActiveBurger] = useState(false);
+
+    useEffect(() => {
+        onToggleBurger(activeBurger)
+    }, [activeBurger])
 
     const styleRegBG = () => {
         if (activeHeader && !activeReg) {
@@ -25,13 +32,13 @@ const Header: React.FC = () => {
             return { color: "#702ff4" }
         }
     }
-
+    //console.log(activeBurger)
     return (
-        <header className="header" style={activeHeader ? { backgroundColor: "#ffffff" } : { backgroundColor: "#ffffff00" }}>
+        <header className="header" style={activeHeader || activeBurger ? { backgroundColor: "#ffffff" } : { backgroundColor: "#ffffff00" }}>
             <div className="header__wrapper" style={activeHeader ? { backgroundColor: "#ffffff" } : { backgroundColor: "#ffffff00" }}>
                 <div className="header__logo">
                     <Link to="/">
-                        <span style={activeHeader ? { color: "#702ff4" } : { color: "#ffffff" }}>E-banking</span>
+                        <span style={activeHeader || activeBurger ? { color: "#702ff4" } : { color: "#ffffff" }}>E-banking</span>
                     </Link>
                 </div>
                 <div className="header__links">
@@ -52,17 +59,17 @@ const Header: React.FC = () => {
                 </div>
                 <div className="header__btns">
                     <button
-
                         style={styleRegBG()}
                         // style={activeHeader ? { backgroundColor: "#00000018", filter: "brightness(0.97)", color: "black" } : { backgroundColor: "#ffffff00" }} 
                         onMouseEnter={() => setActiveReg(true)}
                         onMouseLeave={() => setActiveReg(false)}
                         className="header__btn_reg">
                         <Link to="/registration" style={styleRegC()}>Регистрация</Link></button>
-                    <button style={activeHeader ? { backgroundColor: "#702ff4" } : { backgroundColor: "#ffffff" }} className="header__btn_log"><Link to="/login" style={activeHeader ? { color: "#ffffff" } : { color: "#702ff4" }}>Войти</Link></button>
+                    <button style={activeHeader || activeBurger ? { backgroundColor: "#702ff4" } : { backgroundColor: "#ffffff" }} className="header__btn_log">
+                        <Link to="/login" style={activeHeader || activeBurger ? { color: "#ffffff" } : { color: "#702ff4" }}>Войти</Link></button>
 
                 </div>
-                <div className="header__burger">
+                <div className={activeBurger ? "header__burger active" : "header__burger"} onClick={() => setActiveBurger(!activeBurger)}>
                     <div id='burger_1'></div>
                     <div id='burger_2'></div>
                     <div id='burger_3'></div>

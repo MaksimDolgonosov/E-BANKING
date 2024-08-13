@@ -167,7 +167,7 @@
     &__burger {
         width: 18px;
         height: 16px;
-        display: flex;
+        display: none;
         flex-direction: column;
         justify-content: space-between;
 
@@ -184,8 +184,10 @@
         transition: .3s all;
         margin-bottom: 2px;
         transition: .3s all;
+
         div#burger_1 {
             transform: rotate(45deg) translateY(6px) translateX(4px);
+            background-color: black;
         }
 
         div#burger_2 {
@@ -194,6 +196,7 @@
 
         div#burger_3 {
             transform: rotate(-45deg) translateY(-6px) translateX(4px);
+            background-color: black;
         }
     }
 }
@@ -203,13 +206,34 @@
 
 @media(max-width: 1180px) {}
 
-@media(max-width: 992px) {}
+@media(max-width: 992px) {
+    .header {
+        // &__burger {
+        //     display: none;
+        // }
+        &__wrapper {
+            padding: 0 15px;
+        }
+    }
+}
 
 @media(max-width: 768px) {
 
     .header {
         &__btn_reg {
             display: none;
+        }
+
+        &__links {
+            display: none;
+        }
+
+        &__btns {
+            margin-right: 0px;
+            margin-left: auto;
+        }
+        &__burger {
+            display: flex;
         }
     }
 }
