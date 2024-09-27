@@ -15,7 +15,7 @@ const MainPage: React.FC = () => {
     const onToggleBurger = (state: boolean): void => {
         setActiveBurger(state)
     }
-    console.log(activeBurger)
+    console.log(activeBurger + ": active burger");
     return (
         <div className="main">
             {/* <HeaderBoot/> */}

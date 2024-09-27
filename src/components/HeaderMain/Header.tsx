@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import './header.scss'
 import { Link } from "react-router-dom";
-
-
+import "../portals/mainPortal.scss";
+import MainPortal from '../portals/MainPortal';
+import BuyingPortal from '../portals/BuyingPortal';
 // import Logo from "../../assets/images/logo.svg"
 interface IHeader {
     onToggleBurger: (state: boolean) => void;
@@ -12,6 +13,7 @@ const Header: React.FC<IHeader> = ({ onToggleBurger }) => {
     const [activeHeader, setActiveHeader] = useState(false);
     const [activeReg, setActiveReg] = useState(false);
     const [activeBurger, setActiveBurger] = useState(false);
+    const [portal, setPortal] = useState(false);
 
     useEffect(() => {
         onToggleBurger(activeBurger)
@@ -43,8 +45,14 @@ const Header: React.FC<IHeader> = ({ onToggleBurger }) => {
                 </div>
                 <div className="header__links">
                     <span className="header__link_buying"
-                        onMouseEnter={() => setActiveHeader(true)}
-                        onMouseLeave={() => setActiveHeader(false)}
+                        onMouseEnter={() => {
+                            setActiveHeader(true)
+                            setPortal(true)
+                        }}
+                        onMouseLeave={() => {
+                            setActiveHeader(false)
+                            setPortal(false)
+                        }}
                         style={activeHeader ? { color: "#000000" } : { color: "#ffffff" }}
                     >Для покупок
                         <svg fill={activeHeader ? "#000000" : "#ffffff"} className="header__link_img" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M483.072 714.496l30.165333 30.208 415.957334-415.829333a42.837333 42.837333 0 0 0 0-60.288 42.538667 42.538667 0 0 0-60.330667-0.042667l-355.541333 355.413333-355.242667-355.413333a42.496 42.496 0 0 0-60.288 0 42.837333 42.837333 0 0 0-0.085333 60.330667l383.701333 383.872 1.706667 1.749333z" /></svg>
@@ -75,6 +83,9 @@ const Header: React.FC<IHeader> = ({ onToggleBurger }) => {
                     <div id='burger_3'></div>
                 </div>
             </div>
+            {portal ? <MainPortal>
+                <BuyingPortal />
+            </MainPortal> : null}
         </header >
     )
 }
