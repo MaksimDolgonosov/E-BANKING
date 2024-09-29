@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Июл 14 2024 г., 16:44
+-- Время создания: Сен 29 2024 г., 18:43
 -- Версия сервера: 5.7.24
 -- Версия PHP: 8.0.1
 
@@ -90,7 +90,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `email`, `password`, `account`, `phone`, `name`, `surname`) VALUES
 (1, 'max_air@bk.ru', '263832', '222222222222222', '80375445164007', 'Максим', 'Долгоносов'),
-(2, 'dsaonfgs@dsgs.er', '$2b$05$gsRrtJfwlWaEDqGo1gwU1.soo3laqjl9JgfKHUprYTR7vrOVotMPG', '15ba0395-b0ad-49e7-ac33-afcbaf69223e', '', 'Maksim', ' Dauhanosav');
+(2, 'dsaonfgs@dsgs.er', '$2b$05$gsRrtJfwlWaEDqGo1gwU1.soo3laqjl9JgfKHUprYTR7vrOVotMPG', '15ba0395-b0ad-49e7-ac33-afcbaf69223e', '', 'Maksim', ' Dauhanosav'),
+(3, 'test@dsgs.er', '$2b$05$gARB1VCPBT5j33Nu4LnfRu.p5kcaG4DeCwWsXJD6X0OlhTv2YZyyK', 'ca9a7997-8c8c-446e-a5f6-022a24a06cf6', '', 'Maksim', ' Dauhanosav');
 
 --
 -- Индексы сохранённых таблиц
@@ -122,7 +123,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
