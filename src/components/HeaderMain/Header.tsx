@@ -51,7 +51,7 @@ const Header: React.FC<IHeader> = ({ onToggleBurger }) => {
                         }}
                         onMouseLeave={() => {
                             setActiveHeader(false)
-                            setPortal(false)
+                            // setPortal(false)
                         }}
                         style={activeHeader ? { color: "#000000" } : { color: "#ffffff" }}
                     >Для покупок
@@ -83,8 +83,8 @@ const Header: React.FC<IHeader> = ({ onToggleBurger }) => {
                     <div id='burger_3'></div>
                 </div>
             </div>
-            {portal ? <MainPortal>
-                <BuyingPortal />
+            {portal ? <MainPortal >
+                <BuyingPortal mouseEvent={setPortal} />
             </MainPortal> : null}
         </header >
     )

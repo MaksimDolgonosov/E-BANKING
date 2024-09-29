@@ -1,10 +1,21 @@
 import { Link } from "react-router-dom";
 import Carousel from 'react-bootstrap/Carousel';
 
-const BuyingPortal = () => {
+import transferImage from "../../assets/images/portals/transfers.png";
+import creditImage from "../../assets/images/portals/credit.png";
+
+interface IPortalEvent {
+    mouseEvent: (event: boolean) => void;
+}
+
+
+const BuyingPortal = ({ mouseEvent }: IPortalEvent) => {
+//onMouseLeave={() => mouseEvent(false)}
+
+
     return (
         <div className="mainPortal_modal">
-            <div className="mainPortal_modal__body">
+            <div className="mainPortal_modal__body" >
                 <ul className="mainPortal_modal__list">
                     <li>
                         <Link to={"/"}>
@@ -46,18 +57,16 @@ const BuyingPortal = () => {
                 <div className="mainPortal_modal__advertising">
                     <Carousel>
                         <Carousel.Item>
-                            <ExampleCarouselImage text="First slide" />
-                            <Carousel.Caption>
-                                <h3>First slide label</h3>
-                                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                            </Carousel.Caption>
+                            <h5>Переводы — просто</h5>
+                            <span>Отправляйте и получайте деньги, не выходя из дома</span>
+                            <img src={transferImage} alt="transfer" />
+                            <button className="mainPortal_modal__advertising-det">Хочу перевести</button>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <ExampleCarouselImage text="Second slide" />
-                            <Carousel.Caption>
-                                <h3>Second slide label</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </Carousel.Caption>
+                            <h5>Платежи по кредиту</h5>
+                            <span>Оплачивайте кредиты кошельком. Поможем не пропустить платеж</span>
+                            <img src={creditImage} alt="credit" />
+                            <button className="mainPortal_modal__advertising-det">Подробнее</button>
                         </Carousel.Item>
                     </Carousel>
                 </div>
