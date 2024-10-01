@@ -6,16 +6,29 @@ import creditImage from "../../assets/images/portals/credit.png";
 
 interface IPortalEvent {
     mouseEvent: (event: boolean) => void;
+    activeHeader: (event: boolean) => void;
+    activeBuying: (event: boolean) => void;
 }
 
 
-const BuyingPortal = ({ mouseEvent }: IPortalEvent) => {
-//onMouseLeave={() => mouseEvent(false)}
+const BuyingPortal = ({ mouseEvent, activeHeader, activeBuying }: IPortalEvent) => {
+    //onMouseLeave={() => mouseEvent(false)}
 
 
     return (
         <div className="mainPortal_modal">
-            <div className="mainPortal_modal__body" >
+            <div className="mainPortal_modal__body"
+                onMouseEnter={() => {
+                    activeHeader(true)
+                    activeBuying(true)
+                }}
+                onMouseLeave={() => {
+                    mouseEvent(false)
+                    activeHeader(false)
+                    activeBuying(false)
+                }
+                }
+            >
                 <ul className="mainPortal_modal__list">
                     <li>
                         <Link to={"/"}>
@@ -55,7 +68,7 @@ const BuyingPortal = ({ mouseEvent }: IPortalEvent) => {
                     </li>
                 </ul>
                 <div className="mainPortal_modal__advertising">
-                    <Carousel>
+                    <Carousel fade={true} controls={false}>
                         <Carousel.Item>
                             <h5>Переводы — просто</h5>
                             <span>Отправляйте и получайте деньги, не выходя из дома</span>

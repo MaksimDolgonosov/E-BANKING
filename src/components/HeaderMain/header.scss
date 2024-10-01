@@ -41,6 +41,7 @@
 
     &__links {
         position: relative;
+        display: flex;
         margin-right: auto;
         margin-left: 15px;
         font-size: 16px;
@@ -63,23 +64,25 @@
 
         span {
             position: relative;
-            margin-left: 25px;
+            display: block;
+            padding-left: 25px;
             line-height: 75px;
             cursor: pointer;
             color: rgb(255, 255, 255);
             transition: .3s all;
             z-index: 5;
 
-            &:hover {
-                color: #000000;
-                transition: .4s all;
 
-                svg {
+            // &:hover {
+            //     color: #000000;
+            //     transition: .4s all;
+
+                svg.active {
                     // fill: rgb(0, 0, 0);
                     transform: rotate(180deg);
                     transition: .3s all;
                 }
-            }
+            // }
 
             // &:hover ~ .header__links_bg {
             //     background-color: rgb(255, 255, 255);
@@ -208,6 +211,7 @@
 
 @media(max-width: 992px) {
     .header {
+
         // &__burger {
         //     display: none;
         // }
@@ -232,6 +236,7 @@
             margin-right: 0px;
             margin-left: auto;
         }
+
         &__burger {
             display: flex;
         }

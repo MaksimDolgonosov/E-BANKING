@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "../portals/mainPortal.scss";
 import MainPortal from '../portals/MainPortal';
 import BuyingPortal from '../portals/BuyingPortal';
+import BusinesPortal from '../portals/BusinesPortal';
 // import Logo from "../../assets/images/logo.svg"
 interface IHeader {
     onToggleBurger: (state: boolean) => void;
@@ -11,6 +12,8 @@ interface IHeader {
 
 const Header: React.FC<IHeader> = ({ onToggleBurger }) => {
     const [activeHeader, setActiveHeader] = useState(false);
+    const [activeBuying, setActiveBuying] = useState(false);
+    const [activeBusines, setActiveBusines] = useState(false);
     const [activeReg, setActiveReg] = useState(false);
     const [activeBurger, setActiveBurger] = useState(false);
     const [portal, setPortal] = useState(false);
@@ -47,22 +50,36 @@ const Header: React.FC<IHeader> = ({ onToggleBurger }) => {
                     <span className="header__link_buying"
                         onMouseEnter={() => {
                             setActiveHeader(true)
+                            setActiveBuying(true)
                             setPortal(true)
                         }}
-                        onMouseLeave={() => {
+                        onMouseLeave={(e: React.MouseEvent<HTMLElement>) => {
                             setActiveHeader(false)
-                            // setPortal(false)
+                            setActiveBuying(false);
+                            if (e.relatedTarget && e.relatedTarget instanceof Element) {
+                                if (!e.relatedTarget.classList.contains("mainPortal_modal__body")) {
+                                    setPortal(false)
+                                }
+                            }
                         }}
                         style={activeHeader ? { color: "#000000" } : { color: "#ffffff" }}
                     >Для покупок
-                        <svg fill={activeHeader ? "#000000" : "#ffffff"} className="header__link_img" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M483.072 714.496l30.165333 30.208 415.957334-415.829333a42.837333 42.837333 0 0 0 0-60.288 42.538667 42.538667 0 0 0-60.330667-0.042667l-355.541333 355.413333-355.242667-355.413333a42.496 42.496 0 0 0-60.288 0 42.837333 42.837333 0 0 0-0.085333 60.330667l383.701333 383.872 1.706667 1.749333z" /></svg>
+                        <svg fill={activeHeader ? "#000000" : "#ffffff"} className={activeBuying ? "header__link_img active" : "header__link_img"} viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M483.072 714.496l30.165333 30.208 415.957334-415.829333a42.837333 42.837333 0 0 0 0-60.288 42.538667 42.538667 0 0 0-60.330667-0.042667l-355.541333 355.413333-355.242667-355.413333a42.496 42.496 0 0 0-60.288 0 42.837333 42.837333 0 0 0-0.085333 60.330667l383.701333 383.872 1.706667 1.749333z" /></svg>
                     </span>
                     <span className="header__btn_business"
-                        onMouseEnter={() => setActiveHeader(true)}
-                        onMouseLeave={() => setActiveHeader(false)}
+                        onMouseEnter={() => {
+                            setActiveHeader(true)
+                            setActiveBusines(true)
+                            setPortal(true)
+                        }
+                        }
+                        onMouseLeave={() => {
+                            setActiveHeader(false)
+                            setActiveBusines(false)
+                        }}
                         style={activeHeader ? { color: "#000000" } : { color: "#ffffff" }}
                     >Для бизнеса
-                        <svg fill={activeHeader ? "#000000" : "#ffffff"} className="header__link_img" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M483.072 714.496l30.165333 30.208 415.957334-415.829333a42.837333 42.837333 0 0 0 0-60.288 42.538667 42.538667 0 0 0-60.330667-0.042667l-355.541333 355.413333-355.242667-355.413333a42.496 42.496 0 0 0-60.288 0 42.837333 42.837333 0 0 0-0.085333 60.330667l383.701333 383.872 1.706667 1.749333z" /></svg>
+                        <svg fill={activeHeader ? "#000000" : "#ffffff"} className={activeBusines ? "header__link_img active" : "header__link_img"} viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M483.072 714.496l30.165333 30.208 415.957334-415.829333a42.837333 42.837333 0 0 0 0-60.288 42.538667 42.538667 0 0 0-60.330667-0.042667l-355.541333 355.413333-355.242667-355.413333a42.496 42.496 0 0 0-60.288 0 42.837333 42.837333 0 0 0-0.085333 60.330667l383.701333 383.872 1.706667 1.749333z" /></svg>
                     </span>
                 </div>
                 <div className="header__btns">
@@ -84,7 +101,9 @@ const Header: React.FC<IHeader> = ({ onToggleBurger }) => {
                 </div>
             </div>
             {portal ? <MainPortal >
-                <BuyingPortal mouseEvent={setPortal} />
+
+                {activeBuying ? <BuyingPortal mouseEvent={setPortal} activeHeader={setActiveHeader} activeBuying={setActiveBuying} /> : null}
+                {activeBusines ? <BusinesPortal mouseEvent={setPortal} activeHeader={setActiveHeader} activeBusines={setActiveBusines} /> : null}
             </MainPortal> : null}
         </header >
     )
