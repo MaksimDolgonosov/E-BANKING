@@ -53,6 +53,11 @@ const Header: React.FC<IHeader> = ({ onToggleBurger }) => {
                             setActiveBuying(true)
                             setPortal(true)
                         }}
+                        onClick={() => {
+                            setActiveHeader(true)
+                            setActiveBuying(true)
+                            setPortal(true)
+                        }}
                         onMouseLeave={(e: React.MouseEvent<HTMLElement>) => {
                             setActiveHeader(false)
                             setActiveBuying(false);

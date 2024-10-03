@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Carousel from 'react-bootstrap/Carousel';
-
+import { motion } from "framer-motion";
 import transferImage from "../../assets/images/portals/transfers.png";
 import creditImage from "../../assets/images/portals/credit.png";
 
@@ -16,8 +16,10 @@ const BuyingPortal = ({ mouseEvent, activeHeader, activeBuying }: IPortalEvent) 
 
 
     return (
-        <div className="mainPortal_modal">
-            <div className="mainPortal_modal__body"
+        <motion.div initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }} className="mainPortal_modal">
+            <div  className="mainPortal_modal__body buying"
                 onMouseEnter={() => {
                     activeHeader(true)
                     activeBuying(true)
@@ -84,7 +86,7 @@ const BuyingPortal = ({ mouseEvent, activeHeader, activeBuying }: IPortalEvent) 
                     </Carousel>
                 </div>
             </div>
-        </div>
+        </motion.div>
 
     )
 }

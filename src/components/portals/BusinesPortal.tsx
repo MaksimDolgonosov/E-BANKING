@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import { motion } from "framer-motion";
 
 import businesImage from "../../assets/images/portals/busines.png";
 
@@ -15,8 +15,10 @@ const BusinesPortal = ({ mouseEvent, activeHeader, activeBusines }: IPortalEvent
 
 
     return (
-        <div className="mainPortal_modal">
-            <div className="mainPortal_modal__body"
+        <motion.div initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }} className="mainPortal_modal">
+            <div className="mainPortal_modal__body busines"
                 onMouseEnter={() => {
                     activeHeader(true)
                     activeBusines(true)
@@ -67,7 +69,7 @@ const BusinesPortal = ({ mouseEvent, activeHeader, activeBusines }: IPortalEvent
 
                 </div>
             </div>
-        </div>
+        </motion.div>
 
     )
 }

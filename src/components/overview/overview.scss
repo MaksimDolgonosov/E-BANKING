@@ -1,0 +1,47 @@
+.overview {
+    color: white;
+    max-width: 1200px;
+    margin: 50px auto;
+
+    h4 {
+        font-size: 42px;
+        margin-bottom: 50px;
+    }
+
+    &_list {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &-item {
+            width: 350px;
+            height: 350px;
+            padding: 0 20px 40px 20px;
+            background-color: #341F62;
+            box-sizing: border-box;
+            border-radius: 20px;
+            border: 2px solid rgba(201, 182, 255, 0.20);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+
+            img {
+                display: block;
+                align-self: flex-start;
+                width: 100%;
+            }
+
+            h6 {
+                font-size: 24px;
+                font-weight: 700;
+
+            }
+
+            div {
+                font-size: 17px;
+                line-height: 20px;
+            }
+        }
+    }
+}
