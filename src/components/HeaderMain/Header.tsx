@@ -94,9 +94,9 @@ const Header: React.FC<IHeader> = ({ onToggleBurger }) => {
                         onMouseEnter={() => setActiveReg(true)}
                         onMouseLeave={() => setActiveReg(false)}
                         className="header__btn_reg">
-                        <Link to="/registration" style={styleRegC()}>Регистрация</Link></button>
+                        <Link to="/registrationPage" style={styleRegC()}>Регистрация</Link></button>
                     <button style={activeHeader || activeBurger ? { backgroundColor: "#702ff4" } : { backgroundColor: "#ffffff" }} className="header__btn_log">
-                        <Link to="/login" style={activeHeader || activeBurger ? { color: "#ffffff" } : { color: "#702ff4" }}>Войти</Link></button>
+                        <Link to="/loginPage" style={activeHeader || activeBurger ? { color: "#ffffff" } : { color: "#702ff4" }}>Войти</Link></button>
 
                 </div>
                 <div className={activeBurger ? "header__burger active" : "header__burger"} onClick={() => setActiveBurger(!activeBurger)}>

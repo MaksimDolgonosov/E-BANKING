@@ -43,11 +43,11 @@ class UserController {
         }
         const token = jwt.sign({ id: candidate[0].id, email }, process.env.SECRET_KEY, { expiresIn: "24h" });
 
-        res.json({ token })
+        res.json({ name: candidate[0].name, surname: candidate[0].surname, token })
     }
     async check(req, res, next) {
         const token = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET_KEY, { expiresIn: "24h" });
-        res.json({token})
+        res.json({ token })
     }
 }
 

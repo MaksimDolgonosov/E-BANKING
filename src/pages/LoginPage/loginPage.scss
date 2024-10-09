@@ -3,28 +3,75 @@
     height: 100vh;
     background-color: #291044;
 
+    &_back {
+
+        font-size: 15px;
+        text-decoration: none;
+        color: #020222b3;
+        line-height: 15px;
+
+        svg {
+            margin-bottom: 3px;
+        }
+
+    }
+
     &_wrapper {
         margin: 0 auto;
         max-width: 1200px;
         height: 100vh;
         background-color: #fff;
+
         // background: radial-gradient(81.65% 96.53% at 100% 100%, #A481E8 0%, rgba(164, 129, 232, 0) 100%), #6E44D9;
+        &-header {
+            height: 75px;
+            padding: 0 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            a {
+                color: #6E44D9;
+                text-decoration: none;
+
+                &:first-of-type {
+                    font-size: 18px;
+                    font-weight: 700;
+                }
+            }
+
+        }
+    }
+
+    &_form_wrapper {
+        max-width: 656px;
+        margin: 40px auto;
+
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
     }
 
     &_form {
-        margin: 0 auto;
-        background-color: #fff;
-        border-radius: 20px;
-        width: 400px;
-        height: 200px;
-        border: 2px solid rgba(88, 81, 107, 0.986);
-        box-shadow: 0px 0px 15px 0px rgba(92, 86, 141, 0.788);
+        // margin: 0 auto;
+        // background-color: #fff;
+        // border-radius: 20px;
+        max-width: 450px;
+        // height: 200px;
+        // border: 2px solid rgba(88, 81, 107, 0.986);
+        // box-shadow: 0px 0px 15px 0px rgba(92, 86, 141, 0.788);
 
         input {
+            width: 100%;
             border-radius: 12px;
             border: 2px solid rgba(0, 0, 0, 0.103);
             height: 42px;
             padding: 0 14px;
+            font-size: 16px;
+            margin: 10px 0;
         }
 
         button {
@@ -36,6 +83,33 @@
             font-size: 16px;
             line-height: 12px;
             border-radius: 12px;
+            margin-top: 10px;
         }
     }
 }
+
+@media(max-width: 1300px) {}
+
+@media(max-width: 1180px) {}
+
+@media(max-width: 992px) {}
+
+@media(max-width: 768px) {
+    .loginPage {
+        &_form_wrapper {
+            padding: 0 40px;
+        }
+
+        &_wrapper {
+            &-header {
+                padding: 0 40px;
+            }
+        }
+    }
+}
+
+@media(max-width: 576px) {}
+
+@media(max-width: 429px) {}
+
+@media(max-width: 391px) {}
