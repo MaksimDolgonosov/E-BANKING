@@ -16,6 +16,7 @@ export interface IUserState {
     loadingStatus: LoadingStatus
 }
 
+
 const fetchUser = createAsyncThunk(
     "user/fetchUser",
     async ({ email, password }: IRequestBody): Promise<IUserState> => {
@@ -58,7 +59,10 @@ const loginSlice = createSlice({
 
 
 const { actions, reducer } = loginSlice;
+
+
 export const {
     setLogin
 } = actions;
+
 export default reducer;

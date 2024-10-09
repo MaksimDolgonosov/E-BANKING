@@ -1,7 +1,6 @@
 
 import "./loginPage.scss";
 import { useState } from "react";
-import logo from "../../assets/images/logo.svg";
 import { Link } from "react-router-dom";
 
 
