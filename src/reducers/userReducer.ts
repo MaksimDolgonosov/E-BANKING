@@ -2,9 +2,19 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit"
 import { useHttp } from "../hooks/http.hook";
 import { LoadingStatus } from "../hooks/http.hook";
 
-interface IRequestBody {
+import { RootState } from "../store";
+import { AppDispatch } from "../store";
+
+
+export interface IRequestBody {
     email: string,
     password: string
+}
+
+type ThunkApiConfig = {
+    state: RootState
+     dispatch: AppDispatch
+
 }
 
 
@@ -17,11 +27,11 @@ export interface IUserState {
 }
 
 
-const fetchUser = createAsyncThunk(
+export const fetchUser = createAsyncThunk<IUserState, IRequestBody, {state: RootState}>(
     "user/fetchUser",
-    async ({ email, password }: IRequestBody): Promise<IUserState> => {
+    async ({ email, password }): Promise<IUserState> => {
         const { request } = useHttp();
-        return await request({ url: "http://localhost:3002/api/user/login", body: JSON.stringify({ email, password }) })
+        return await request({ url: `http://localhost:3002/api/user/login/:${email}` });
     }
 )
 

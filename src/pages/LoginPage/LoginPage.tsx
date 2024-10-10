@@ -2,25 +2,32 @@
 import "./loginPage.scss";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../hooks/hook";
+import { fetchUser } from "../../reducers/userReducer";
 
 
-interface Login {
-    login: string | null,
-    password: string | null
-}
+
+
+// interface Login {
+//     email: string | null,
+//     password: string | null
+// }
 
 const LoginPage = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const dispatch = useAppDispatch();
     // const [login, setLogin] = useState<Login>({ login: null, password: null })
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const login: Login = { login: email, password };
+        console.log({ email, password });
 
-        console.log(login);
+        dispatch(fetchUser({ email: email, password: password }))
+
+        // console.log(login);
         setEmail("");
         setPassword("");
     }
