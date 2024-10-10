@@ -29,7 +29,7 @@ class UserController {
         res.json({ token })
     }
 
-    async login(req, res) {
+    async login(req, res, next) {
         console.log(req.body);
         const { email, password } = req.body;
 
@@ -39,6 +39,7 @@ class UserController {
             return next(ApiError.internal("Пользователя с таким email не существует!"));
         }
         let comparePassword = bcrypt.compareSync(password, candidate[0].password);
+        console.log(comparePassword);
         if (!comparePassword) {
             return next(ApiError.internal("Неверный пароль!"));
         }

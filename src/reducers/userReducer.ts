@@ -6,6 +6,7 @@ import { RootState } from "../store";
 import { AppDispatch } from "../store";
 
 
+
 export interface IRequestBody {
     email: string,
     password: string
@@ -13,7 +14,7 @@ export interface IRequestBody {
 
 type ThunkApiConfig = {
     state: RootState
-     dispatch: AppDispatch
+    dispatch: AppDispatch
 
 }
 
@@ -27,11 +28,11 @@ export interface IUserState {
 }
 
 
-export const fetchUser = createAsyncThunk<IUserState, IRequestBody, {state: RootState}>(
+export const fetchUser = createAsyncThunk<IUserState, IRequestBody, ThunkApiConfig>(
     "user/fetchUser",
     async ({ email, password }): Promise<IUserState> => {
         const { request } = useHttp();
-        return await request({ url: `http://localhost:3002/api/user/login/:${email}` });
+        return await request({ url: `http://localhost:3002/api/user/login`, method: "POST", body: JSON.stringify({ email, password }) });
     }
 )
 
@@ -58,8 +59,10 @@ const loginSlice = createSlice({
         builder
             .addCase(fetchUser.pending, state => { state.loadingStatus = 'loading' })
             .addCase(fetchUser.fulfilled, (state, action) => {
-                state = action.payload;
+                console.log(action)
+                // state = action.payload;
                 state.loadingStatus = 'idle';
+                // state.login = true
             })
             .addCase(fetchUser.rejected, state => { state.loadingStatus = 'error' })
             .addDefaultCase(() => { })

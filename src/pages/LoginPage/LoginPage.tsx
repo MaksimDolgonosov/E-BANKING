@@ -25,9 +25,8 @@ const LoginPage = () => {
 
         console.log({ email, password });
 
-        dispatch(fetchUser({ email: email, password: password }))
+        dispatch(fetchUser({ email: email, password: password }));
 
-        // console.log(login);
         setEmail("");
         setPassword("");
     }
