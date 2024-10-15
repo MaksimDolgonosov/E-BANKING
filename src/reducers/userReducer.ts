@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit"
 import { useHttp } from "../hooks/http.hook";
+
+
+
+
 import { LoadingStatus } from "../hooks/http.hook";
 
 import { RootState } from "../store";
@@ -20,19 +24,33 @@ type ThunkApiConfig = {
 
 
 export interface IUserState {
-    login: boolean;
+    login: boolean | undefined;
     name: string | null;
     surname: string | null;
-    token: string | null
-    loadingStatus: LoadingStatus
+    token: string | null;
+    loadingStatus: LoadingStatus;
+
 }
+// export interface IUserRequest {
+//     name: string | null;
+//     surname: string | null;
+//     token: string | null
+// }
 
 
 export const fetchUser = createAsyncThunk<IUserState, IRequestBody, ThunkApiConfig>(
     "user/fetchUser",
-    async ({ email, password }): Promise<IUserState> => {
+    async ({ email, password }) => {
+
+
+        // const response = await fetch(`http://localhost:3002/api/user/login`, { method: "POST", body: JSON.stringify({ email, password }), headers: { "Content-Type": "application/json" } })
+        // const data = await response.json();
+        // console.log(data);
+        // return await data as IUserState;
+
         const { request } = useHttp();
-        return await request({ url: `http://localhost:3002/api/user/login`, method: "POST", body: JSON.stringify({ email, password }) });
+
+        return await (request({ url: `http://localhost:3002/api/user/login`, method: "POST", body: JSON.stringify({ email, password }) })) as IUserState;
     }
 )
 
@@ -51,18 +69,20 @@ const loginSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setLogin(state: IUserState, action: PayloadAction<IUserState>) {
-            state = action.payload;
+        setLogin(state: IUserState, action: PayloadAction<boolean>) {
+            console.log(action.payload)
+            state.login = action.payload;
         },
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchUser.pending, state => { state.loadingStatus = 'loading' })
-            .addCase(fetchUser.fulfilled, (state, action) => {
-                console.log(action)
-                // state = action.payload;
-                state.loadingStatus = 'idle';
-                // state.login = true
+            .addCase(fetchUser.fulfilled, (state: IUserState, action: PayloadAction<IUserState>) => {
+                state.login = action.payload.login
+                state.name = action.payload.name
+                state.surname = action.payload.surname
+                state.token = action.payload.token
+                state.loadingStatus = "idle"
             })
             .addCase(fetchUser.rejected, state => { state.loadingStatus = 'error' })
             .addDefaultCase(() => { })

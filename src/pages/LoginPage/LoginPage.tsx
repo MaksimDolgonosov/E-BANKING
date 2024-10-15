@@ -3,9 +3,10 @@ import "./loginPage.scss";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 // import { useDispatch } from "react-redux";
-import { useAppDispatch } from "../../hooks/hook";
+import { useAppDispatch, useAppSelector } from "../../hooks/hook";
 import { fetchUser } from "../../reducers/userReducer";
-
+import Spinner from 'react-bootstrap/Spinner';
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -17,18 +18,25 @@ import { fetchUser } from "../../reducers/userReducer";
 const LoginPage = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const loading = useAppSelector(state => state.user.loadingStatus);
+    const login = useAppSelector(state => state.user.login);
+
     const dispatch = useAppDispatch();
-    // const [login, setLogin] = useState<Login>({ login: null, password: null })
+    const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        await dispatch(fetchUser({ email: email, password: password }));
+    }
+    console.log(login)
 
-        console.log({ email, password });
-
-        dispatch(fetchUser({ email: email, password: password }));
-
+    if (login) {
         setEmail("");
         setPassword("");
+        navigate("/accountPage");
+
     }
 
 
@@ -49,7 +57,8 @@ const LoginPage = () => {
                         <input name="email" type="email" id="email" placeholder="example@mail.ru" required value={email} onChange={(e) => setEmail(e.target.value)} />
                         {/* <label htmlFor="password">Пароль: </label> */}
                         <input name="password" type="password" id="password" placeholder="Пароль" required value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <button>Войти</button>
+                        {loading == "error" ? <div className="loginPage_error">Ошибка загрузки...Пожалуйста, повторите попытку!</div> : null}
+                        <button className="loginPage_button loading" disabled={loading === 'loading' ? true : false}>{loading === 'loading' ? <Spinner size="sm" /> : "Войти"}</button>
                     </form>
                 </div>
             </div>

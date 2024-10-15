@@ -17,17 +17,18 @@ export type LoadingStatus = "idle" | "loading" | "error";
 
 
 export const useHttp = () => {
-    const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>("idle");
+    
+    // const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>("idle");
+   
 
-
-    const request = useCallback(async (
+    // const request = useCallback(async (
+    const request = async (
         { url,
             method = "GET",
             body = null,
             headers = { "Content-Type": "application/json" }
         }: RequestConfig) => {
-
-        setLoadingStatus("loading");
+        // setLoadingStatus("loading");
         try {
             const response = await fetch(url, { method, body, headers });
             if (!response.ok) {
@@ -35,13 +36,14 @@ export const useHttp = () => {
             }
 
             const data = await response.json();
-            setLoadingStatus("idle");
+            // setLoadingStatus("idle");
             return data;
         } catch (error) {
-            setLoadingStatus("error");
+            // setLoadingStatus("error");
             throw error;
         }
-    }, [])
+    }
+    //}, [])
 
 
 
@@ -68,5 +70,5 @@ export const useHttp = () => {
     //     }
     // },[]);
 
-    return { loadingStatus, request }
+    return { request }
 }

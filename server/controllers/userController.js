@@ -30,7 +30,7 @@ class UserController {
     }
 
     async login(req, res, next) {
-        console.log(req.body);
+
         const { email, password } = req.body;
 
         const candidate = await syncConn.query(`SELECT * FROM user where email = '${email}'`);
@@ -39,18 +39,18 @@ class UserController {
             return next(ApiError.internal("Пользователя с таким email не существует!"));
         }
         let comparePassword = bcrypt.compareSync(password, candidate[0].password);
-        console.log(comparePassword);
+
         if (!comparePassword) {
             return next(ApiError.internal("Неверный пароль!"));
         }
         const token = jwt.sign({ id: candidate[0].id, email }, process.env.SECRET_KEY, { expiresIn: "24h" });
         //res.json({ token })
-        res.json({ name: candidate[0].name, surname: candidate[0].surname, token })
+        res.json({ name: candidate[0].name, surname: candidate[0].surname, token, lodingStatus: "idle", login: true })
     }
 
 
     async check(req, res, next) {
-        console.log(req.body);
+
         const token = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET_KEY, { expiresIn: "24h" });
         res.json({ name: candidate[0].name, surname: candidate[0].surname, token })
         // res.json({ token })
