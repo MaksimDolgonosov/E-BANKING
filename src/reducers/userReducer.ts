@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit"
-import { useHttp } from "../hooks/http.hook";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 
 
@@ -8,7 +7,7 @@ import { LoadingStatus } from "../hooks/http.hook";
 
 import { RootState } from "../store";
 import { AppDispatch } from "../store";
-
+import { useHttp } from "../hooks/http.hook";
 
 
 export interface IRequestBody {
@@ -42,13 +41,12 @@ export const fetchUser = createAsyncThunk<IUserState, IRequestBody, ThunkApiConf
     "user/fetchUser",
     async ({ email, password }) => {
 
-
         // const response = await fetch(`http://localhost:3002/api/user/login`, { method: "POST", body: JSON.stringify({ email, password }), headers: { "Content-Type": "application/json" } })
         // const data = await response.json();
         // console.log(data);
         // return await data as IUserState;
 
-        const { request } = useHttp();
+        const  request  = useHttp();
 
         return await (request({ url: `http://localhost:3002/api/user/login`, method: "POST", body: JSON.stringify({ email, password }) })) as IUserState;
     }
@@ -95,7 +93,7 @@ const { actions, reducer } = loginSlice;
 
 
 export const {
-    setLogin
+
 } = actions;
 
 export default reducer;

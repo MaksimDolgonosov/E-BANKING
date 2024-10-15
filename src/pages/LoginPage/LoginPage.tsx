@@ -1,6 +1,6 @@
 
 import "./loginPage.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // import { useDispatch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../hooks/hook";
@@ -29,15 +29,9 @@ const LoginPage = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await dispatch(fetchUser({ email: email, password: password }));
-    }
-    console.log(login)
-
-    if (login) {
-        setEmail("");
-        setPassword("");
         navigate("/accountPage");
-
     }
+
 
 
     return (
