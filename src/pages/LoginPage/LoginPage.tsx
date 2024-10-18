@@ -19,7 +19,7 @@ const LoginPage = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const loading = useAppSelector(state => state.user.loadingStatus);
-    const login = useAppSelector(state => state.user.login);
+    const loginStatus = useAppSelector(state => state.user.login);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -29,10 +29,15 @@ const LoginPage = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await dispatch(fetchUser({ email: email, password: password }));
-        navigate("/accountPage");
+
+
     }
 
-
+    useEffect(() => {
+        if (loginStatus) {
+            navigate("/accountPage")
+        }
+    }, [loginStatus])
 
     return (
         <div className="loginPage">

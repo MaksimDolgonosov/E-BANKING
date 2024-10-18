@@ -46,7 +46,7 @@ export const fetchUser = createAsyncThunk<IUserState, IRequestBody, ThunkApiConf
         // console.log(data);
         // return await data as IUserState;
 
-        const  request  = useHttp();
+        const request = useHttp();
 
         return await (request({ url: `http://localhost:3002/api/user/login`, method: "POST", body: JSON.stringify({ email, password }) })) as IUserState;
     }
@@ -67,9 +67,12 @@ const loginSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setLogin(state: IUserState, action: PayloadAction<boolean>) {
-            console.log(action.payload)
-            state.login = action.payload;
+        exitAccount(state: IUserState) {
+            state.login = false;
+            state.name = null;
+            state.surname = null;
+            state.token = null;
+            state.loadingStatus = "idle";
         },
     },
     extraReducers: (builder) => {
@@ -93,7 +96,7 @@ const { actions, reducer } = loginSlice;
 
 
 export const {
-
+    exitAccount
 } = actions;
 
 export default reducer;
