@@ -1,12 +1,11 @@
 import "./accountPage.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { FaUserCheck } from "react-icons/fa6";
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoLogOutOutline } from "react-icons/io5";
 import { exitAccount } from "../../reducers/userReducer";
 import { useAppDispatch } from "../../hooks/hook";
-
+import { VscAccount } from "react-icons/vsc";
 
 const AccountPage = () => {
     const navigate = useNavigate();
@@ -27,13 +26,21 @@ const AccountPage = () => {
                     <Link className="accountPage_header-list-item" to="/accoutPage" >Карты</Link>
                 </div>
                 <div className="accountPage_header-account">
-                    <NavDropdown title={<FaUserCheck />} className='d-block header_black'
+                    <NavDropdown title={<VscAccount />} className='d-block header_black'
                         // id='dropdown-button-drop-down-centered'
                         align={{ lg: 'end' }}
                         drop="down-centered">
-                        <NavDropdown.Item ><Link to="/settings"><IoSettingsOutline />Перейти в настройки</Link></NavDropdown.Item>
-                        <NavDropdown.Item onClick={exitAccountHandler}><IoLogOutOutline />Выйти</NavDropdown.Item>
+                        <NavDropdown.Item style={{ fontSize: "13px", padding: "4px 10px" }}><Link to="/settings" style={{ color: "black", }}><IoSettingsOutline />Перейти в настройки</Link></NavDropdown.Item>
+                        <NavDropdown.Item style={{ fontSize: "13px", padding: "4px 10px" }} onClick={exitAccountHandler}><IoLogOutOutline />Выйти</NavDropdown.Item>
                     </NavDropdown>
+                </div>
+            </div>
+            <div className="accountPage_main">
+                <div className="accountPage_main_cardList">
+
+                </div>
+                <div className="accountPage_main_actions">
+
                 </div>
             </div>
         </div >
