@@ -5,10 +5,10 @@ import { ICardProps } from "../types/types";
 import { IUserState } from "./userReducer";
 import { LoadingStatus } from "../types/types";
 
-type TUserId = Pick<IUserState, "id">
-
+// type TUserId = Pick<IUserState, "id">
+type TUserId = number
 interface ICardsState extends ICardProps {
-    loadingStatus: LoadingStatus
+    loadingStatus?: LoadingStatus
 }
 
 
@@ -17,13 +17,11 @@ export type ThunkApiConfig = {
     dispatch: AppDispatch
 }
 
-export const fetchUserCards = createAsyncThunk<ICardProps, TUserId, ThunkApiConfig>(
+export const fetchUserCards = createAsyncThunk<ICardProps[], TUserId, ThunkApiConfig>(
     "cards/fetchUserCard",
-    async ({ id }) => {
-
+    async (id) => {
         const request = useHttp();
-
-        return await (request({ url: `http://localhost:3002/api/cards`, method: "POST", body: JSON.stringify({ id }) })) as ICardProps;
+        return await (request({ url: `http://localhost:3002/api/cards/getCards?id=${id}` })) as ICardProps[];
     }
 )
 
@@ -45,19 +43,23 @@ const cardsSlice = createSlice({
     extraReducers: (builder) => {
         builder
             // .addCase(fetchUserCards.pending, state => { state.loadingStatus = 'loading' })
-            .addCase(fetchUserCards.fulfilled, (state: ICardsState[], action: PayloadAction<ICardProps>) => {
+            .addCase(fetchUserCards.fulfilled, (state: ICardsState[], action: PayloadAction<ICardProps[]>) => {
+                state = action.payload
+                return state
 
-                state.currency = action.payload.currency
-                state.ammount = action.payload.ammount
-                state.number = action.payload.number
-                state.name = action.payload.name
-                state.date = action.payload.date
-                state.cvv = action.payload.cvv
-                state.system = action.payload.system
-                state.style = action.payload.style
-                state.loadingStatus = "idle"
+                // return state.concat(action.payload)
+                // state.push(action.payload)
+                // state.currency = action.payload.currency
+                // state.ammount = action.payload.ammount
+                // state.number = action.payload.number
+                // state.name = action.payload.name
+                // state.date = action.payload.date
+                // state.cvv = action.payload.cvv
+                // state.system = action.payload.system
+                // state.style = action.payload.style
+                // state.loadingStatus = "idle"
             })
-            .addCase(fetchUserCards.rejected, state => { state.loadingStatus = 'error' })
+            // .addCase(fetchUserCards.rejected, state => { state.loadingStatus = 'error' })
             .addDefaultCase(() => { })
     }
 });

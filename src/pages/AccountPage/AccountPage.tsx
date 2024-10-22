@@ -6,8 +6,14 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { exitAccount } from "../../reducers/userReducer";
 import { useAppDispatch } from "../../hooks/hook";
 import { VscAccount } from "react-icons/vsc";
+import { useAppSelector } from "../../hooks/hook";
+import { useEffect } from "react";
+import { fetchUserCards } from "../../reducers/cardReducer";
+import CardItem from "../../components/CardItem/CardItem";
 
 const AccountPage = () => {
+    const id = useAppSelector(state => state.user.id);
+    const cards = useAppSelector(state => state.cards);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
@@ -15,6 +21,15 @@ const AccountPage = () => {
         dispatch(exitAccount());
         navigate("/")
     }
+
+    useEffect(() => {
+
+        if (id) {
+            dispatch(fetchUserCards(id))
+        }
+
+    }, [])
+
     return (
         <div className="accountPage">
             <div className="accountPage_header">
@@ -37,7 +52,9 @@ const AccountPage = () => {
             </div>
             <div className="accountPage_main">
                 <div className="accountPage_main_cardList">
-
+                    {cards.map(item => {
+                        return <CardItem  key={item.number} currency={item.currency}  ammount={item.ammount} number={item.number} style={item.style} system={item.system}/>
+                    })}
                 </div>
                 <div className="accountPage_main_actions">
 

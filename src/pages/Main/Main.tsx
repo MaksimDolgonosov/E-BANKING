@@ -9,12 +9,23 @@ import Promo from "../../components/Promo/Promo";
 import Burger from "../../components/Burger/Burger";
 import Descriptiont from "../../components/Description/Description";
 import Overview from "../../components/overview/Overview";
+
+// import { useEffect } from "react";
+// import { useAppDispatch } from "../../hooks/hook";
+// import { fetchUserCards } from "../../reducers/cardReducer";
+
+
+
+
+
 const MainPage: React.FC = () => {
 
     const [activeBurger, setActiveBurger] = useState(false);
 
     // fetch(`http://localhost:3002/api/cards`, { method: "POST", body: JSON.stringify(1), headers: { "Content-Type": "application/json" } })
-    fetch(`http://localhost:3002/api/cards/getCards?id=1`)
+    // fetch(`http://localhost:3002/api/cards/getCards?id=1`)
+
+
     const onToggleBurger = (state: boolean): void => {
         setActiveBurger(state)
     }
