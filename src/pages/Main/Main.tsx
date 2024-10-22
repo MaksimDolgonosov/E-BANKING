@@ -13,6 +13,8 @@ const MainPage: React.FC = () => {
 
     const [activeBurger, setActiveBurger] = useState(false);
 
+    // fetch(`http://localhost:3002/api/cards`, { method: "POST", body: JSON.stringify(1), headers: { "Content-Type": "application/json" } })
+    fetch(`http://localhost:3002/api/cards/getCards?id=1`)
     const onToggleBurger = (state: boolean): void => {
         setActiveBurger(state)
     }
@@ -24,7 +26,7 @@ const MainPage: React.FC = () => {
             {activeBurger ? <Burger /> : null}
             <Promo />
             <Descriptiont />
-            <Overview/>
+            <Overview />
         </div>
 
     )

@@ -45,7 +45,20 @@ class UserController {
         }
         const token = jwt.sign({ id: candidate[0].id, email }, process.env.SECRET_KEY, { expiresIn: "24h" });
         //res.json({ token })
-        res.json({ name: candidate[0].name, surname: candidate[0].surname, token, lodingStatus: "idle", login: true })
+        res.json({ id: candidate[0].id, name: candidate[0].name, surname: candidate[0].surname, token, lodingStatus: "idle", login: true })
+    }
+    
+    async cards(req, res, next) {
+        console.log(req.body)
+        const { id } = req.body;
+
+        const cards = await syncConn.query(`SELECT * FROM cards where user_id = '${id}'`);
+        console.log(cards)
+        if (cards.length === 0) {
+            return next(ApiError.internal("У пользователя нет активных карт!"));
+        }
+
+        res.json(cards)
     }
 
 

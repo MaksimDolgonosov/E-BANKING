@@ -13,7 +13,7 @@ interface RequestConfig {
     headers?: HTTPHeaders
 }
 
-export type LoadingStatus = "idle" | "loading" | "error";
+
 
 
 export const useHttp = () => {

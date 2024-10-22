@@ -1,13 +1,9 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { RootState, AppDispatch } from "../store";
+import { LoadingStatus } from "../types/types";
 
-
-
-
-import { LoadingStatus } from "../hooks/http.hook";
-
-import { RootState } from "../store";
-import { AppDispatch } from "../store";
 import { useHttp } from "../hooks/http.hook";
+// import { ThunkApiConfig } from "../types/types";
 
 
 export interface IRequestBody {
@@ -15,14 +11,8 @@ export interface IRequestBody {
     password: string
 }
 
-type ThunkApiConfig = {
-    state: RootState
-    dispatch: AppDispatch
-
-}
-
-
 export interface IUserState {
+    id: number | null;
     login: boolean | undefined;
     name: string | null;
     surname: string | null;
@@ -30,11 +20,12 @@ export interface IUserState {
     loadingStatus: LoadingStatus;
 
 }
-// export interface IUserRequest {
-//     name: string | null;
-//     surname: string | null;
-//     token: string | null
-// }
+
+export type ThunkApiConfig = {
+    state: RootState
+    dispatch: AppDispatch
+}
+
 
 
 export const fetchUser = createAsyncThunk<IUserState, IRequestBody, ThunkApiConfig>(
@@ -53,8 +44,8 @@ export const fetchUser = createAsyncThunk<IUserState, IRequestBody, ThunkApiConf
 )
 
 
-
 const initialState: IUserState = {
+    id: null,
     login: false,
     name: null,
     surname: null,
@@ -79,6 +70,7 @@ const loginSlice = createSlice({
         builder
             .addCase(fetchUser.pending, state => { state.loadingStatus = 'loading' })
             .addCase(fetchUser.fulfilled, (state: IUserState, action: PayloadAction<IUserState>) => {
+                state.id = action.payload.id
                 state.login = action.payload.login
                 state.name = action.payload.name
                 state.surname = action.payload.surname

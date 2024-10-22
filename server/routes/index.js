@@ -10,7 +10,7 @@ const historyRouter = require("./historyRouter");
 
 
 router.use('/user', userRouter);
-router.use('/card', cardRouter);
+router.use('/cards', cardRouter);
 router.use('/history', historyRouter);
 
 
