@@ -1,14 +1,14 @@
 import { RootState, AppDispatch } from "../store";
 
 
-type TCurrency = "BYN" | "RUB" | "EUR" | "USD" | null;
+export type TCurrency = "BYN" | "RUB" | "EUR" | "USD" | null;
 
 
 
 export type LoadingStatus = "idle" | "loading" | "error";
 export interface ICardProps {
     currency: TCurrency,
-    ammount: number | null,
+    amount: number | null,
     number: string | null,
     name?: string | null,
     date?: string | null,

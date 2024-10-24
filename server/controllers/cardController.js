@@ -9,7 +9,6 @@ class CardController {
     }
     async getCard(req, res) {
         const cards = await syncConn.query(`SELECT * FROM card where user_id = '${req.query.id}'`);
-        console.log(cards)
         return res.json(cards)
     }
 

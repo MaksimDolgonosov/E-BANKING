@@ -10,6 +10,10 @@ import { useAppSelector } from "../../hooks/hook";
 import { useEffect } from "react";
 import { fetchUserCards } from "../../reducers/cardReducer";
 import CardItem from "../../components/CardItem/CardItem";
+import phone from "../../assets/icons/actions/telephone.png";
+import list from "../../assets/icons/actions/list.png";
+import smartphone from "../../assets/icons/actions/smartphone.png";
+import cards from "../../assets/icons/actions/cards.png";
 
 const AccountPage = () => {
     const id = useAppSelector(state => state.user.id);
@@ -52,12 +56,48 @@ const AccountPage = () => {
             </div>
             <div className="accountPage_main">
                 <div className="accountPage_main_cardList">
+                    {cards.length ? null : <div className="accountPage_main_noCards">У вас нет активных карт</div>}
                     {cards.map(item => {
-                        return <CardItem  key={item.number} currency={item.currency}  ammount={item.ammount} number={item.number} style={item.style} system={item.system}/>
+                        return <CardItem key={item.number} currency={item.currency} amount={item.amount} number={item.number} style={item.style} system={item.system} />
                     })}
                 </div>
                 <div className="accountPage_main_actions">
+                    <div className="accountPage_main_actions-list">
+                        <div className="accountPage_main_actions-item">
+                            <div className="accountPage_main_actions-item-img">
+                                <img src={phone} alt="phone" />
+                            </div>
+                            <div className="accountPage_main_actions-item-descr">
+                                Перевести по телефону
+                            </div>
+                        </div>
 
+                        <div className="accountPage_main_actions-item">
+                            <div className="accountPage_main_actions-item-img">
+                                <img src={list} alt="list" />
+                            </div>
+                            <div className="accountPage_main_actions-item-descr">
+                                Перевести по реквизитам
+                            </div>
+                        </div>
+                        <div className="accountPage_main_actions-item">
+                            <div className="accountPage_main_actions-item-img">
+                                <img src={cards} alt="cards" />
+                            </div>
+                            <div className="accountPage_main_actions-item-descr">
+                                Перевести между своими картами
+                            </div>
+                        </div>
+
+                        <div className="accountPage_main_actions-item">
+                            <div className="accountPage_main_actions-item-img">
+                                <img src={smartphone} alt="smartphone" />
+                            </div>
+                            <div className="accountPage_main_actions-item-descr">
+                                Оплатить мобильный
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div >

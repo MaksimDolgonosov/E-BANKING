@@ -22,9 +22,8 @@ class UserController {
 
 
         const account = uuid.v4();
-        console.log(hashPassword.length)
+
         const user = await syncConn.query(`INSERT INTO user (id, email, password, account, phone, name, surname) VALUES (${null},'${email}','${hashPassword}','${account}','','${name}','${surname}')`);
-        console.log(user)
         const token = jwt.sign({ id: user.insertId, email }, process.env.SECRET_KEY, { expiresIn: "24h" });
         res.json({ token })
     }
@@ -47,26 +46,10 @@ class UserController {
         //res.json({ token })
         res.json({ id: candidate[0].id, name: candidate[0].name, surname: candidate[0].surname, token, lodingStatus: "idle", login: true })
     }
-    
-    async cards(req, res, next) {
-        console.log(req.body)
-        const { id } = req.body;
-
-        const cards = await syncConn.query(`SELECT * FROM cards where user_id = '${id}'`);
-        console.log(cards)
-        if (cards.length === 0) {
-            return next(ApiError.internal("У пользователя нет активных карт!"));
-        }
-
-        res.json(cards)
-    }
-
 
     async check(req, res, next) {
-
         const token = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET_KEY, { expiresIn: "24h" });
-        res.json({ name: candidate[0].name, surname: candidate[0].surname, token })
-        // res.json({ token })
+        res.json({ token })
     }
 }
 
