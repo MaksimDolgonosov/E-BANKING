@@ -113,11 +113,12 @@
                 width: 153px;
                 height: 112px;
                 border-radius: 20px;
-                padding: 20px;
+                padding: 20px 10px;
                 cursor: pointer;
                 box-shadow: 0px 0px 20px 0px rgba(27, 30, 32, 0.2);
                 font-size: 15px;
                 transition: .2s all;
+                line-height: 17px;
 
                 &:hover {
                     box-shadow: 0px 0px 35px 0px rgba(27, 30, 32, 0.2);

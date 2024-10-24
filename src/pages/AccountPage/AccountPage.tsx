@@ -13,7 +13,7 @@ import CardItem from "../../components/CardItem/CardItem";
 import phone from "../../assets/icons/actions/telephone.png";
 import list from "../../assets/icons/actions/list.png";
 import smartphone from "../../assets/icons/actions/smartphone.png";
-import cards from "../../assets/icons/actions/cards.png";
+import cardsLogo from "../../assets/icons/actions/cards.png";
 
 const AccountPage = () => {
     const id = useAppSelector(state => state.user.id);
@@ -82,7 +82,7 @@ const AccountPage = () => {
                         </div>
                         <div className="accountPage_main_actions-item">
                             <div className="accountPage_main_actions-item-img">
-                                <img src={cards} alt="cards" />
+                                <img src={cardsLogo} alt="cards" />
                             </div>
                             <div className="accountPage_main_actions-item-descr">
                                 Перевести между своими картами

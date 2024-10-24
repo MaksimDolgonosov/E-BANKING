@@ -28,11 +28,11 @@
             padding: 0px 0px 16px 0px;
 
             &.buying {
-                left: 385px
+                left: calc((100vw / 2) - 600px + 180px);
             }
 
             &.busines {
-                left: 535px
+                left: calc((100vw / 2) - 600px + 325px)
             }
 
             &::before {
@@ -161,13 +161,13 @@
             &__body {
                 width: 60%;
 
-                &.buying {
-                    left: 245px
-                }
+                // &.buying {
+                //     left: 245px
+                // }
 
-                &.busines {
-                    left: 385px
-                }
+                // &.busines {
+                //     left: 325px
+                // }
             }
         }
     }
@@ -177,16 +177,16 @@
     #mainPortal-wrapper {
         .mainPortal_modal {
             &__body {
-                width: 70%;
+                width: 60%;
 
 
 
                 &.buying {
-                    left: 175px
+                    left: calc((100vw / 2) - 600px + 280px);
                 }
-
+    
                 &.busines {
-                    left: 285px
+                    left: calc((100vw / 2) - 600px + 425px)
                 }
             }
 
@@ -198,6 +198,10 @@
 
             &__advertising {
                 padding: 40px 20px 20px 20px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
             }
         }
     }
