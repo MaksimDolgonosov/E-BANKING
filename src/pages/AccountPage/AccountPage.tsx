@@ -10,7 +10,7 @@ import { useAppSelector } from "../../hooks/hook";
 import { useEffect } from "react";
 import { fetchUserCards } from "../../reducers/cardReducer";
 import CardItem from "../../components/CardItem/CardItem";
-import phone from "../../assets/icons/actions/telephone.png";
+import money from "../../assets/icons/actions/money-bag.png";
 import list from "../../assets/icons/actions/list.png";
 import smartphone from "../../assets/icons/actions/smartphone.png";
 import cardsLogo from "../../assets/icons/actions/cards.png";
@@ -65,10 +65,10 @@ const AccountPage = () => {
                     <div className="accountPage_main_actions-list">
                         <div className="accountPage_main_actions-item">
                             <div className="accountPage_main_actions-item-img">
-                                <img src={phone} alt="phone" />
+                                <img src={money} alt="money" />
                             </div>
                             <div className="accountPage_main_actions-item-descr">
-                                Перевести по телефону
+                                Пополнить карту
                             </div>
                         </div>
 
@@ -88,13 +88,20 @@ const AccountPage = () => {
                                 Перевести между своими картами
                             </div>
                         </div>
-
                         <div className="accountPage_main_actions-item">
                             <div className="accountPage_main_actions-item-img">
                                 <img src={smartphone} alt="smartphone" />
                             </div>
                             <div className="accountPage_main_actions-item-descr">
                                 Оплатить мобильный
+                            </div>
+                        </div>
+                        <div className="accountPage_main_actions-item">
+                            <div className="accountPage_main_actions-item-img">
+                                <img src={smartphone} alt="smartphone" />
+                            </div>
+                            <div className="accountPage_main_actions-item-descr">
+                                Выпустить новую карту
                             </div>
                         </div>
                     </div>

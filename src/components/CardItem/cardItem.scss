@@ -49,6 +49,8 @@
         font-size: 15px;
         font-weight: 400;
         color: rgba(0, 0, 0, 0.521);
+        justify-self: flex-end;
+        margin-top: auto;
 
         &::first-letter {
             text-transform: uppercase;
@@ -117,3 +119,15 @@
         }
     }
 }
+
+@media(max-width: 576px) {
+    .cardItem {
+        margin: 20px auto;
+        width: 90%;
+        height: 227px;
+    }
+}
+
+@media(max-width: 429px) {}
+
+@media(max-width: 391px) {}

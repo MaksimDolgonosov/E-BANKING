@@ -182,11 +182,11 @@
 
 
                 &.buying {
-                    left: calc((100vw / 2) - 600px + 280px);
+                    left: calc((100vw / 2) - 60% + 300px);
                 }
-    
+
                 &.busines {
-                    left: calc((100vw / 2) - 600px + 425px)
+                    left: calc((100vw / 2) - 60% + 425px)
                 }
             }
 
@@ -198,6 +198,7 @@
 
             &__advertising {
                 padding: 40px 20px 20px 20px;
+
                 img {
                     width: 100%;
                     height: 100%;
@@ -212,7 +213,15 @@
     #mainPortal-wrapper {
         .mainPortal_modal {
             &__body {
-                width: 60%;
+                width: 50%;
+
+                &.buying {
+                    left: calc((100vw / 2) - 60% + 270px);
+                }
+
+                &.busines {
+                    left: calc((100vw / 2) - 60% + 400px)
+                }
             }
 
             &__advertising {
@@ -223,7 +232,7 @@
             }
 
             &__list {
-
+                padding: 20px 10px 30px 15px;
 
                 li {
                     line-height: 15px;
