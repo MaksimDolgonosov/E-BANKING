@@ -99,9 +99,10 @@
         &_actions {
             width: 672px;
             height: 100%;
-            // display: flex;
-            // justify-content: space-between;
-            // align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
 
             &-list {
                 display: flex;
@@ -120,6 +121,7 @@
                 font-size: 15px;
                 transition: .2s all;
                 line-height: 17px;
+                margin-bottom: 20px;
 
                 &:hover {
                     box-shadow: 0px 0px 35px 0px rgba(27, 30, 32, 0.2);
@@ -132,6 +134,108 @@
 
             }
         }
+
+        &_currencies {
+            align-self: flex-end;
+            margin-top: 20px;
+            width: 400px;
+            // border: 1px solid black;
+            border-radius: 5px;
+            box-shadow: 0px 0px 20px 0px rgba(27, 30, 32, 0.2);
+
+            &_header {
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                height: 50px;
+                padding: 0 20px;
+                line-height: 50px;
+                background-color: #e7e7e7;
+                color: black;
+                font-size: 18px;
+                font-weight: 600;
+            }
+
+            &_descr {
+                height: 50px;
+                padding: 0 20px;
+                line-height: 50px;
+                color: black;
+                font-size: 18px;
+                font-weight: 300;
+                border-bottom: 1px solid rgb(185, 185, 185);
+            }
+
+            &_operation {
+                margin: 20px 0 20px auto;
+                width: 180px;
+                height: 30px;
+
+                line-height: 30px;
+                text-align: center;
+                color: black;
+                font-size: 14px;
+                font-weight: 300;
+
+                span {
+                    display: inline-block;
+                    color: #c5c5c5;
+                    margin: 0 10px;
+                }
+            }
+
+            &_date {
+                height: 50px;
+                padding: 0 20px;
+                line-height: 50px;
+                color: #7c7c7c;
+            }
+
+            &_list {
+                padding: 0 20px;
+            }
+
+            &_wrapper {
+                border-bottom: 1px solid rgb(185, 185, 185);
+            }
+
+            &_item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                height: 45px;
+
+                &_name {
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: #333333;
+                }
+
+                &_rates {
+                    display: flex;
+
+                    span {
+                        display: inline-block;
+                        color: #696969;
+                        margin: 0 10px;
+                    }
+                }
+
+                &_rubs {
+                    width: 152px;
+                    margin: 0 0 0 auto;
+
+                    span {
+                        font-size: 12px;
+                        margin: 0 2px;
+                        color: #c5c5c5;
+                    }
+
+                }
+            }
+        }
+
+
 
         &_noCards {
             font-size: 18px;

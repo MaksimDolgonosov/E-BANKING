@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import loginReducer from '../reducers/userReducer'
 import cardsReducer from '../reducers/cardReducer'
+import currenciesReducer from '../reducers/currenciesReducer'
 //import { IUserState } from '../reducers/userReducer';
 
 export const store = configureStore({
   reducer: {
     user: loginReducer,
-    cards: cardsReducer
+    cards: cardsReducer,
+    currencies: currenciesReducer
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware(),
   devTools: process.env.NODE_ENV !== "production",

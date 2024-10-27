@@ -9,24 +9,32 @@ import { VscAccount } from "react-icons/vsc";
 import { useAppSelector } from "../../hooks/hook";
 import { useEffect } from "react";
 import { fetchUserCards } from "../../reducers/cardReducer";
+import { fetchCurrencies } from "../../reducers/currenciesReducer";
 import CardItem from "../../components/CardItem/CardItem";
 import money from "../../assets/icons/actions/money-bag.png";
 import list from "../../assets/icons/actions/list.png";
 import smartphone from "../../assets/icons/actions/smartphone.png";
 import cardsLogo from "../../assets/icons/actions/cards.png";
+import { useHttp } from "../../hooks/http.hook";
+import Currency from "../../components/Currency/Currency";
+
 
 const AccountPage = () => {
     const id = useAppSelector(state => state.user.id);
     const cards = useAppSelector(state => state.cards);
+    const currencies = useAppSelector(state => state.currencies);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const date = new Date().toLocaleDateString()
 
     const exitAccountHandler = () => {
         dispatch(exitAccount());
         navigate("/")
     }
 
+
     useEffect(() => {
+        dispatch(fetchCurrencies(null));
 
         if (id) {
             dispatch(fetchUserCards(id))
@@ -103,6 +111,19 @@ const AccountPage = () => {
                             <div className="accountPage_main_actions-item-descr">
                                 Выпустить новую карту
                             </div>
+                        </div>
+                    </div>
+                    <div className="accountPage_main_currencies">
+                        <div className="accountPage_main_currencies_header">Курсы валют</div>
+                        <div className="accountPage_main_currencies_descr">Белорусского рубля</div>
+                        <div className="accountPage_main_currencies_operation"><span>Покупка</span><span>Продажа</span></div>
+                        <div className="accountPage_main_currencies_list">
+                            {currencies.map(currency => {
+                                return <Currency key={currency.Cur_OfficialRate} name={currency.Cur_Abbreviation} rate={currency.Cur_OfficialRate} />
+                            })}
+                        </div>
+                        <div className="accountPage_main_currencies_date">
+                            {date}
                         </div>
                     </div>
                 </div>
