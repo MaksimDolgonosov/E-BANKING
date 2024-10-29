@@ -26,20 +26,27 @@ export type ThunkApiConfig = {
     dispatch: AppDispatch
 }
 
+export type TToken = Pick<IUserState, "token">
+
 
 
 export const fetchUser = createAsyncThunk<IUserState, IRequestBody, ThunkApiConfig>(
     "user/fetchUser",
     async ({ email, password }) => {
-
         // const response = await fetch(`http://localhost:3002/api/user/login`, { method: "POST", body: JSON.stringify({ email, password }), headers: { "Content-Type": "application/json" } })
         // const data = await response.json();
         // console.log(data);
         // return await data as IUserState;
-
         const request = useHttp();
-
         return await (request({ url: `http://localhost:3002/api/user/login`, method: "POST", body: JSON.stringify({ email, password }) })) as IUserState;
+    }
+)
+
+export const checkUser = createAsyncThunk<TToken, null, ThunkApiConfig>(
+    "user/checkUser",
+    async () => {
+        const request = useHttp();
+        return await (request({ url: `http://localhost:3002/api/user/auth`, method: "GET", headers: { authorization: localStorage.getItem("token")! } })) as TToken;
     }
 )
 
@@ -79,6 +86,10 @@ const loginSlice = createSlice({
                 localStorage.setItem("token", action.payload.token!);
             })
             .addCase(fetchUser.rejected, state => { state.loadingStatus = 'error' })
+
+            .addCase(checkUser.fulfilled, (state, action) => {
+                console.log(action.payload)
+            })
             .addDefaultCase(() => { })
     }
 });

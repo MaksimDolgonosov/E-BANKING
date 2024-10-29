@@ -15,7 +15,7 @@ import money from "../../assets/icons/actions/money-bag.png";
 import list from "../../assets/icons/actions/list.png";
 import smartphone from "../../assets/icons/actions/smartphone.png";
 import cardsLogo from "../../assets/icons/actions/cards.png";
-import { useHttp } from "../../hooks/http.hook";
+import { checkUser } from "../../reducers/userReducer";
 import Currency from "../../components/Currency/Currency";
 
 
@@ -32,7 +32,8 @@ const AccountPage = () => {
         navigate("/")
     }
     const moveToSettingsPage = () => {
-        navigate("/settings")
+        dispatch(checkUser(null))
+        // navigate("/settings")
     }
 
     useEffect(() => {
