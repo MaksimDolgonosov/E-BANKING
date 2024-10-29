@@ -31,7 +31,9 @@ const AccountPage = () => {
         dispatch(exitAccount());
         navigate("/")
     }
-
+    const moveToSettingsPage = () => {
+        navigate("/settings")
+    }
 
     useEffect(() => {
         dispatch(fetchCurrencies(null));
@@ -57,7 +59,7 @@ const AccountPage = () => {
                         // id='dropdown-button-drop-down-centered'
                         align={{ lg: 'end' }}
                         drop="down-centered">
-                        <NavDropdown.Item style={{ fontSize: "13px", padding: "4px 10px" }}><Link to="/settings" style={{ color: "black", }}><IoSettingsOutline />Перейти в настройки</Link></NavDropdown.Item>
+                        <NavDropdown.Item style={{ fontSize: "13px", padding: "4px 10px" }} onClick={moveToSettingsPage}><IoSettingsOutline />Перейти в настройки</NavDropdown.Item>
                         <NavDropdown.Item style={{ fontSize: "13px", padding: "4px 10px" }} onClick={exitAccountHandler}><IoLogOutOutline />Выйти</NavDropdown.Item>
                     </NavDropdown>
                 </div>

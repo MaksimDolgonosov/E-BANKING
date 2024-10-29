@@ -76,6 +76,7 @@ const loginSlice = createSlice({
                 state.surname = action.payload.surname
                 state.token = action.payload.token
                 state.loadingStatus = "idle"
+                localStorage.setItem("token", action.payload.token!);
             })
             .addCase(fetchUser.rejected, state => { state.loadingStatus = 'error' })
             .addDefaultCase(() => { })

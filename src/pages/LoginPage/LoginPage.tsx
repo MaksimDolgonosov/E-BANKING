@@ -28,6 +28,7 @@ const LoginPage = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        
         await dispatch(fetchUser({ email: email, password: password }));
 
 
