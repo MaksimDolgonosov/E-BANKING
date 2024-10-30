@@ -42,13 +42,13 @@ class UserController {
         if (!comparePassword) {
             return next(ApiError.internal("Неверный пароль!"));
         }
-        const token = jwt.sign({ id: candidate[0].id, email }, process.env.SECRET_KEY, { expiresIn: "24h" });
+        const token = jwt.sign({ id: candidate[0].id, email }, process.env.SECRET_KEY, { expiresIn: "120s" });
         //res.json({ token })
         res.json({ id: candidate[0].id, name: candidate[0].name, surname: candidate[0].surname, token, lodingStatus: "idle", login: true })
     }
 
     async check(req, res, next) {
-        const token = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET_KEY, { expiresIn: "24h" });
+        const token = jwt.sign({ id: req.user.id, email: req.user.email }, process.env.SECRET_KEY, { expiresIn: "120s" });
         res.json({ token })
     }
 }

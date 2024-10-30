@@ -32,7 +32,7 @@ const CardItem = ({ currency, amount, number, style, system }: ICardProps) => {
                 <Currency currency={currency} />
             </div>
             <div className="cardItem_wrapper">
-                <div className="cardItem_ammount">{amount} {getSymbol(currency)} </div>
+                <div className="cardItem_ammount">{amount!.toFixed(2)} {getSymbol(currency)} </div>
                 <div className="cardItem_style">{style}</div>
                 <div className={`cardItem_card ${style}`}>
                     <div className="cardItem_card-number">{number!.slice(-4)}</div>

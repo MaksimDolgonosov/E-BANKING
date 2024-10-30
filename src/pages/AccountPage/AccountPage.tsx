@@ -37,11 +37,11 @@ const AccountPage = () => {
     }
 
     useEffect(() => {
-        dispatch(fetchCurrencies(null));
 
-        if (id) {
-            dispatch(fetchUserCards(id))
-        }
+        // if (id) {
+            dispatch(fetchCurrencies(null));
+            dispatch(fetchUserCards(id!))
+        // }
 
     }, [])
 

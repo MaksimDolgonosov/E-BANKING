@@ -46,7 +46,7 @@ export const checkUser = createAsyncThunk<TToken, null, ThunkApiConfig>(
     "user/checkUser",
     async () => {
         const request = useHttp();
-        return await (request({ url: `http://localhost:3002/api/user/auth`, method: "GET", headers: { authorization: localStorage.getItem("token")! } })) as TToken;
+        return await (request({ url: `http://localhost:3002/api/user/auth`, method: "GET", headers: { authorization: `Bearer ${localStorage.getItem("token")}`! } })) as TToken;
     }
 )
 
@@ -87,8 +87,13 @@ const loginSlice = createSlice({
             })
             .addCase(fetchUser.rejected, state => { state.loadingStatus = 'error' })
 
-            .addCase(checkUser.fulfilled, (state, action) => {
-                console.log(action.payload)
+            .addCase(checkUser.fulfilled, (state: IUserState, action: PayloadAction<TToken>) => {
+                state.token = action.payload.token
+                localStorage.setItem("token", action.payload.token!)
+            })
+            .addCase(checkUser.rejected, (state: IUserState) => {
+                state = initialState
+                return state
             })
             .addDefaultCase(() => { })
     }
