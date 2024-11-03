@@ -7,7 +7,7 @@ import { exitAccount } from "../../reducers/userReducer";
 import { useAppDispatch } from "../../hooks/hook";
 import { VscAccount } from "react-icons/vsc";
 import { useAppSelector } from "../../hooks/hook";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchUserCards } from "../../reducers/cardReducer";
 import { fetchCurrencies } from "../../reducers/currenciesReducer";
 import CardItem from "../../components/CardItem/CardItem";
@@ -17,16 +17,18 @@ import smartphone from "../../assets/icons/actions/smartphone.png";
 import cardsLogo from "../../assets/icons/actions/cards.png";
 import { checkUser } from "../../reducers/userReducer";
 import Currency from "../../components/Currency/Currency";
-
+import MainPortal from "../../components/portals/MainPortal";
+import DepositCard from "../../components/portals/DepositCardPortal";
 
 const AccountPage = () => {
     const id = useAppSelector(state => state.user.id);
     const cards = useAppSelector(state => state.cards);
     const currencies = useAppSelector(state => state.currencies);
+    const [depositPortal, setDepositPortal] = useState(false)
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const date = new Date().toLocaleDateString()
-
+    console.log("render")
     const exitAccountHandler = () => {
         dispatch(exitAccount());
         navigate("/")
@@ -39,8 +41,8 @@ const AccountPage = () => {
     useEffect(() => {
 
         // if (id) {
-            dispatch(fetchCurrencies(null));
-            dispatch(fetchUserCards(id!))
+        dispatch(fetchCurrencies(null));
+        dispatch(fetchUserCards(id!))
         // }
 
     }, [])
@@ -78,7 +80,7 @@ const AccountPage = () => {
                             <div className="accountPage_main_actions-item-img">
                                 <img src={money} alt="money" />
                             </div>
-                            <div className="accountPage_main_actions-item-descr">
+                            <div className="accountPage_main_actions-item-descr" onClick={() => setDepositPortal(true)}>
                                 Пополнить карту
                             </div>
                         </div>
@@ -131,6 +133,11 @@ const AccountPage = () => {
                     </div>
                 </div>
             </div>
+            {depositPortal ? <MainPortal wrapperId="depositCard_wrapper">
+
+                <DepositCard setDepositPortal={setDepositPortal}></DepositCard>
+
+            </MainPortal> : null}
         </div >
     )
 }

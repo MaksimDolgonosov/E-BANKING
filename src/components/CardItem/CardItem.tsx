@@ -49,7 +49,7 @@ const CardItem = ({ currency, amount, number, style, system }: ICardProps) => {
 }
 
 
-const Currency = ({ currency }: TCurrencyProps) => {
+export const Currency = ({ currency }: TCurrencyProps) => {
     switch (currency) {
         case "USD":
             return (<img src={USD} />)
