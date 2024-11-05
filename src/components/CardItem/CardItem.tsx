@@ -8,7 +8,7 @@ import { TCurrency } from "../../types/types";
 
 type TCurrencyProps = Pick<ICardProps, "currency">;
 
-const getSymbol = (curency: TCurrency) => {
+export const getSymbol = (curency: TCurrency) => {
     switch (curency) {
         case "USD":
             return <span>&#36;</span>

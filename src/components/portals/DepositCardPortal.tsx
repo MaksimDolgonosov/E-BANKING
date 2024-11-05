@@ -1,16 +1,14 @@
 import "./depositCardPortal.scss";
 
 import { useAppSelector } from "../../hooks/hook"
-import { Currency } from "../CardItem/CardItem";
+
 import { motion } from "framer-motion";
 import Form from 'react-bootstrap/Form';
-import CardItem from "../CardItem/CardItem";
+import CardItemMini from "../CardItem/CardItemMini";
 
-import RUB from "../../assets/icons/currency/ruble2.png";
-import USD from "../../assets/icons/currency/dollar2.png";
-import EUR from "../../assets/icons/currency/euro2.webp";
-import BYN from "../../assets/icons/currency/byn2.png";
+
 import Dropdown from 'react-bootstrap/Dropdown';
+import { ReactNode, useState } from "react";
 
 
 interface IDepositCardProps {
@@ -19,19 +17,20 @@ interface IDepositCardProps {
 
 const DepositCard = ({ setDepositPortal }: IDepositCardProps) => {
     const cards = useAppSelector(state => state.cards);
+    const [cardState, setCardState] = useState<JSX.Element>(<div>Выберете карту</div>)
 
     return (
         <motion.div className="depositCard_wrapper" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
             <div className="depositCard">
                 <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        Dropdown Button
+                    <Dropdown.Toggle variant="white" id="dropdown-basic" style={{ width: "368px", height: "55px" }}>
+                        {cardState}
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
                         {cards.map(item =>
-                            
-                            <Dropdown.Item className={`depositCard_option ${item.style}`} key={item.number}><CardItem key={item.number} currency={item.currency} amount={item.amount} number={item.number} style={item.style} system={item.system} /> </Dropdown.Item>
+
+                            <Dropdown.Item onClick={(e: React.MouseEvent) => setCardState(e.target)} className={`depositCard_option ${item.style}`} key={item.number}><CardItemMini key={item.number} currency={item.currency} amount={item.amount} number={item.number} style={item.style} system={item.system} /> </Dropdown.Item>
                         )
                         }
                         {/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
