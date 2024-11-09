@@ -71,7 +71,7 @@ const AccountPage = () => {
                 <div className="accountPage_main_cardList">
                     {cards.length ? null : <div className="accountPage_main_noCards">У вас нет активных карт</div>}
                     {cards.map(item => {
-                        return <CardItem key={item.number} currency={item.currency} amount={item.amount} number={item.number} style={item.style} system={item.system} />
+                        return <CardItem key={item.number} currency={item.currency} amount={item.amount} number={item.number} style={item.style} system={item.system} user_id={item.user_id} id={item.id}/>
                     })}
                 </div>
                 <div className="accountPage_main_actions">

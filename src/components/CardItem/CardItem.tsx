@@ -25,7 +25,7 @@ export const getSymbol = (curency: TCurrency) => {
 
 
 
-const CardItem = ({ currency, amount, number, style, system }: ICardProps) => {
+const CardItem = ({ currency, amount, number, style, system, user_id, id }: ICardProps) => {
     return (
         <div className="cardItem">
             <div className="cardItem_img">

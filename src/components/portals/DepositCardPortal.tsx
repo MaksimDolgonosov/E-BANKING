@@ -1,67 +1,64 @@
 import "./depositCardPortal.scss";
-
-import { useAppSelector } from "../../hooks/hook"
-
+import { useAppSelector, useAppDispatch } from "../../hooks/hook"
 import { motion } from "framer-motion";
-import Form from 'react-bootstrap/Form';
 import CardItemMini from "../CardItem/CardItemMini";
-
+import { depositCard } from "../../reducers/cardReducer";
 
 import Dropdown from 'react-bootstrap/Dropdown';
-import { ReactNode, useState } from "react";
-
+import { useState } from "react";
 
 interface IDepositCardProps {
     setDepositPortal: (state: boolean) => void
 }
 
+
+
 const DepositCard = ({ setDepositPortal }: IDepositCardProps) => {
     const cards = useAppSelector(state => state.cards);
-    const [cardState, setCardState] = useState<JSX.Element>(<div>Выберете карту</div>)
+    const [cardState, setCardState] = useState(<CardItemDefalt />)
+    const [deposit, setDeposit] = useState<number>(0);
+    const [user_id, setUser_id] = useState<number | null>(null);
+    const [id, setId] = useState<number | null>(null);
+    const dispatch = useAppDispatch();
+
+    const onSubmitDepositForm = (e: React.FormEvent) => {
+        e.preventDefault();
+        dispatch(depositCard({ id, user_id, deposit }))
+
+    }
 
     return (
         <motion.div className="depositCard_wrapper" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-            <div className="depositCard">
-                <Dropdown>
-                    <Dropdown.Toggle variant="white" id="dropdown-basic" style={{ width: "368px", height: "55px" }}>
-                        {cardState}
-                    </Dropdown.Toggle>
+            <form onSubmit={onSubmitDepositForm}>
+                <div className="depositCard">
+                    <h4>Введите сумму:</h4>
+                    <input type="number" min="1" max="100000000" step="any" placeholder="0" required value={deposit} onChange={(e) => setDeposit((Number(e.target.value)))} />
+                    <Dropdown>
+                        <Dropdown.Toggle variant="white" id="dropdown-basic" style={{ width: "376px", height: "55px" }}>{cardState}</Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            {cards.map(item =>
+                                <Dropdown.Item
+                                    onClick={() => {
+                                        setId(item.id);
+                                        setUser_id(item.user_id);
+                                        setCardState(<CardItemMini key={item.number} currency={item.currency} amount={item.amount} number={item.number} style={item.style} system={item.system} user_id={item.user_id} id={item.id} />)
+                                    }}
+                                    className={`depositCard_option ${item.style}`} key={item.number}><CardItemMini key={item.number} currency={item.currency} amount={item.amount} number={item.number} style={item.style} system={item.system} user_id={item.user_id} id={item.id} /> </Dropdown.Item>
+                            )}
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <button className="depositCard_submit" type="submit">Пополнить</button>
 
-                    <Dropdown.Menu>
-                        {cards.map(item =>
+                    <div className="depositCard_close" onClick={() => setDepositPortal(false)}></div>
+                </div>
+            </form>
 
-                            <Dropdown.Item onClick={(e: React.MouseEvent) => setCardState(e.target)} className={`depositCard_option ${item.style}`} key={item.number}><CardItemMini key={item.number} currency={item.currency} amount={item.amount} number={item.number} style={item.style} system={item.system} /> </Dropdown.Item>
-                        )
-                        }
-                        {/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
-                    </Dropdown.Menu>
-                </Dropdown>
-
-
-
-
-
-                <input type="number" />
-                <div className="depositCard_close" onClick={() => setDepositPortal(false)}></div>
-            </div>
-
-            {/* <img className="depositCard_close"><MdClose /></img> */}
         </motion.div >
     )
 }
-
-/* <Form.Select aria-label="Default select example">
-    <option>Выберете карту</option>
-    {cards.map(item =>
-        // <CardItem key={item.number} currency={item.currency} amount={item.amount} number={item.number} style={item.style} system={item.system} />
-        <option className={`depositCard_option ${item.style}`} key={item.number}>{item.amount} {item.currency} </option>
+const CardItemDefalt = () => {
+    return (
+        <div>Выберете карту</div>
     )
-    }
-    {/* <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option> */
-
-
+}
 export default DepositCard;

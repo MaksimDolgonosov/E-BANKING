@@ -7,6 +7,8 @@ export type TCurrency = "BYN" | "RUB" | "EUR" | "USD" | null;
 
 export type LoadingStatus = "idle" | "loading" | "error";
 export interface ICardProps {
+    user_id: number,
+    id: number
     currency: TCurrency,
     amount: number | null,
     number: string | null,

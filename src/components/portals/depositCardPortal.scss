@@ -7,16 +7,61 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #00000083;
+     background-color: #00000083;
     z-index: 98;
 
     & .depositCard {
         position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         border-radius: 10px;
         // margin: calc(50vh - 200px) auto;
-        width: 600px;
-        height: 400px;
+        width: 400px;
+        height: 300px;
         background-color: white;
+        z-index: 99;
+
+        h4 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            margin-bottom: 20px;
+            width: 342px;
+            height: 41px;
+            border-radius: 20px;
+            padding: 8px 10px;
+            border: 1px solid rgba(0, 0, 0, 0.199);
+            font-size: 14px;
+            font-weight: 500;
+            background-color: #fff;
+            box-shadow: 0px 0px 20px 0px rgba(27, 30, 32, 0.2);
+            &:focus {
+                border: 1px solid rgba(0, 0, 0, 0.199);
+                outline: none;
+            }
+        }
+
+        &_submit {
+            width: 342px;
+            height: 41px;
+            background-color: rgb(140, 0, 255);
+            color: white;
+            border-radius: 20px;
+            padding: 8px 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: .3s all;
+
+            &:hover {
+                background-color: rgba(140, 0, 255, 0.808);
+                transition: .3s all;
+            }
+        }
 
         &_close {
             position: absolute;
