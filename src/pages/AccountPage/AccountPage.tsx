@@ -45,7 +45,7 @@ const AccountPage = () => {
         dispatch(fetchUserCards(id!))
         // }
 
-    }, [])
+    }, [depositPortal])
 
     return (
         <div className="accountPage">

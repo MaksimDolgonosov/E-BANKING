@@ -6,6 +6,8 @@ import { depositCard } from "../../reducers/cardReducer";
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useState } from "react";
+import { LoadingStatus } from "../../types/types";
+import { Spinner } from "react-bootstrap";
 
 interface IDepositCardProps {
     setDepositPortal: (state: boolean) => void
@@ -15,6 +17,7 @@ interface IDepositCardProps {
 
 const DepositCard = ({ setDepositPortal }: IDepositCardProps) => {
     const cards = useAppSelector(state => state.cards);
+    const [loading, setLoading] = useState<LoadingStatus>("idle");
     const [cardState, setCardState] = useState(<CardItemDefalt />)
     const [deposit, setDeposit] = useState<number>(0);
     const [user_id, setUser_id] = useState<number | null>(null);
@@ -22,8 +25,17 @@ const DepositCard = ({ setDepositPortal }: IDepositCardProps) => {
     const dispatch = useAppDispatch();
 
     const onSubmitDepositForm = (e: React.FormEvent) => {
+        setLoading("loading");
         e.preventDefault();
         dispatch(depositCard({ id, user_id, deposit }))
+            .then(data => {
+                if (data.meta.requestStatus === "fulfilled") {
+                    setLoading("idle");
+                    setDeposit(0);
+                    setCardState(<CardItemDefalt />);
+                    setDepositPortal(false);
+                }
+            })
 
     }
 
@@ -47,7 +59,7 @@ const DepositCard = ({ setDepositPortal }: IDepositCardProps) => {
                             )}
                         </Dropdown.Menu>
                     </Dropdown>
-                    <button className="depositCard_submit" type="submit">Пополнить</button>
+                    <button className="depositCard_submit" type="submit" disabled={loading === "loading" ? true : false} >{loading === "loading" ? <Spinner size="sm" /> : "Пополнить"}</button>
 
                     <div className="depositCard_close" onClick={() => setDepositPortal(false)}></div>
                 </div>
