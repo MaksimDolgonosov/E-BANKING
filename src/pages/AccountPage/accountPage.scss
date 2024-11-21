@@ -1,8 +1,13 @@
+.accountWrapper {
+    background-color: #291044;
+}
+
 .accountPage {
     width: 1200px;
     height: 100vh;
     margin: 0 auto;
     background-color: #ffffff;
+    padding: 0 40px;
 
     &_header {
         height: 80px;
@@ -11,6 +16,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        border-bottom: 2px solid #291044;
+
 
         &-logo {
             color: #6E44D9;
