@@ -45,11 +45,13 @@ const LoginPage = () => {
             <div className="loginPage_wrapper">
                 <div className="loginPage_wrapper-header">
                     <Link to="/">E-banking</Link>
-                    <Link to="/register">Регистрация</Link>
+                    <button><Link to="/registration">Регистрация</Link></button>
+                    {/* <Link to="/registration"><button>Регистрация</button></Link> */}
+                    {/* <button className="promo__btn"><Link to="/register">Регистрация</Link></button> */}
                 </div>
                 <div className="loginPage_form_wrapper">
                     <Link to="/" className="loginPage_back">
-                        <svg color="#020222b3" fill="#020222b3" width="19px" height="16px" clipPath=""><g><path fillRule="evenodd" clipRule="evenodd" d="M5.60948 8.00016L10.4716 3.13813L9.52879 2.19531L4.19527 7.52874C4.07024 7.65377 4 7.82334 4 8.00015C4 8.17696 4.07024 8.34653 4.19526 8.47156L9.5287 13.805L10.4715 12.8622L5.60948 8.00016Z"></path></g></svg>
+                        <svg color="#ffffffb3" fill="#ffffffb3" width="19px" height="16px" clipPath=""><g><path fillRule="evenodd" clipRule="evenodd" d="M5.60948 8.00016L10.4716 3.13813L9.52879 2.19531L4.19527 7.52874C4.07024 7.65377 4 7.82334 4 8.00015C4 8.17696 4.07024 8.34653 4.19526 8.47156L9.5287 13.805L10.4715 12.8622L5.60948 8.00016Z"></path></g></svg>
                         Назад</Link>
                     <h2>Вход в E-banking</h2>
                     <form className="loginPage_form" onSubmit={handleSubmit}>
@@ -58,7 +60,7 @@ const LoginPage = () => {
                         {/* <label htmlFor="password">Пароль: </label> */}
                         <input name="password" type="password" id="password" placeholder="Пароль" required value={password} onChange={(e) => setPassword(e.target.value)} />
                         {loading == "error" ? <div className="loginPage_error">Ошибка загрузки...Пожалуйста, повторите попытку!</div> : null}
-                        <button className="loginPage_button loading" disabled={loading === 'loading' ? true : false}>{loading === 'loading' ? <Spinner size="sm" /> : "Войти"}</button>
+                        <button className="loginPage_button  loading" disabled={loading === 'loading' ? true : false}>{loading === 'loading' ? <Spinner size="sm" /> : "Войти"}</button>
                     </form>
                 </div>
             </div>

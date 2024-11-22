@@ -13,7 +13,6 @@ module.exports = function (req, res, next) {
             return res.status(401).json({ message: "Войдите или зарегистрируйтесь" })
         }
         const decode = jwt.verify(token, process.env.SECRET_KEY);
-        console.log(decode)
         req.user = decode;
         next()
     } catch (error) {

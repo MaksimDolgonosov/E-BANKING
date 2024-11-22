@@ -22,6 +22,7 @@ import DepositCard from "../../components/portals/DepositCardPortal";
 
 const AccountPage = () => {
     const id = useAppSelector(state => state.user.id);
+    const userName = useAppSelector(state => state.user.name);
     const cards = useAppSelector(state => state.cards);
     const currencies = useAppSelector(state => state.currencies);
     const [depositPortal, setDepositPortal] = useState(false)
@@ -59,6 +60,7 @@ const AccountPage = () => {
                         <Link className="accountPage_header-list-item" to="/accoutPage" >Карты</Link>
                     </div>
                     <div className="accountPage_header-account">
+                        <div>{userName}</div>
                         <NavDropdown title={<VscAccount />} className='d-block header_black'
                             // id='dropdown-button-drop-down-centered'
                             align={{ lg: 'end' }}
