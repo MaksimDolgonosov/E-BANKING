@@ -16,20 +16,20 @@ import list from "../../assets/icons/actions/list.png";
 import smartphone from "../../assets/icons/actions/smartphone.png";
 import cardsLogo from "../../assets/icons/actions/cards.png";
 import { checkUser } from "../../reducers/userReducer";
-import Currency from "../../components/Currency/Currency";
+// import Currency from "../../components/Currency/Currency";
 import MainPortal from "../../components/portals/MainPortal";
 import DepositCard from "../../components/portals/DepositCardPortal";
-
+import CurrencyList from "../../components/Currency/CurrencyList";
 const AccountPage = () => {
     const id = useAppSelector(state => state.user.id);
     const userName = useAppSelector(state => state.user.name);
     const cards = useAppSelector(state => state.cards);
-    const currencies = useAppSelector(state => state.currencies);
+    // const currencies = useAppSelector(state => state.currencies);
     const [depositPortal, setDepositPortal] = useState(false)
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const date = new Date().toLocaleDateString()
-    console.log("render")
+    console.log("Account Page render")
     const exitAccountHandler = () => {
         dispatch(exitAccount());
         navigate("/")
@@ -129,9 +129,10 @@ const AccountPage = () => {
                             <div className="accountPage_main_currencies_descr">Белорусского рубля</div>
                             <div className="accountPage_main_currencies_operation"><span>Покупка</span><span>Продажа</span></div>
                             <div className="accountPage_main_currencies_list">
-                                {currencies.map(currency => {
+                                <CurrencyList />
+                                {/* {currencies.map(currency => {
                                     return <Currency key={currency.Cur_OfficialRate} name={currency.Cur_Abbreviation} rate={currency.Cur_OfficialRate} />
-                                })}
+                                })} */}
                             </div>
                             <div className="accountPage_main_currencies_date">
                                 {date}
