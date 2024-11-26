@@ -289,11 +289,11 @@
 
         &_main {
 
-            flex-direction: column;
-            align-items: center;
+            // flex-direction: column;
+            // align-items: center;
 
             &_cardList {
-                width: 60%;
+                width: 40%;
                 margin: 0 auto;
 
             }
@@ -307,10 +307,11 @@
 
         &_main {
 
-
+            flex-direction: column;
+            align-items: center;
 
             &_cardList {
-                width: 80%;
+                // width: 80%;
                 margin: 0 auto;
 
             }

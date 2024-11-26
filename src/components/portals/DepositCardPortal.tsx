@@ -19,7 +19,7 @@ const DepositCard = ({ setDepositPortal }: IDepositCardProps) => {
     const cards = useAppSelector(state => state.cards);
     const [loading, setLoading] = useState<LoadingStatus>("idle");
     const [cardState, setCardState] = useState(<CardItemDefalt />)
-    const [deposit, setDeposit] = useState<number>(parseInt("0", 10));
+    const [deposit, setDeposit] = useState<number>(0);
     const [user_id, setUser_id] = useState<number | null>(null);
     const [id, setId] = useState<number | null>(null);
     const dispatch = useAppDispatch();
@@ -38,16 +38,13 @@ const DepositCard = ({ setDepositPortal }: IDepositCardProps) => {
             })
 
     }
-
     return (
         <motion.div className="depositCard_wrapper" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
             <form onSubmit={onSubmitDepositForm}>
                 <div className="depositCard">
                     <h4>Введите сумму:</h4>
-                    <input type="number" min="1" max="100000000" step="any" required value={deposit} onChange={(e) => {
-                        console.log(parseInt(e.target.value, 10))
-                        console.log(deposit)
-                        setDeposit((parseInt(e.target.value, 10)))
+                    <input type="number" min="1" max="100000000" required value={String(deposit) } onChange={(e) => {
+                        setDeposit(parseInt(e.target.value));
                     }
 
                     } />
