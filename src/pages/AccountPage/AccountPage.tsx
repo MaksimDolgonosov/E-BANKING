@@ -49,7 +49,7 @@ const AccountPage = () => {
     }, [depositPortal])
 
     return (
-        <div className="accountWrapper">
+        // <div className="accountWrapper">
             <div className="accountPage">
                 <div className="accountPage_header">
                     <Link to="/" className="accountPage_header-logo">E-banking</Link>
@@ -146,7 +146,7 @@ const AccountPage = () => {
 
                 </MainPortal> : null}
             </div >
-        </div>
+        // </div>
     )
 }
 
