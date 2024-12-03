@@ -1,7 +1,7 @@
 import "./description.scss";
 import people from "../../assets/images/main_page/desrc_people.png";
 
-const Descriptiont = () => {
+const Description = () => {
     return (
         <div className="description">
             <div className="description_descr">
@@ -15,4 +15,4 @@ const Descriptiont = () => {
     )
 }
 
-export default Descriptiont;
+export default Description;

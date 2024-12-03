@@ -4,6 +4,7 @@
     margin: 50px auto;
 
     h4 {
+        margin-left: 10px;
         font-size: 42px;
         margin-bottom: 50px;
     }
@@ -14,7 +15,7 @@
         align-items: center;
 
         &-item {
-            width: 350px;
+            max-width: 350px;
             height: 350px;
             padding: 0 20px 40px 20px;
             background-color: #341F62;
@@ -45,3 +46,56 @@
         }
     }
 }
+
+@media(max-width: 1300px) {}
+
+@media(max-width: 1180px) {
+    .overview {
+        &_list {
+            &-item {
+                margin: 0 5px;
+            }
+        }
+    }
+}
+
+@media(max-width: 992px) {
+    .overview {
+        &_list {
+            flex-direction: column;
+
+            &-item {
+                margin: 10px 5px;
+                max-width: 90%;
+
+                img {
+                    width: 50%;
+                    margin: 0 auto;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 768px) {
+    .overview {
+        &_list {
+
+
+            &-item {
+
+
+                img {
+                    width: 100%;
+
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 576px) {}
+
+@media(max-width: 429px) {}
+
+@media(max-width: 391px) {}

@@ -7,7 +7,7 @@ import Header from "../../components/HeaderMain/Header";
 import Promo from "../../components/Promo/Promo";
 // import HeaderBoot from "../../components/HeaderBoot/HeaderBoot";
 import Burger from "../../components/Burger/Burger";
-import Descriptiont from "../../components/Description/Description";
+import Description from "../../components/Description/Description";
 import Overview from "../../components/overview/Overview";
 
 // import { useEffect } from "react";
@@ -36,7 +36,7 @@ const MainPage: React.FC = () => {
             <Header onToggleBurger={onToggleBurger} />
             {activeBurger ? <Burger /> : null}
             <Promo />
-            <Descriptiont />
+            <Description />
             <Overview />
         </div>
 

@@ -113,7 +113,7 @@
         align-items: flex-start;
 
         &_actions {
-            width: 672px;
+            width: 692px;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -122,7 +122,7 @@
 
             &-list {
                 display: flex;
-                justify-content: space-between;
+                justify-content: flex-start;
                 align-items: center;
                 flex-wrap: wrap;
             }
@@ -139,6 +139,7 @@
                 transition: .2s all;
                 line-height: 17px;
                 margin-bottom: 20px;
+                margin-right: 20px;
 
                 &:hover {
                     box-shadow: 0px 0px 35px 0px rgba(27, 30, 32, 0.2);
@@ -273,13 +274,23 @@
 
 }
 
-@media(max-width: 1180px) {}
+@media(max-width: 1180px) {
+    .accountPage {
+        width: 100%;
+    }
+}
 
-@media(max-width: 992px) {}
+@media(max-width: 992px) {
+    .accountPage {
+        &_main {
+            &_actions {
+                width: 60%;
+            }
+        }
+    }
+}
 
-@media(max-width: 768px) {}
-
-@media(max-width: 576px) {
+@media(max-width: 768px) {
     .accountPage {
         &_header {
             &-list {
@@ -287,16 +298,58 @@
             }
         }
 
+        &_main {
+
+            flex-direction: column;
+            align-items: center;
+
+            &_actions {
+                width: 100%;
+
+                &-list {
+                    justify-content: space-between;
+
+                }
+
+                &-item {
+                    width: 140px;
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 576px) {
+    .accountPage {
+
+
 
         &_main {
 
-            // flex-direction: column;
-            // align-items: center;
-
             &_cardList {
-                width: 40%;
+                width: 100%;
                 margin: 0 auto;
 
+            }
+
+            &_actions {
+                width: 100%;
+
+                &-list {
+                    justify-content: space-between;
+
+                }
+
+                &-item {
+                    font-size: 13px;
+                    width: 125px;
+                    height: 95px;
+                    margin-right: 5px;
+                    margin-bottom: 10px;
+                    padding: 10px 10px;
+                    line-height: 15px;
+                }
             }
 
         }
@@ -322,4 +375,16 @@
 
 }
 
-@media(max-width: 391px) {}
+@media(max-width: 391px) {
+
+    .accountPage {
+        &_main {
+
+            &_currencies {
+                width: 95%;
+                margin: 20px auto 20px auto;
+            }
+        }
+    }
+
+}
