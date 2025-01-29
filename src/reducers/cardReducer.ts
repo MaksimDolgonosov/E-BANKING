@@ -4,7 +4,7 @@ import { RootState, AppDispatch } from "../store";
 import { ICardProps } from "../types/types";
 import { IUserState } from "./userReducer";
 import { LoadingStatus } from "../types/types";
-
+import { _apiBase } from "../services/getUserService";
 // type TUserId = Pick<IUserState, "id">
 type TUserId = number
 interface ICardsState extends ICardProps {
@@ -26,7 +26,7 @@ export const fetchUserCards = createAsyncThunk<ICardProps[], TUserId, ThunkApiCo
     "cards/fetchUserCard",
     async (id) => {
         const request = useHttp();
-        return await (request({ url: `http://localhost:3002/api/cards/getCards?id=${id}` })) as ICardProps[];
+        return await (request({ url: `${_apiBase}/cards/getCards?id=${id}` })) as ICardProps[];
     }
 )
 
@@ -34,7 +34,7 @@ export const depositCard = createAsyncThunk<ICardProps, IDepositCardProps, Thunk
     "cards/depositCard",
     async ({ id, user_id, deposit }) => {
         const request = useHttp();
-        return await (request({ url: `http://localhost:3002/api/cards/depositCard?id=${id}&user_id=${user_id}&deposit=${deposit}`, method: "POST" })) as ICardProps;
+        return await (request({ url: `${_apiBase}/cards/depositCard?id=${id}&user_id=${user_id}&deposit=${deposit}`, method: "POST" })) as ICardProps;
     }
 )
 

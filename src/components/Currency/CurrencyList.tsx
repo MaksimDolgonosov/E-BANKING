@@ -2,7 +2,6 @@ import Currency from "./Currency";
 import { useAppSelector } from "../../hooks/hook";
 
 const CurrencyList = () => {
-    console.log("Currency");
     const currencies = useAppSelector(state => state.currencies);
     return (
 

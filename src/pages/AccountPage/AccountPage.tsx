@@ -29,7 +29,7 @@ const AccountPage = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const date = new Date().toLocaleDateString()
-    console.log("Account Page render")
+    // console.log("Account Page render")
     const exitAccountHandler = () => {
         dispatch(exitAccount());
         navigate("/")

@@ -7,8 +7,6 @@ const cardRouter = require("./cardRouter");
 const historyRouter = require("./historyRouter");
 
 
-
-
 router.use('/user', userRouter);
 router.use('/cards', cardRouter);
 router.use('/history', historyRouter);

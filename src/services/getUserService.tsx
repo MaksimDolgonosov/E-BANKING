@@ -1,16 +1,18 @@
 import { useHttp } from "../hooks/http.hook";
 import { IUserState } from "../reducers/userReducer";
 import { IRequestBody } from "../reducers/userReducer";
+export const _apiBase = "http://localhost:3002/api";
+
 
 export const useGetUser = () => {
-    const { loadingStatus, request } = useHttp();
-    const _apiBase = "http://localhost:3002/api/user/login";
+    const { request } = useHttp();
+    // const _apiBase = "http://localhost:3002/api/user/login";
 
 
     //console.log("service hook");
     const getUserData = async ({ email, password }: IRequestBody): Promise<IUserState> => {
         console.log("service")
-        const res = await (request({ url: _apiBase, method: "POST", body: JSON.stringify({ email, password }) })) as IUserState;
+        const res = await (request({ url: `${_apiBase}/user/login`, method: "POST", body: JSON.stringify({ email, password }) })) as IUserState;
         console.log(res)
         return res
     }
