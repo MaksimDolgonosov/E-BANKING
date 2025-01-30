@@ -4,7 +4,7 @@ import { LoadingStatus } from "../types/types";
 
 import { useHttp } from "../hooks/http.hook";
 // import { ThunkApiConfig } from "../types/types";
-
+import { _apiBase } from "../services/getUserService";
 
 export interface IRequestBody {
     email: string,
@@ -33,12 +33,12 @@ export type TToken = Pick<IUserState, "token">
 export const fetchUser = createAsyncThunk<IUserState, IRequestBody, ThunkApiConfig>(
     "user/fetchUser",
     async ({ email, password }) => {
-        // const response = await fetch(`http://localhost:3002/api/user/login`, { method: "POST", body: JSON.stringify({ email, password }), headers: { "Content-Type": "application/json" } })
+        // const response = await fetch(`${_apiBase}/user/login`, { method: "POST", body: JSON.stringify({ email, password }), headers: { "Content-Type": "application/json" } })
         // const data = await response.json();
         // console.log(data);
         // return await data as IUserState;
         const request = useHttp();
-        return await (request({ url: `http://localhost:3002/api/user/login`, method: "POST", body: JSON.stringify({ email, password }) })) as IUserState;
+        return await (request({ url: `${_apiBase}/user/login`, method: "POST", body: JSON.stringify({ email, password }) })) as IUserState;
     }
 )
 
@@ -46,7 +46,7 @@ export const checkUser = createAsyncThunk<TToken, null, ThunkApiConfig>(
     "user/checkUser",
     async () => {
         const request = useHttp();
-        return await (request({ url: `http://localhost:3002/api/user/auth`, method: "GET", headers: { authorization: `Bearer ${localStorage.getItem("token")}`! } })) as TToken;
+        return await (request({ url: `${_apiBase}/user/auth`, method: "GET", headers: { authorization: `Bearer ${localStorage.getItem("token")}`! } })) as TToken;
     }
 )
 
