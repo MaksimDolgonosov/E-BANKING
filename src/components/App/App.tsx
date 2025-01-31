@@ -12,9 +12,11 @@ function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log(localStorage.getItem("token"))
-    dispatch(checkUser(null));
-    
+
+
+    //console.log(localStorage.getItem("token"));
+    // dispatch(checkUser(null));
+    console.log(document.cookie)
   }, [])
 
 

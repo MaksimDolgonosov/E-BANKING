@@ -52,6 +52,7 @@ class UserController {
         const token = jwt.sign({ id: req.user.id, email: req.user.email }, process.env.SECRET_KEY, { expiresIn: "24h" });
         // console.log(req.headers.authorization)
         // res.json(req)
+        
         res.json({ token })
     }
 }
