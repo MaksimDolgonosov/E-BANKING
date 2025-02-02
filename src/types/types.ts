@@ -1,5 +1,5 @@
 import { RootState, AppDispatch } from "../store";
-
+import { TToken } from "../reducers/userReducer";
 
 export type TCurrency = "BYN" | "RUB" | "EUR" | "USD" | null;
 
@@ -23,3 +23,15 @@ export type ThunkApiConfig = {
     state: RootState
     dispatch: AppDispatch
 }
+
+
+
+export type TServerDataToken = {
+    meta: Object,
+    payload: {
+        token: string | null
+    }
+    type: string
+}
+
+

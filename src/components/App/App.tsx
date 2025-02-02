@@ -4,19 +4,30 @@ import MainPage from "../../pages/Main/Main";
 import LoginPage from "../../pages/LoginPage/LoginPage";
 import AccountPage from "../../pages/AccountPage/AccountPage";
 import { useEffect } from "react";
-import { checkUser } from "../../reducers/userReducer";
+import { checkUser, fetchUser } from "../../reducers/userReducer";
 import { useAppDispatch } from "../../hooks/hook";
+import { TServerDataToken } from "../../types/types";
+import { TToken } from "../../reducers/userReducer";
+import { jwtDecode } from "jwt-decode";
 
 function App() {
 
   const dispatch = useAppDispatch();
 
+
+
+
   useEffect(() => {
 
+    if (localStorage.getItem("token")) {
+      dispatch(checkUser(localStorage.getItem("token")))
+        .then(() => {
+          const token = jwtDecode(localStorage.getItem("token")!);
+          console.log(token)
+        });
+    }
 
-    //console.log(localStorage.getItem("token"));
-    // dispatch(checkUser(null));
-    console.log(document.cookie)
+
   }, [])
 
 

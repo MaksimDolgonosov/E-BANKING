@@ -42,11 +42,12 @@ export const fetchUser = createAsyncThunk<IUserState, IRequestBody, ThunkApiConf
     }
 )
 
-export const checkUser = createAsyncThunk<TToken, null, ThunkApiConfig>(
+export const checkUser = createAsyncThunk<TToken, string | null, ThunkApiConfig>(
     "user/checkUser",
-    async () => {
+    async (token: string | null) => {
+        const tokenNumber = `Bearer ${token}`
         const request = useHttp();
-        return await (request({ url: `${_apiBase}/user/auth`, method: "GET", headers: { authorization: `Bearer ${localStorage.getItem("token")}`! } })) as TToken;
+        return await (request({ url: `${_apiBase}/user/auth`, method: "GET", headers: { authorization: tokenNumber } })) as TToken;
     }
 )
 
