@@ -1,4 +1,4 @@
-import "./depositCardPortal.scss";
+import "./portal.scss";
 import { useAppSelector, useAppDispatch } from "../../hooks/hook";
 import { motion } from "framer-motion";
 import CardItemMini from "../CardItem/CardItemMini";
@@ -9,6 +9,7 @@ import { useState } from "react";
 import { LoadingStatus } from "../../types/types";
 import { Spinner } from "react-bootstrap";
 import Portal from "./Portal";
+import { use } from "framer-motion/client";
 
 interface IDepositCardProps {
   setDepositPortal: (state: boolean) => void;
@@ -21,9 +22,10 @@ const DepositCardPortal = ({ setDepositPortal }: IDepositCardProps) => {
   const [deposit, setDeposit] = useState<number>(0);
   const [user_id, setUser_id] = useState<number | null>(null);
   const [id, setId] = useState<number | null>(null);
+  const [currency, setCurrency] = useState<string | null>(null);
   const dispatch = useAppDispatch();
 
-  const onSubmitDepositForm = (e: React.FormEvent) => {
+  const onSubmitTransactionForm = (e: React.FormEvent) => {
     setLoading("loading");
     e.preventDefault();
     dispatch(depositCard({ id, user_id, deposit })).then((data) => {
@@ -38,26 +40,15 @@ const DepositCardPortal = ({ setDepositPortal }: IDepositCardProps) => {
   return (
     <Portal>
       <motion.div
-        className="depositCard_wrapper"
+        className="modal_wrapper"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <form onSubmit={onSubmitDepositForm}>
-          <div className="depositCard">
-            <h4>Введите сумму:</h4>
-            <input
-              type="number"
-              min="1"
-              max="100000000"
-              required
-              value={String(deposit)}
-              onChange={(e) => {
-                setDeposit(parseInt(e.target.value));
-              }}
-            />
-            <Dropdown>
-              <Dropdown.Toggle variant="white" id="dropdown-basic" style={{ width: "376px", height: "55px" }}>
+        <form onSubmit={onSubmitTransactionForm}>
+          <div className="modal_form">
+            <Dropdown className="modal_form_dropdown">
+              <Dropdown.Toggle variant="white" id="dropdown-basic" style={{ width: "100%", height: "55px" }}>
                 {cardState}
               </Dropdown.Toggle>
               <Dropdown.Menu>
@@ -66,6 +57,7 @@ const DepositCardPortal = ({ setDepositPortal }: IDepositCardProps) => {
                     onClick={() => {
                       setId(item.id);
                       setUser_id(item.user_id);
+                      setCurrency(item.currency);
                       setCardState(
                         <CardItemMini
                           key={item.number}
@@ -96,11 +88,22 @@ const DepositCardPortal = ({ setDepositPortal }: IDepositCardProps) => {
                 ))}
               </Dropdown.Menu>
             </Dropdown>
-            <button className="depositCard_submit" type="submit" disabled={loading === "loading" ? true : false}>
+            <h4>Введите сумму{currency ? ` в ${currency}` : null}:</h4>
+            <input
+              type="number"
+              min="1"
+              max="100000000"
+              required
+              value={String(deposit)}
+              onChange={(e) => {
+                setDeposit(parseInt(e.target.value));
+              }}
+            />
+            <button className="modal_form_submit" type="submit" disabled={loading === "loading" ? true : false}>
               {loading === "loading" ? <Spinner size="sm" /> : "Пополнить"}
             </button>
 
-            <div className="depositCard_close" onClick={() => setDepositPortal(false)}></div>
+            <div className="modal_form_close" onClick={() => setDepositPortal(false)}></div>
           </div>
         </form>
       </motion.div>

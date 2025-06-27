@@ -19,6 +19,7 @@ import { checkUser } from "../../reducers/userReducer";
 // import Currency from "../../components/Currency/Currency";
 import Portal from "../../components/portals/Portal";
 import DepositCardPortal from "../../components/portals/DepositCardPortal";
+import TransactionCardPortal from "../../components/portals/TransactionCardPortal";
 import CurrencyList from "../../components/Currency/CurrencyList";
 
 const AccountPage = () => {
@@ -118,7 +119,6 @@ const AccountPage = () => {
             <div
               className="accountPage_main_actions-item"
               onClick={() => {
-                console.log("depositPortal");
                 setDepositPortal(true);
               }}
             >
@@ -134,7 +134,12 @@ const AccountPage = () => {
               </div>
               <div className="accountPage_main_actions-item-descr">Перевести по реквизитам</div>
             </div>
-            <div className="accountPage_main_actions-item">
+            <div
+              className="accountPage_main_actions-item"
+              onClick={() => {
+                setTransactionPortal(true);
+              }}
+            >
               <div className="accountPage_main_actions-item-img">
                 <img src={cardsLogo} alt="cards" />
               </div>
@@ -170,21 +175,8 @@ const AccountPage = () => {
           </div>
         </div>
       </div>
-      {depositPortal ? (
-        <DepositCardPortal setDepositPortal={setDepositPortal}></DepositCardPortal>
-      ) : // <Portal
-      // //   wrapperId="depositCard_wrapper"
-      // >
-      //   <DepositCard setDepositPortal={setDepositPortal}></DepositCard>
-      // </Portal>
-      null}
-      {/* {transactionPortal ? (
-        <Portal
-        //   wrapperId="depositCard_wrapper"
-        >
-          <DepositCard setDepositPortal={setDepositPortal}></DepositCard>
-        </Portal>
-      ) : null} */}
+      {depositPortal ? <DepositCardPortal setDepositPortal={setDepositPortal}></DepositCardPortal> : null}
+      {transactionPortal ? <TransactionCardPortal setTransactionPortal={setTransactionPortal} /> : null}
     </div>
     // </div>
   );
