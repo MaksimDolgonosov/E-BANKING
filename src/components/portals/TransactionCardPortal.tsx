@@ -8,6 +8,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
 import { LoadingStatus } from "../../types/types";
 import { Spinner } from "react-bootstrap";
+import useExchange from "../../hooks/exchange";
 
 interface ITransactionCardProps {
   setTransactionPortal: (state: boolean) => void;
@@ -19,15 +20,19 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
   const [cardStateFrom, setCardStateFrom] = useState(<CardItemDefaltFrom />);
   const [cardStateTo, setCardStateTo] = useState(<CardItemDefaltTo />);
   const [transaction, setTransaction] = useState<number>(0);
+  const [activeCurrency, setActiveCurrency] = useState<string | undefined>(undefined);
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
-
   const [user_id, setUser_id] = useState<number | null>(null);
   const [id, setId] = useState<number | null>(null);
   const dispatch = useAppDispatch();
+  console.log(activeCurrency);
 
   const onSubmitDepositForm = (e: React.FormEvent) => {
     setLoading("loading");
     e.preventDefault();
+    const amount = useExchange(cardStateFrom.props.currency, cardStateTo.props.currency, transaction);
+    console.log(amount);
+    setLoading("idle");
     //   dispatch(depositCard({ id, user_id, deposit })).then((data) => {
     //     if (data.meta.requestStatus === "fulfilled") {
     //       setLoading("idle");
@@ -53,13 +58,14 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 {cards
-                  .filter((card) => card.id !== activeCardId)
+                  .filter((card) => card.id !== cardStateTo.props.id)
                   .map((item) => (
                     <Dropdown.Item
                       onClick={() => {
                         setId(item.id);
                         setUser_id(item.user_id);
                         setActiveCardId(item.id);
+                        setActiveCurrency(item.currency ? item.currency : undefined);
                         setCardStateFrom(
                           <CardItemMini
                             key={item.number}
@@ -97,7 +103,7 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 {cards
-                  .filter((card) => card.id !== activeCardId)
+                  .filter((card) => card.id !== cardStateFrom.props.id)
                   .map((item) => (
                     <Dropdown.Item
                       onClick={() => {
@@ -134,7 +140,33 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
                   ))}
               </Dropdown.Menu>
             </Dropdown>
-            <h4>Введите сумму перевода:</h4>
+            <h4>
+              Введите сумму перевода
+              {cardStateFrom.props.currency &&
+              cardStateTo.props.currency &&
+              cardStateFrom.props.currency === cardStateTo.props.currency
+                ? ` в ${activeCurrency}`
+                : null}
+              {cardStateFrom.props.currency &&
+              cardStateTo.props.currency &&
+              cardStateFrom.props.currency !== cardStateTo.props.currency ? (
+                <>
+                  <span> в </span>
+
+                  <select
+                    id="select_currency_id"
+                    //defaultValue={cardStateFrom.props.currency}
+                    value={activeCurrency}
+                    className="select_currency"
+                    onChange={(e) => setActiveCurrency(e.target.value)}
+                  >
+                    <option value={cardStateFrom.props.currency}>{cardStateFrom.props.currency}</option>
+                    <option value={cardStateTo.props.currency}>{cardStateTo.props.currency}</option>
+                  </select>
+                </>
+              ) : null}
+              <> : </>
+            </h4>
             <input
               type="number"
               min="1"
