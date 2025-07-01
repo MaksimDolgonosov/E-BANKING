@@ -2,7 +2,7 @@
 import { useAppSelector, useAppDispatch } from "../../hooks/hook";
 import { motion } from "framer-motion";
 import CardItemMini from "../CardItem/CardItemMini";
-// import { depositCard } from "../../reducers/cardReducer";
+import { depositCard, remittanceCard } from "../../reducers/cardReducer";
 import Portal from "./Portal";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
@@ -21,26 +21,45 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
   const [cardStateTo, setCardStateTo] = useState(<CardItemDefaltTo />);
   const [transaction, setTransaction] = useState<number>(0);
   const [activeCurrency, setActiveCurrency] = useState<string | undefined>(undefined);
-  const [activeCardId, setActiveCardId] = useState<number | null>(null);
-  const [user_id, setUser_id] = useState<number | null>(null);
-  const [id, setId] = useState<number | null>(null);
+  // const [activeCardId, setActiveCardId] = useState<number | null>(null);
+  // const [user_id, setUser_id] = useState<number | null>(null);
+  // const [id, setId] = useState<number | null>(null);
   const dispatch = useAppDispatch();
-  console.log(activeCurrency);
+  const exchange = useExchange();
+
+  // console.log(activeCurrency);
+  console.log(cardStateFrom.props.currency, cardStateTo.props.currency);
 
   const onSubmitDepositForm = (e: React.FormEvent) => {
     setLoading("loading");
     e.preventDefault();
-    const amount = useExchange(cardStateFrom.props.currency, cardStateTo.props.currency, transaction);
-    console.log(amount);
-    setLoading("idle");
-    //   dispatch(depositCard({ id, user_id, deposit })).then((data) => {
-    //     if (data.meta.requestStatus === "fulfilled") {
-    //       setLoading("idle");
-    //       setDeposit(0);
-    //       setCardState(<CardItemDefalt />);
-    //       setTransactionPortal(false);
-    //     }
-    //   });
+    const deposit = Number(exchange(cardStateFrom.props.currency, cardStateTo.props.currency, transaction));
+
+    // setLoading("idle");
+    dispatch(depositCard({ id: cardStateTo.props.id, user_id: cardStateTo.props.user_id, deposit })).then(
+      (depositResolve) => {
+        dispatch(
+          remittanceCard({ id: cardStateFrom.props.id, user_id: cardStateFrom.props.user_id, deposit: transaction })
+        ).then((remittanceResolve) => {
+          if (
+            depositResolve.meta.requestStatus === "fulfilled" &&
+            remittanceResolve.meta.requestStatus === "fulfilled"
+          ) {
+            setLoading("idle");
+            setTransaction(0);
+            setCardStateFrom(<CardItemDefaltFrom />);
+            setCardStateTo(<CardItemDefaltTo />);
+            setTransactionPortal(false);
+          }
+        });
+        // if (data.meta.requestStatus === "fulfilled") {
+        //   setLoading("idle");
+        //   setDeposit(0);
+        //   setCardState(<CardItemDefalt />);
+        //   setTransactionPortal(false);
+        // }
+      }
+    );
   };
   return (
     <Portal>
@@ -62,9 +81,9 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
                   .map((item) => (
                     <Dropdown.Item
                       onClick={() => {
-                        setId(item.id);
-                        setUser_id(item.user_id);
-                        setActiveCardId(item.id);
+                        // setId(item.id);
+                        // setUser_id(item.user_id);
+                        // setActiveCardId(item.id);
                         setActiveCurrency(item.currency ? item.currency : undefined);
                         setCardStateFrom(
                           <CardItemMini
@@ -107,9 +126,9 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
                   .map((item) => (
                     <Dropdown.Item
                       onClick={() => {
-                        setId(item.id);
-                        setUser_id(item.user_id);
-                        setActiveCardId(item.id);
+                        // setId(item.id);
+                        // setUser_id(item.user_id);
+                        // setActiveCardId(item.id);
                         setCardStateTo(
                           <CardItemMini
                             key={item.number}

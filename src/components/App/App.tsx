@@ -14,7 +14,7 @@ import useExchange from "../../hooks/exchange";
 function App() {
   const dispatch = useAppDispatch();
 
-  console.log(useExchange("USD", "EUR", 1));
+  // console.log(useExchange("USD", "EUR", 1));
   useEffect(() => {
     if (localStorage.getItem("token")) {
       dispatch(checkUser(localStorage.getItem("token"))).then(() => {
