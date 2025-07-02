@@ -11,10 +11,10 @@ import { Spinner } from "react-bootstrap";
 import useExchange from "../../hooks/exchange";
 
 interface ITransactionCardProps {
-  setTransactionPortal: (state: boolean) => void;
+  setTransactionByAccountPortal: (state: boolean) => void;
 }
 
-const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) => {
+const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITransactionCardProps) => {
   const cards = useAppSelector((state) => state.cards);
   const [loading, setLoading] = useState<LoadingStatus>("idle");
   const [cardStateFrom, setCardStateFrom] = useState(<CardItemDefaltFrom />);
@@ -53,7 +53,7 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
             setTransaction(0);
             setCardStateFrom(<CardItemDefaltFrom />);
             setCardStateTo(<CardItemDefaltTo />);
-            setTransactionPortal(false);
+            setTransactionByAccountPortal(false);
           }
         });
       }
@@ -192,7 +192,7 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
               {loading === "loading" ? <Spinner size="sm" /> : "Перевести"}
             </button>
 
-            <div className="modal_form_close" onClick={() => setTransactionPortal(false)}></div>
+            <div className="modal_form_close" onClick={() => setTransactionByAccountPortal(false)}></div>
           </div>
         </form>
       </motion.div>
@@ -207,4 +207,4 @@ const CardItemDefaltTo = () => {
   return <div>Выберете карту на которую перевести</div>;
 };
 
-export default TransactionCardPortal;
+export default TransactionByAccountCardPortal;

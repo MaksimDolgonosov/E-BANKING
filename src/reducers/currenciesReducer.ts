@@ -58,7 +58,6 @@ const currenciesSlice = createSlice({
     builder
       // .addCase(fetchUserCards.pending, state => { state.loadingStatus = 'loading' })
       .addCase(fetchCurrencies.fulfilled, (state: TCurrenciesState[], action: PayloadAction<ICurrenciesResponse[]>) => {
-        console.log(currenciesState(action.payload));
         state = currenciesState(action.payload);
         return state;
       })

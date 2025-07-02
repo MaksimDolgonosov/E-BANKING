@@ -20,6 +20,7 @@ import { checkUser } from "../../reducers/userReducer";
 import Portal from "../../components/portals/Portal";
 import DepositCardPortal from "../../components/portals/DepositCardPortal";
 import TransactionCardPortal from "../../components/portals/TransactionCardPortal";
+import TransactionByAccountCardPortal from "../../components/portals/TransactionByAccountCardPortal";
 import CurrencyList from "../../components/Currency/CurrencyList";
 
 const AccountPage = () => {
@@ -30,6 +31,8 @@ const AccountPage = () => {
   // const currencies = useAppSelector(state => state.currencies);
   const [depositPortal, setDepositPortal] = useState(false);
   const [transactionPortal, setTransactionPortal] = useState(false);
+  const [transactionByAccountPortal, setTransactionByAccountPortal] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const date = new Date().toLocaleDateString();
@@ -53,7 +56,7 @@ const AccountPage = () => {
     dispatch(fetchCurrencies(null));
     dispatch(fetchUserCards(id!));
     // }
-  }, [depositPortal]);
+  }, [depositPortal, transactionPortal]);
 
   return (
     // <div className="accountWrapper">
@@ -128,7 +131,12 @@ const AccountPage = () => {
               <div className="accountPage_main_actions-item-descr">Пополнить карту</div>
             </div>
 
-            <div className="accountPage_main_actions-item">
+            <div
+              className="accountPage_main_actions-item"
+              onClick={() => {
+                setTransactionByAccountPortal(true);
+              }}
+            >
               <div className="accountPage_main_actions-item-img">
                 <img src={list} alt="list" />
               </div>
@@ -177,6 +185,9 @@ const AccountPage = () => {
       </div>
       {depositPortal ? <DepositCardPortal setDepositPortal={setDepositPortal}></DepositCardPortal> : null}
       {transactionPortal ? <TransactionCardPortal setTransactionPortal={setTransactionPortal} /> : null}
+      {transactionByAccountPortal ? (
+        <TransactionByAccountCardPortal setTransactionByAccountPortal={setTransactionByAccountPortal} />
+      ) : null}
     </div>
     // </div>
   );

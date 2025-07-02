@@ -91,12 +91,12 @@ const DepositCardPortal = ({ setDepositPortal }: IDepositCardProps) => {
             <h4>Введите сумму{currency ? ` в ${currency}` : null}:</h4>
             <input
               type="number"
-              min="1"
-              max="100000000"
+              min="1,00"
+              max="100000000,00"
               required
               value={String(deposit)}
               onChange={(e) => {
-                setDeposit(parseInt(e.target.value));
+                setDeposit(parseFloat(e.target.value));
               }}
             />
             <button className="modal_form_submit" type="submit" disabled={loading === "loading" ? true : false}>
@@ -108,36 +108,6 @@ const DepositCardPortal = ({ setDepositPortal }: IDepositCardProps) => {
         </form>
       </motion.div>
     </Portal>
-    // <motion.div className="depositCard_wrapper" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-    //     <form onSubmit={onSubmitDepositForm}>
-    //         <div className="depositCard">
-    //             <h4>Введите сумму:</h4>
-    //             <input type="number" min="1" max="100000000" required value={String(deposit) } onChange={(e) => {
-    //                 setDeposit(parseInt(e.target.value));
-    //             }
-
-    //             } />
-    //             <Dropdown>
-    //                 <Dropdown.Toggle variant="white" id="dropdown-basic" style={{ width: "376px", height: "55px" }}>{cardState}</Dropdown.Toggle>
-    //                 <Dropdown.Menu>
-    //                     {cards.map(item =>
-    //                         <Dropdown.Item
-    //                             onClick={() => {
-    //                                 setId(item.id);
-    //                                 setUser_id(item.user_id);
-    //                                 setCardState(<CardItemMini key={item.number} currency={item.currency} amount={item.amount} number={item.number} style={item.style} system={item.system} user_id={item.user_id} id={item.id} />)
-    //                             }}
-    //                             className={`depositCard_option ${item.style}`} key={item.number}><CardItemMini key={item.number} currency={item.currency} amount={item.amount} number={item.number} style={item.style} system={item.system} user_id={item.user_id} id={item.id} /> </Dropdown.Item>
-    //                     )}
-    //                 </Dropdown.Menu>
-    //             </Dropdown>
-    //             <button className="depositCard_submit" type="submit" disabled={loading === "loading" ? true : false} >{loading === "loading" ? <Spinner size="sm" /> : "Пополнить"}</button>
-
-    //             <div className="depositCard_close" onClick={() => setDepositPortal(false)}></div>
-    //         </div>
-    //     </form>
-
-    // </motion.div >
   );
 };
 const CardItemDefalt = () => {
