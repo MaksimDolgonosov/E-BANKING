@@ -52,6 +52,14 @@ export const remittanceCard = createAsyncThunk<ICardProps, IDepositCardProps, Th
   }
 );
 
+export const checkCard = createAsyncThunk<ICardProps, string, ThunkApiConfig>("cards/checkCard", async (cardNumber) => {
+  const request = useHttp();
+  return (await request({
+    url: `${_apiBase}/cards/checkCard?number=${cardNumber}`,
+    method: "GET",
+  })) as ICardProps;
+});
+
 const initialState: ICardsState[] = [];
 
 const cardsSlice = createSlice({

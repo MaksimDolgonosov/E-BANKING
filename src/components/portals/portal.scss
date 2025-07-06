@@ -31,6 +31,7 @@
     }
 
     input {
+      appearance: none;
       margin-bottom: 20px;
       width: 100%;
       //width: 342px;
@@ -45,6 +46,22 @@
       &:focus {
         border: 1px solid rgba(0, 0, 0, 0.199);
         outline: none;
+      }
+      &.card-number_input {
+        position: relative;
+        border: 1px solid red;
+
+        &::after {
+          content: "dddddddddddddddddddddddddddddddddddd";
+          display: block;
+          width: 100px;
+          height: 100px;
+          background-color: #ff0000;
+          position: absolute;
+          top: 0;
+          right: 0;
+          z-index: 100;
+        }
       }
     }
 
@@ -121,6 +138,14 @@
         transition: 0.3s all;
       }
     }
+  }
+}
+
+.card-number_input {
+  position: relative;
+  ::after {
+    content: "sdfgddddddddddd";
+    position: absolute;
   }
 }
 

@@ -1,0 +1,1 @@
+const useCardNumber = (cardNumber: string) => {};

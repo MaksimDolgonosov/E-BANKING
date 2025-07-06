@@ -10,10 +10,11 @@ import { TServerDataToken } from "../../types/types";
 import { TToken } from "../../reducers/userReducer";
 import { jwtDecode } from "jwt-decode";
 import useExchange from "../../hooks/exchange";
+import { checkCard } from "../../reducers/cardReducer";
 
 function App() {
   const dispatch = useAppDispatch();
-  const currencyExchange = useExchange();
+  dispatch(checkCard("2244 6784 9876 5429")).then((data) => console.log(data.payload));
 
   useEffect(() => {
     if (localStorage.getItem("token")) {

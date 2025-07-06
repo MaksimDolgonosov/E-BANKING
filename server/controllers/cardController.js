@@ -25,6 +25,13 @@ class CardController {
         const card = await syncConn.query(`UPDATE card SET amount='${newAmount}' where user_id = '${+req.query.user_id}' && id = '${+req.query.id}'`);
         return res.json(card)
     }
+        async checkCard(req, res) {
+        // console.log(req.query)
+        const card = await syncConn.query(`SELECT * FROM card where number = '${req.query.number}'`);
+        // const newAmount = await amount[0].amount - +req.query.deposit;
+       // const card = await syncConn.query(`UPDATE card SET amount='${newAmount}' where user_id = '${+req.query.user_id}' && id = '${+req.query.id}'`);
+        return res.json(card)
+    }
 
 }
 
