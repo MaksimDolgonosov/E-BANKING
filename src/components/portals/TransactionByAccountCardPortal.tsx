@@ -9,7 +9,9 @@ import { useState } from "react";
 import { LoadingStatus } from "../../types/types";
 import { Spinner } from "react-bootstrap";
 import useExchange from "../../hooks/exchange";
+import useCardNumber from "../../hooks/cardNumber";
 import { InputMask } from "@react-input/mask";
+import { ICardProps } from "../../types/types";
 interface ITransactionCardProps {
   setTransactionByAccountPortal: (state: boolean) => void;
 }
@@ -18,9 +20,11 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
   const cards = useAppSelector((state) => state.cards);
   const [loading, setLoading] = useState<LoadingStatus>("idle");
   const [cardStateFrom, setCardStateFrom] = useState(<CardItemDefaltFrom />);
+  const [cardStateTo, setCardStateTo] = useState<ICardProps | undefined>(undefined);
   const [cardNumberInput, setCardNumberInput] = useState("");
   const [transaction, setTransaction] = useState<number>(0);
   const [activeCurrency, setActiveCurrency] = useState<string | undefined>(undefined);
+  const fetchCard = useCardNumber();
   // const [activeCardId, setActiveCardId] = useState<number | null>(null);
   // const [user_id, setUser_id] = useState<number | null>(null);
   // const [id, setId] = useState<number | null>(null);
@@ -31,8 +35,14 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
   // console.log(cardStateFrom.props.currency, cardStateTo.props.currency);
   const cardNumberHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setCardNumberInput(e.target.value);
-    if (e.target.value[0] === "4" && e.target.value.length === 19) {
-      console.log("VISA");
+    if (e.target.value.length === 19) {
+      console.log(e.target.value.length);
+      fetchCard(e.target.value).then((data) => {
+        if (data.meta.requestStatus === "fulfilled" && data.payload) {
+          console.log(data);
+          // if(data.payload.)
+        }
+      });
     }
   };
 
@@ -171,6 +181,8 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
               value={cardNumberInput}
               required
               onChange={cardNumberHandler}
+              placeholder="Введите номер карты"
+              // showMask
             />
             {/* <div className={`cardItem_mini_card ${"black"}`}>
               <div className="cardItem_mini_card-number">{"2323523523".slice(-4)}</div>

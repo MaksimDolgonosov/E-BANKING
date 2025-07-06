@@ -14,7 +14,7 @@ import { checkCard } from "../../reducers/cardReducer";
 
 function App() {
   const dispatch = useAppDispatch();
-  dispatch(checkCard("2244 6784 9876 5429")).then((data) => console.log(data.payload));
+  //dispatch(checkCard("2244 6784 9876 5429")).then((data) => console.log(data.payload));
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
