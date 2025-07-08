@@ -6,12 +6,15 @@ import { depositCard, remittanceCard } from "../../reducers/cardReducer";
 import Portal from "./Portal";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
-import { LoadingStatus } from "../../types/types";
+import { LoadingStatus, TCheckCardFromServer } from "../../types/types";
 import { Spinner } from "react-bootstrap";
 import useExchange from "../../hooks/exchange";
 import useCardNumber from "../../hooks/cardNumber";
 import { InputMask } from "@react-input/mask";
+import { checkCard } from "../../reducers/cardReducer";
 import { ICardProps } from "../../types/types";
+import { error } from "console";
+import isNamedCard from "../../types/typeQuardrs";
 interface ITransactionCardProps {
   setTransactionByAccountPortal: (state: boolean) => void;
 }
@@ -19,12 +22,13 @@ interface ITransactionCardProps {
 const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITransactionCardProps) => {
   const cards = useAppSelector((state) => state.cards);
   const [loading, setLoading] = useState<LoadingStatus>("idle");
+  const [loadingCard, setLoadingCard] = useState<LoadingStatus>("idle");
   const [cardStateFrom, setCardStateFrom] = useState(<CardItemDefaltFrom />);
-  const [cardStateTo, setCardStateTo] = useState<ICardProps | undefined>(undefined);
+  const [cardStateTo, setCardStateTo] = useState<ICardProps | {}>({});
   const [cardNumberInput, setCardNumberInput] = useState("");
   const [transaction, setTransaction] = useState<number>(0);
   const [activeCurrency, setActiveCurrency] = useState<string | undefined>(undefined);
-  const fetchCard = useCardNumber();
+  // const fetchCard = useCardNumber();
   // const [activeCardId, setActiveCardId] = useState<number | null>(null);
   // const [user_id, setUser_id] = useState<number | null>(null);
   // const [id, setId] = useState<number | null>(null);
@@ -36,13 +40,23 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
   const cardNumberHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setCardNumberInput(e.target.value);
     if (e.target.value.length === 19) {
-      console.log(e.target.value.length);
-      fetchCard(e.target.value).then((data) => {
-        if (data.meta.requestStatus === "fulfilled" && data.payload) {
-          console.log(data);
-          // if(data.payload.)
-        }
-      });
+      // console.log(e.target.value.length);
+      setLoadingCard("loading");
+      dispatch(checkCard(e.target.value))
+        .then((data) => {
+          if (data.meta.requestStatus === "fulfilled" && data.payload) {
+            setCardStateTo(data.payload);
+            setLoadingCard("idle");
+          } else {
+            setCardStateTo({ number: e.target.value });
+            setLoadingCard("idle");
+          }
+        })
+        .catch((error) => {
+          setLoadingCard("error");
+        });
+    } else {
+      setCardStateTo({});
     }
   };
 
@@ -102,8 +116,8 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
                           number={item.number}
                           style={item.style}
                           system={item.system}
-                          user_id={item.user_id}
-                          id={item.id}
+                          // user_id={item.user_id}
+                          // id={item.id}
                         />
                       );
                     }}
@@ -117,8 +131,8 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
                       number={item.number}
                       style={item.style}
                       system={item.system}
-                      user_id={item.user_id}
-                      id={item.id}
+                      // user_id={item.user_id}
+                      // id={item.id}
                     />{" "}
                   </Dropdown.Item>
                 ))}
@@ -184,20 +198,18 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
               placeholder="Введите номер карты"
               // showMask
             />
+            {loadingCard === "loading" ? <Spinner /> : null}
+            {isNamedCard(cardStateTo) ? (
+              <div className={`cardItem_mini_card ${cardStateTo.style}`}>
+                <div className="cardItem_mini_card-number">{cardStateTo.number!.slice(-4)}</div>
+                <div className="cardItem_mini_card-system">{cardStateTo.system}</div>
+              </div>
+            ) : null}
             {/* <div className={`cardItem_mini_card ${"black"}`}>
               <div className="cardItem_mini_card-number">{"2323523523".slice(-4)}</div>
               <div className="cardItem_mini_card-system">{"VISA"}</div>
             </div> */}
-            {/* <CardItemMini
-              key={34}
-              currency={"USD"}
-              amount={444}
-              number={"sdg"}
-              style={"black"}
-              system={"VISA"}
-              user_id={1}
-              id={1}
-            /> */}
+
             <h4>
               Введите сумму перевода
               {/* {cardStateFrom.props.currency &&
