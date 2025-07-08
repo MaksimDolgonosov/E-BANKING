@@ -88,8 +88,8 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
                             number={item.number}
                             style={item.style}
                             system={item.system}
-                            user_id={item.user_id}
-                            id={item.id}
+                            // user_id={item.user_id}
+                            // id={item.id}
                           />
                         );
                       }}
@@ -103,8 +103,8 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
                         number={item.number}
                         style={item.style}
                         system={item.system}
-                        user_id={item.user_id}
-                        id={item.id}
+                        // user_id={item.user_id}
+                        // id={item.id}
                       />{" "}
                     </Dropdown.Item>
                   ))}
@@ -129,8 +129,8 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
                             number={item.number}
                             style={item.style}
                             system={item.system}
-                            user_id={item.user_id}
-                            id={item.id}
+                            // user_id={item.user_id}
+                            // id={item.id}
                           />
                         );
                       }}
@@ -144,8 +144,8 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
                         number={item.number}
                         style={item.style}
                         system={item.system}
-                        user_id={item.user_id}
-                        id={item.id}
+                        // user_id={item.user_id}
+                        // id={item.id}
                       />{" "}
                     </Dropdown.Item>
                   ))}

@@ -1,14 +1,21 @@
-import { useAppDispatch } from "./hook";
-import { checkCard } from "../reducers/cardReducer";
+import { TSystems } from "../types/types";
 
-const useCardNumber = () => {
-  const dispatch = useAppDispatch();
-
-  const fetchCard = (cardNumber: string) => {
-    return dispatch(checkCard(cardNumber));
-  };
-
-  return fetchCard;
+const cardNumber = (number: string): TSystems => {
+  let res: TSystems = null;
+  switch (number[0]) {
+    case "2":
+      res = "МИР";
+      break;
+    case "4":
+      res = "VISA";
+      break;
+    case "5":
+      res = "MasterCard";
+      break;
+    default:
+      "Pay";
+  }
+  return res;
 };
 
-export default useCardNumber;
+export default cardNumber;

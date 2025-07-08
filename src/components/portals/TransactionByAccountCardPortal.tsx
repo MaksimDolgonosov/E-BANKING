@@ -2,6 +2,8 @@
 import { useAppSelector, useAppDispatch } from "../../hooks/hook";
 import { motion } from "framer-motion";
 import CardItemMini from "../CardItem/CardItemMini";
+import MiniCard from "../CardItem/MiniCard";
+import { shortName } from "../../hooks/shortName";
 import { depositCard, remittanceCard } from "../../reducers/cardReducer";
 import Portal from "./Portal";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -9,12 +11,13 @@ import { useState } from "react";
 import { LoadingStatus, TCheckCardFromServer } from "../../types/types";
 import { Spinner } from "react-bootstrap";
 import useExchange from "../../hooks/exchange";
-import useCardNumber from "../../hooks/cardNumber";
 import { InputMask } from "@react-input/mask";
 import { checkCard } from "../../reducers/cardReducer";
 import { ICardProps } from "../../types/types";
-import { error } from "console";
-import isNamedCard from "../../types/typeQuardrs";
+import { TAnonymusCard } from "../../types/types";
+import cardNumber from "../../hooks/cardNumber";
+import { isNamedCard } from "../../types/typeQuardrs";
+import { isAnonymusCard } from "../../types/typeQuardrs";
 interface ITransactionCardProps {
   setTransactionByAccountPortal: (state: boolean) => void;
 }
@@ -24,7 +27,7 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
   const [loading, setLoading] = useState<LoadingStatus>("idle");
   const [loadingCard, setLoadingCard] = useState<LoadingStatus>("idle");
   const [cardStateFrom, setCardStateFrom] = useState(<CardItemDefaltFrom />);
-  const [cardStateTo, setCardStateTo] = useState<ICardProps | {}>({});
+  const [cardStateTo, setCardStateTo] = useState<ICardProps | {} | TAnonymusCard>({});
   const [cardNumberInput, setCardNumberInput] = useState("");
   const [transaction, setTransaction] = useState<number>(0);
   const [activeCurrency, setActiveCurrency] = useState<string | undefined>(undefined);
@@ -200,16 +203,18 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
             />
             {loadingCard === "loading" ? <Spinner /> : null}
             {isNamedCard(cardStateTo) ? (
-              <div className={`cardItem_mini_card ${cardStateTo.style}`}>
-                <div className="cardItem_mini_card-number">{cardStateTo.number!.slice(-4)}</div>
-                <div className="cardItem_mini_card-system">{cardStateTo.system}</div>
+              <div className="modal_form_recipient">
+                <span>Получатель: {shortName(cardStateTo.name)}</span>
+                <MiniCard style={cardStateTo.style} number={cardStateTo.number} system={cardStateTo.system} />
               </div>
             ) : null}
-            {/* <div className={`cardItem_mini_card ${"black"}`}>
-              <div className="cardItem_mini_card-number">{"2323523523".slice(-4)}</div>
-              <div className="cardItem_mini_card-system">{"VISA"}</div>
-            </div> */}
 
+            {isAnonymusCard(cardStateTo) ? (
+              <div className="modal_form_recipient">
+                <span>Получатель: {shortName(null)}</span>
+                <MiniCard style={"standart"} number={cardStateTo.number} system={cardNumber(cardStateTo.number)} />
+              </div>
+            ) : null}
             <h4>
               Введите сумму перевода
               {/* {cardStateFrom.props.currency &&

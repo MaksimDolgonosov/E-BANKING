@@ -24,6 +24,17 @@
     background-color: white;
     z-index: 99;
 
+    &_recipient {
+      padding: 0 10px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      span {
+        display: block;
+        font-size: 14px;
+      }
+    }
     h4 {
       font-size: 18px;
       margin-bottom: 20px;

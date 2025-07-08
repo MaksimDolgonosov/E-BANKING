@@ -81,6 +81,7 @@
     &-system {
       font-size: 7px;
       text-align: end;
+      color: aliceblue;
     }
 
     &.black {
@@ -113,6 +114,16 @@
         rgb(167, 194, 192) 35%,
         rgb(151, 184, 181) 70%,
         rgb(134, 184, 184) 100%
+      );
+    }
+    &.standart {
+      // background: rgb(190, 81, 81);
+      background: linear-gradient(
+        45deg,
+        rgb(92, 131, 175) 0%,
+        rgb(88, 94, 189) 35%,
+        rgb(74, 104, 187) 70%,
+        rgb(53, 78, 161) 100%
       );
     }
   }

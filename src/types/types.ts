@@ -2,6 +2,7 @@ import { RootState, AppDispatch } from "../store";
 import { TToken } from "../reducers/userReducer";
 
 export type TCurrency = "BYN" | "RUB" | "EUR" | "USD" | null;
+export type TSystems = "VISA" | "MasterCard" | "МИР" | "Pay" | null;
 
 export type LoadingStatus = "idle" | "loading" | "error";
 export interface ICardProps {
@@ -13,11 +14,12 @@ export interface ICardProps {
   name: string | null;
   date?: string | null;
   cvv?: number | null;
-  system: string | null;
-  style: "black" | "gold" | "platinum" | null;
+  system: TSystems;
+  style: "black" | "gold" | "platinum" | "standart" | null;
 }
 
-export type TAnonymusCard = Pick<ICardProps, "number">;
+// export type TAnonymusCard = Pick<ICardProps, "number">;
+export type TAnonymusCard = { number: string };
 
 export type ThunkApiConfig = {
   state: RootState;

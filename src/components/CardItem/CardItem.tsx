@@ -5,6 +5,7 @@ import EUR from "../../assets/icons/currency/euro2.webp";
 import BYN from "../../assets/icons/currency/byn2.png";
 import { ICardProps } from "../../types/types";
 import { TCurrency } from "../../types/types";
+import MiniCard from "./MiniCard";
 
 type TCurrencyProps = Pick<ICardProps, "currency">;
 
@@ -23,7 +24,7 @@ export const getSymbol = (curency: TCurrency) => {
   }
 };
 
-const CardItem = ({ currency, amount, number, style, system, user_id, id }: ICardProps) => {
+const CardItem = ({ currency, amount, number, style, system }: ICardProps) => {
   return (
     <div className="cardItem">
       <div className="cardItem_img">
@@ -34,10 +35,11 @@ const CardItem = ({ currency, amount, number, style, system, user_id, id }: ICar
           {amount!.toFixed(2)} {getSymbol(currency)}{" "}
         </div>
         <div className="cardItem_style">{style}</div>
-        <div className={`cardItem_card ${style}`}>
+        <MiniCard style={style} number={number} system={system} />
+        {/* <div className={`cardItem_card ${style}`}>
           <div className="cardItem_card-number">{number!.slice(-4)}</div>
           <div className="cardItem_card-system">{system}</div>
-        </div>
+        </div> */}
       </div>
       <div className="cardItem_cashBack">
         <div className="cardItem_cashBack-img">

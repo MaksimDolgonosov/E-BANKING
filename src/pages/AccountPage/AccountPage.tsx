@@ -111,6 +111,7 @@ const AccountPage = () => {
                 number={item.number}
                 style={item.style}
                 system={item.system}
+                name={item.name}
                 user_id={item.user_id}
                 id={item.id}
               />

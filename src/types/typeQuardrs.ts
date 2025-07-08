@@ -1,7 +1,9 @@
 import { ICardProps, TAnonymusCard } from "./types";
 
-export function isNamedCard(card: ICardProps | {}): card is ICardProps {
+export function isNamedCard(card: ICardProps | {} | TAnonymusCard): card is ICardProps {
   return (card as ICardProps).name !== undefined;
 }
 
-export default isNamedCard;
+export function isAnonymusCard(card: ICardProps | {} | TAnonymusCard): card is TAnonymusCard {
+  return "number" in card && !("name" in card);
+}
