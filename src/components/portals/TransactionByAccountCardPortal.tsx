@@ -18,9 +18,11 @@ import { TAnonymusCard } from "../../types/types";
 import cardNumber from "../../hooks/cardNumber";
 import { isNamedCard } from "../../types/typeQuardrs";
 import { isAnonymusCard } from "../../types/typeQuardrs";
+import { checkInput } from "../../hooks/checkInput";
 interface ITransactionCardProps {
   setTransactionByAccountPortal: (state: boolean) => void;
 }
+type TStyle = "1px solid red" | "none";
 
 const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITransactionCardProps) => {
   const cards = useAppSelector((state) => state.cards);
@@ -31,6 +33,10 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
   const [cardNumberInput, setCardNumberInput] = useState("");
   const [transaction, setTransaction] = useState<number>(0);
   const [activeCurrency, setActiveCurrency] = useState<string | undefined>(undefined);
+  const [styleFrom, setStyleFrom] = useState<TStyle>("none");
+  const [styleTo, setStyleTo] = useState<TStyle>("none");
+  const [styleTransaction, setStyleTransaction] = useState<TStyle>("none");
+
   // const fetchCard = useCardNumber();
   // const [activeCardId, setActiveCardId] = useState<number | null>(null);
   // const [user_id, setUser_id] = useState<number | null>(null);
@@ -42,6 +48,7 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
   // console.log(cardStateFrom.props.currency, cardStateTo.props.currency);
   const cardNumberHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setCardNumberInput(e.target.value);
+    setStyleTo("none");
     if (e.target.value.length === 19) {
       // console.log(e.target.value.length);
       setLoadingCard("loading");
@@ -64,33 +71,39 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
   };
 
   const onSubmitDepositForm = (e: React.FormEvent) => {
-    setLoading("loading");
+    // setLoading("loading");
     e.preventDefault();
-    // const { minus, plus } = exchange(
-    //   cardStateFrom.props.currency,
-    //   cardStateTo.props.currency,
-    //   transaction,
-    //   activeCurrency
-    // );
-
-    // dispatch(depositCard({ id: cardStateTo.props.id, user_id: cardStateTo.props.user_id, deposit: plus })).then(
-    //   (depositResolve) => {
-    //     dispatch(
-    //       remittanceCard({ id: cardStateFrom.props.id, user_id: cardStateFrom.props.user_id, deposit: minus })
-    //     ).then((remittanceResolve) => {
-    //       if (
-    //         depositResolve.meta.requestStatus === "fulfilled" &&
-    //         remittanceResolve.meta.requestStatus === "fulfilled"
-    //       ) {
-    //         setLoading("idle");
-    //         setTransaction(0);
-    //         setCardStateFrom(<CardItemDefaltFrom />);
-    //         setCardStateTo(<CardItemDefaltTo />);
-    //         setTransactionByAccountPortal(false);
-    //       }
-    //     });
-    //   }
-    // );
+    if (!cardStateFrom.props.currency) {
+      setStyleFrom("1px solid red");
+    } else if (!("number" in cardStateTo) || cardStateTo.number?.length !== 19) {
+      setStyleTo("1px solid red");
+    } else if (transaction < 0.01) {
+      setStyleTransaction("1px solid red");
+      // const { minus, plus } = exchange(
+      //   cardStateFrom.props.currency,
+      //   cardStateTo.props.currency,
+      //   transaction,
+      //   activeCurrency
+      // );
+      // dispatch(depositCard({ id: cardStateTo.props.id, user_id: cardStateTo.props.user_id, deposit: plus })).then(
+      //   (depositResolve) => {
+      //     dispatch(
+      //       remittanceCard({ id: cardStateFrom.props.id, user_id: cardStateFrom.props.user_id, deposit: minus })
+      //     ).then((remittanceResolve) => {
+      //       if (
+      //         depositResolve.meta.requestStatus === "fulfilled" &&
+      //         remittanceResolve.meta.requestStatus === "fulfilled"
+      //       ) {
+      //         setLoading("idle");
+      //         setTransaction(0);
+      //         setCardStateFrom(<CardItemDefaltFrom />);
+      //         setCardStateTo(<CardItemDefaltTo />);
+      //         setTransactionByAccountPortal(false);
+      //       }
+      //     });
+      //   }
+      // );
+    }
   };
   return (
     <Portal>
@@ -102,7 +115,7 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
       >
         <form onSubmit={onSubmitDepositForm}>
           <div className="modal_form">
-            <Dropdown className="modal_form_dropdown">
+            <Dropdown className="modal_form_dropdown" style={{ border: `${styleFrom}` }}>
               <Dropdown.Toggle variant="white" id="dropdown-basic" style={{ width: "100%", height: "55px" }}>
                 {cardStateFrom}
               </Dropdown.Toggle>
@@ -111,6 +124,7 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
                   <Dropdown.Item
                     onClick={() => {
                       setActiveCurrency(item.currency ? item.currency : undefined);
+                      setStyleFrom("none");
                       setCardStateFrom(
                         <CardItemMini
                           key={item.number}
@@ -199,6 +213,7 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
               required
               onChange={cardNumberHandler}
               placeholder="Введите номер карты"
+              style={{ border: `${styleTo}` }}
               // showMask
             />
             {loadingCard === "loading" ? <Spinner /> : null}
@@ -217,6 +232,25 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
             ) : null}
             <h4>
               Введите сумму перевода
+              {isAnonymusCard(cardStateTo) ? ` в ${cardStateFrom.props.currency}` : null}
+              {isNamedCard(cardStateTo) ? (
+                <>
+                  <span> в </span>
+
+                  <select
+                    id="select_currency_id"
+                    //defaultValue={cardStateFrom.props.currency}
+                    value={activeCurrency}
+                    className="select_currency"
+                    onChange={(e) => setActiveCurrency(e.target.value)}
+                  >
+                    <option value={cardStateFrom.props.currency}>{cardStateFrom.props.currency}</option>
+                    <option value={cardStateTo.currency === null ? undefined : cardStateTo.currency}>
+                      {cardStateTo.currency}
+                    </option>
+                  </select>
+                </>
+              ) : null}
               {/* {cardStateFrom.props.currency &&
               cardStateTo.props.currency &&
               cardStateFrom.props.currency === cardStateTo.props.currency
@@ -242,14 +276,18 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
               ) : null}
               <> : </> */}
             </h4>
-            <input
+            <InputMask
+              style={{ border: `${styleTransaction}` }}
               type="number"
-              min="1,00"
-              max="100000000,00"
+              mask="__.__"
+              // min="0.01"
+              // max="100000000.00"
+              // step="0.01"
               required
-              value={String(transaction)}
+              value={transaction}
               onChange={(e) => {
-                setTransaction(parseFloat(e.target.value));
+                setStyleTransaction("none");
+                setTransaction(+e.target.value);
               }}
             />
             <button className="modal_form_submit" type="submit" disabled={loading === "loading" ? true : false}>
@@ -267,8 +305,8 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
 const CardItemDefaltFrom = () => {
   return <div>Выберете карту с которой перевести</div>;
 };
-const CardItemDefaltTo = () => {
-  return <div>Выберете карту на которую перевести</div>;
-};
+// const CardItemDefaltTo = () => {
+//   return <div>Выберете карту на которую перевести</div>;
+// };
 
 export default TransactionByAccountCardPortal;

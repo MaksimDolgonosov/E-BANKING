@@ -3,9 +3,6 @@ import { TSystems } from "../types/types";
 const cardNumber = (number: string): TSystems => {
   let res: TSystems = null;
   switch (number[0]) {
-    case "2":
-      res = "МИР";
-      break;
     case "4":
       res = "VISA";
       break;
@@ -13,7 +10,8 @@ const cardNumber = (number: string): TSystems => {
       res = "MasterCard";
       break;
     default:
-      "Pay";
+      res = "МИР";
+      break;
   }
   return res;
 };
