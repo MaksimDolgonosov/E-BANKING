@@ -1,5 +1,13 @@
-export const checkInput = (input: string): number => {
-  let res = (+input).toFixed(2);
-  console.log(res);
-  return parseFloat(res);
+export const checkInput = (input: string): string => {
+  if (input === "") {
+    return "0,00";
+  }
+
+  const arr = input.split(".");
+
+  if (arr[1]) {
+    return [arr[0], ".", arr[1].substring(0, 2)].join("");
+  }
+
+  return arr.join(".");
 };
