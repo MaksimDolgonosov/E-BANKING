@@ -4,7 +4,8 @@ import CardItemMini from "../CardItem/CardItemMini";
 import { TStyle } from "../portals/TransactionByAccountCardPortal";
 import { ReactNode } from "react";
 import { ICardProps } from "../../types/types";
-
+import BLR from "../../assets/icons/flags/BLR-flag.svg";
+import RUS from "../../assets/icons/flags/RUS-flag.svg";
 interface IDropdownCardList {
   style: TStyle;
   cardState: ReactNode;
@@ -44,5 +45,23 @@ const DropdownCardList = memo(({ style, cardState, cards, onChangeCard, filterEl
     </Dropdown>
   );
 });
+
+export const DropdownRegion = (onChangeRegion: React.MouseEventHandler<HTMLElement>) => {
+  return (
+    <Dropdown className="modal_form_dropdown">
+      <Dropdown.Toggle variant="white" id="dropdown-basic" style={{ width: "60px", height: "35px" }}>
+        {/* {cardState} */}
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <Dropdown.Item onClick={onChangeRegion} className="dropdown-flag-item">
+          <img src={BLR} alt="BLR-flag" />
+        </Dropdown.Item>
+        <Dropdown.Item onClick={onChangeRegion} className="dropdown-flag-item">
+          <img src={RUS} alt="RUS-flag" />
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+};
 
 export default DropdownCardList;

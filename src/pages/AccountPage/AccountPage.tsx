@@ -21,6 +21,7 @@ import Portal from "../../components/portals/Portal";
 import DepositCardPortal from "../../components/portals/DepositCardPortal";
 import TransactionCardPortal from "../../components/portals/TransactionCardPortal";
 import TransactionByAccountCardPortal from "../../components/portals/TransactionByAccountCardPortal";
+import MobilePayPortal from "../../components/portals/MobilePayPortal";
 import CurrencyList from "../../components/Currency/CurrencyList";
 
 const AccountPage = () => {
@@ -32,6 +33,7 @@ const AccountPage = () => {
   const [depositPortal, setDepositPortal] = useState(false);
   const [transactionPortal, setTransactionPortal] = useState(false);
   const [transactionByAccountPortal, setTransactionByAccountPortal] = useState(false);
+  const [mobilePayPortal, setMobilePayPortal] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -56,7 +58,7 @@ const AccountPage = () => {
     dispatch(fetchCurrencies(null));
     dispatch(fetchUserCards(id!));
     // }
-  }, [depositPortal, transactionPortal, transactionByAccountPortal]);
+  }, [depositPortal, transactionPortal, transactionByAccountPortal, mobilePayPortal]);
 
   return (
     // <div className="accountWrapper">
@@ -154,7 +156,12 @@ const AccountPage = () => {
               </div>
               <div className="accountPage_main_actions-item-descr">Перевести между своими картами</div>
             </div>
-            <div className="accountPage_main_actions-item">
+            <div
+              className="accountPage_main_actions-item"
+              onClick={() => {
+                setMobilePayPortal(true);
+              }}
+            >
               <div className="accountPage_main_actions-item-img">
                 <img src={smartphone} alt="smartphone" />
               </div>
@@ -186,6 +193,7 @@ const AccountPage = () => {
       </div>
       {depositPortal ? <DepositCardPortal setDepositPortal={setDepositPortal}></DepositCardPortal> : null}
       {transactionPortal ? <TransactionCardPortal setTransactionPortal={setTransactionPortal} /> : null}
+      {mobilePayPortal ? <MobilePayPortal setMobilePayPortal={setMobilePayPortal}></MobilePayPortal> : null}
       {transactionByAccountPortal ? (
         <TransactionByAccountCardPortal setTransactionByAccountPortal={setTransactionByAccountPortal} />
       ) : null}

@@ -2,26 +2,30 @@ import "./portal.scss";
 import { useAppSelector, useAppDispatch } from "../../hooks/hook";
 import { motion } from "framer-motion";
 import CardItemMini from "../CardItem/CardItemMini";
-import { depositCard } from "../../reducers/cardReducer";
+import { remittanceCard } from "../../reducers/cardReducer";
 import DropdownCardList from "../DropdownCardList/DropdownCardList";
 import { checkInput } from "../../hooks/checkInput";
 import { useState } from "react";
 import { LoadingStatus } from "../../types/types";
 import { Spinner } from "react-bootstrap";
 import Portal from "./Portal";
+import InputSum from "../InputSum/InputSum";
+import { DropdownRegion } from "../DropdownCardList/DropdownCardList";
 import { useCallback } from "react";
 import { TStyle } from "./TransactionByAccountCardPortal";
+import { TRegion } from "../../types/types";
 import { ICardProps } from "../../types/types";
-import InputSum from "../InputSum/InputSum";
-interface IDepositCardProps {
-  setDepositPortal: (state: boolean) => void;
+
+interface IMobilePayPortalProps {
+  setMobilePayPortal: (state: boolean) => void;
 }
 
-const DepositCardPortal = ({ setDepositPortal }: IDepositCardProps) => {
+const MobilePayPortal = ({ setMobilePayPortal }: IMobilePayPortalProps) => {
   const cards = useAppSelector((state) => state.cards);
   const [loading, setLoading] = useState<LoadingStatus>("idle");
   const [cardState, setCardState] = useState(<CardItemDefalt />);
-  const [deposit, setDeposit] = useState<string>("");
+  const [transaction, setTransaction] = useState<string>("");
+  const [region, setRegion] = useState<TRegion>("BLR");
   const [user_id, setUser_id] = useState<number | null>(null);
   const [id, setId] = useState<number | null>(null);
   const [currency, setCurrency] = useState<string | null>(null);
@@ -36,29 +40,28 @@ const DepositCardPortal = ({ setDepositPortal }: IDepositCardProps) => {
     setCurrency(item.currency);
     setCardState(<CardItemMini key={item.number} {...item} />);
   };
-
-  const setTransactionHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const setMobilePaymentHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setStyleInput("none");
-    setDeposit(checkInput(e.target.value));
+    setTransaction(checkInput(e.target.value));
   }, []);
 
-  const onSubmitTransactionForm = (e: React.FormEvent) => {
+  const onSubmitMobilePayment = (e: React.FormEvent) => {
     e.preventDefault();
     if (!cardState.props.currency) {
       setStyleFrom("1px solid red");
       return;
-    } else if (+deposit < 0.01) {
+    } else if (+transaction < 0.01) {
       setStyleInput("1px solid red");
       return;
     }
     setLoading("loading");
 
-    dispatch(depositCard({ id, user_id, deposit: parseFloat(deposit) })).then((data) => {
+    dispatch(remittanceCard({ id, user_id, deposit: parseFloat(transaction) })).then((data) => {
       if (data.meta.requestStatus === "fulfilled") {
         setLoading("idle");
-        setDeposit("");
+        setTransaction("");
         setCardState(<CardItemDefalt />);
-        setDepositPortal(false);
+        setMobilePayPortal(false);
       }
     });
   };
@@ -71,7 +74,7 @@ const DepositCardPortal = ({ setDepositPortal }: IDepositCardProps) => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <form onSubmit={onSubmitTransactionForm} className="modal_form">
+        <form onSubmit={onSubmitMobilePayment} className="modal_form">
           <DropdownCardList
             cardState={cardState}
             style={styleFrom}
@@ -79,19 +82,42 @@ const DepositCardPortal = ({ setDepositPortal }: IDepositCardProps) => {
             onChangeCard={onChangeCard}
             filterElement={-1}
           />
+          <h4>Введите номер телефона:</h4>
+          <div className="modal_form__mobileWrapper">
+            <DropdownRegion />
+            {/* <select
+              id="select_region"
+              //defaultValue={cardStateFrom.props.currency}
+              value={region}
+              className="modal_form__mobileWrapper-select"
+              onChange={(e) => setRegion(e.target.value as TRegion)}
+            >
+              <option value="BLR">
+                <img src={BLR} alt="BLR-flag" />
+              </option>
+              <option value="RUS">
+                <img src={RUS} alt="RUS-flag" />
+              </option>
+            </select> */}
+          </div>
           <h4>Введите сумму{currency ? ` в ${currency}` : null}:</h4>
-          <InputSum styleTransaction={styleInput} transaction={deposit} setTransactionHandler={setTransactionHandler} />
+          <InputSum
+            styleTransaction={styleInput}
+            transaction={transaction}
+            setTransactionHandler={setMobilePaymentHandler}
+          />
           <button className="modal_form_submit" type="submit" disabled={loading === "loading" ? true : false}>
-            {loading === "loading" ? <Spinner size="sm" /> : "Пополнить"}
+            {loading === "loading" ? <Spinner size="sm" /> : "Оплатить"}
           </button>
 
-          <div className="modal_form_close" onClick={() => setDepositPortal(false)}></div>
+          <div className="modal_form_close" onClick={() => setMobilePayPortal(false)}></div>
         </form>
       </motion.div>
     </Portal>
   );
 };
+
 const CardItemDefalt = () => {
   return <div>Выберете карту</div>;
 };
-export default DepositCardPortal;
+export default MobilePayPortal;

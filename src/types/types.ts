@@ -3,8 +3,9 @@ import { TToken } from "../reducers/userReducer";
 
 export type TCurrency = "BYN" | "RUB" | "EUR" | "USD" | null;
 export type TSystems = "VISA" | "MasterCard" | "МИР" | "Pay" | null;
-
+export type TRegion = "RUS" | "BLR";
 export type LoadingStatus = "idle" | "loading" | "error";
+
 export interface ICardProps {
   user_id: number;
   id: number;

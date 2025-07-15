@@ -152,6 +152,14 @@
         transition: 0.3s all;
       }
     }
+    #select_region {
+      width: 60px;
+      height: 35px;
+      img {
+        width: 90%;
+        height: 90%;
+      }
+    }
   }
 }
 
