@@ -3,25 +3,24 @@ import { useAppSelector, useAppDispatch } from "../../hooks/hook";
 import { motion } from "framer-motion";
 import CardItemMini from "../CardItem/CardItemMini";
 import InputSum from "../InputSum/InputSum";
-import MiniCard from "../CardItem/MiniCard";
-import { shortName } from "../../hooks/shortName";
 import { depositCard, remittanceCard } from "../../reducers/cardReducer";
 import Portal from "./Portal";
-import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
-import { LoadingStatus, TCheckCardFromServer } from "../../types/types";
+import { LoadingStatus } from "../../types/types";
 import { Spinner } from "react-bootstrap";
 import useExchange from "../../hooks/exchange";
 import { InputMask } from "@react-input/mask";
 import { checkCard } from "../../reducers/cardReducer";
 import { ICardProps } from "../../types/types";
 import { TAnonymusCard } from "../../types/types";
-import cardNumber from "../../hooks/cardNumber";
 import { isNamedCard } from "../../types/typeQuardrs";
 import { isAnonymusCard } from "../../types/typeQuardrs";
 import { checkInput } from "../../hooks/checkInput";
 import { useCallback } from "react";
 import DropdownCardList from "../DropdownCardList/DropdownCardList";
+import RecipientInfo from "../CardItem/RecipientInfo";
+import { TExchange } from "../../hooks/exchange";
+
 interface ITransactionCardProps {
   setTransactionByAccountPortal: (state: boolean) => void;
 }
@@ -48,27 +47,12 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
   const onChangeCardFrom = useCallback((item: ICardProps) => {
     setActiveCurrency(item.currency ? item.currency : undefined);
     setStyleFrom("none");
-    setCardStateFrom(
-      <CardItemMini
-        key={item.number}
-        currency={item.currency}
-        amount={item.amount}
-        number={item.number}
-        style={item.style}
-        system={item.system}
-      />
-    );
+    setCardStateFrom(<CardItemMini key={item.number} {...item} />);
   }, []);
 
-  // const fetchCard = useCardNumber();
-  // const [activeCardId, setActiveCardId] = useState<number | null>(null);
-  // const [user_id, setUser_id] = useState<number | null>(null);
-  // const [id, setId] = useState<number | null>(null);
   const dispatch = useAppDispatch();
   const exchange = useExchange();
 
-  // console.log(activeCurrency);
-  // console.log(cardStateFrom.props.currency, cardStateTo.props.currency);
   const cardNumberHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setCardNumberInput(e.target.value);
     setStyleTo("none");
@@ -94,38 +78,64 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
   };
 
   const onSubmitDepositForm = (e: React.FormEvent) => {
-    // setLoading("loading");
+    setLoading("loading");
     e.preventDefault();
     if (!cardStateFrom.props.currency) {
       setStyleFrom("1px solid red");
+      return;
     } else if (!("number" in cardStateTo) || cardStateTo.number?.length !== 19) {
       setStyleTo("1px solid red");
+      return;
     } else if (+transaction < 0.01) {
       setStyleTransaction("1px solid red");
-      // const { minus, plus } = exchange(
-      //   cardStateFrom.props.currency,
-      //   cardStateTo.props.currency,
-      //   transaction,
-      //   activeCurrency
-      // );
-      // dispatch(depositCard({ id: cardStateTo.props.id, user_id: cardStateTo.props.user_id, deposit: plus })).then(
-      //   (depositResolve) => {
-      //     dispatch(
-      //       remittanceCard({ id: cardStateFrom.props.id, user_id: cardStateFrom.props.user_id, deposit: minus })
-      //     ).then((remittanceResolve) => {
-      //       if (
-      //         depositResolve.meta.requestStatus === "fulfilled" &&
-      //         remittanceResolve.meta.requestStatus === "fulfilled"
-      //       ) {
-      //         setLoading("idle");
-      //         setTransaction(0);
-      //         setCardStateFrom(<CardItemDefaltFrom />);
-      //         setCardStateTo(<CardItemDefaltTo />);
-      //         setTransactionByAccountPortal(false);
-      //       }
-      //     });
-      //   }
-      // );
+      return;
+    }
+    if (isAnonymusCard(cardStateTo)) {
+      dispatch(
+        remittanceCard({ id: cardStateFrom.props.id, user_id: cardStateFrom.props.user_id, deposit: +transaction })
+      )
+        .then((remittanceResolve) => {
+          if (remittanceResolve.meta.requestStatus === "fulfilled") {
+            setLoading("idle");
+            setTransaction("");
+            setCardStateFrom(<CardItemDefaltFrom />);
+            setCardStateTo({});
+            setTransactionByAccountPortal(false);
+          } else if ("error" in remittanceResolve) {
+            setLoading("error");
+          }
+        })
+        .catch((error) => {
+          if (error instanceof TypeError) {
+            setLoading("error");
+          }
+        });
+    }
+    if (isNamedCard(cardStateTo)) {
+      const { minus, plus } = exchange(
+        cardStateFrom.props.currency,
+        cardStateTo.currency as TExchange,
+        +transaction,
+        activeCurrency
+      );
+      dispatch(depositCard({ id: cardStateTo.id, user_id: cardStateTo.user_id, deposit: plus })).then(
+        (depositResolve) => {
+          dispatch(
+            remittanceCard({ id: cardStateFrom.props.id, user_id: cardStateFrom.props.user_id, deposit: minus })
+          ).then((remittanceResolve) => {
+            if (
+              depositResolve.meta.requestStatus === "fulfilled" &&
+              remittanceResolve.meta.requestStatus === "fulfilled"
+            ) {
+              setLoading("idle");
+              setTransaction("");
+              setCardStateFrom(<CardItemDefaltFrom />);
+              setCardStateTo({});
+              setTransactionByAccountPortal(false);
+            }
+          });
+        }
+      );
     }
   };
   return (
@@ -138,10 +148,11 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
       >
         <form onSubmit={onSubmitDepositForm} className="modal_form">
           <DropdownCardList
-            styleFrom={styleFrom}
-            cardStateFrom={cardStateFrom}
+            style={styleFrom}
+            cardState={cardStateFrom}
             cards={cards}
-            onChangeCardFrom={onChangeCardFrom}
+            onChangeCard={onChangeCardFrom}
+            filterElement={-1}
           />
           <InputMask
             name="card-number_input"
@@ -155,19 +166,8 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
             style={{ border: `${styleTo}` }}
           />
           {loadingCard === "loading" ? <Spinner /> : null}
-          {isNamedCard(cardStateTo) ? (
-            <div className="modal_form_recipient">
-              <span>Получатель: {shortName(cardStateTo.name)}</span>
-              <MiniCard style={cardStateTo.style} number={cardStateTo.number} system={cardStateTo.system} />
-            </div>
-          ) : null}
-
-          {isAnonymusCard(cardStateTo) ? (
-            <div className="modal_form_recipient">
-              <span>Получатель: {shortName(null)}</span>
-              <MiniCard style={"standart"} number={cardStateTo.number} system={cardNumber(cardStateTo.number)} />
-            </div>
-          ) : null}
+          {isNamedCard(cardStateTo) ? <RecipientInfo isNamed={true} cardState={cardStateTo} /> : null}
+          {isAnonymusCard(cardStateTo) ? <RecipientInfo isNamed={false} cardState={cardStateTo} /> : null}
           <h4>
             Введите сумму перевода
             {isAnonymusCard(cardStateTo) ? ` в ${cardStateFrom.props.currency}` : null}
@@ -189,30 +189,6 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
                 </select>
               </>
             ) : null}
-            {/* {cardStateFrom.props.currency &&
-              cardStateTo.props.currency &&
-              cardStateFrom.props.currency === cardStateTo.props.currency
-                ? ` в ${activeCurrency}`
-                : null}
-              {cardStateFrom.props.currency &&
-              cardStateTo.props.currency &&
-              cardStateFrom.props.currency !== cardStateTo.props.currency ? (
-                <>
-                  <span> в </span>
-
-                  <select
-                    id="select_currency_id"
-                    //defaultValue={cardStateFrom.props.currency}
-                    value={activeCurrency}
-                    className="select_currency"
-                    onChange={(e) => setActiveCurrency(e.target.value)}
-                  >
-                    <option value={cardStateFrom.props.currency}>{cardStateFrom.props.currency}</option>
-                    <option value={cardStateTo.props.currency}>{cardStateTo.props.currency}</option>
-                  </select>
-                </>
-              ) : null}
-              <> : </> */}
           </h4>
 
           <InputSum
@@ -220,22 +196,7 @@ const TransactionByAccountCardPortal = ({ setTransactionByAccountPortal }: ITran
             transaction={transaction}
             setTransactionHandler={setTransactionHandler}
           />
-
-          {/* <input
-              style={{ border: `${styleTransaction}` }}
-              type="number"
-              min="0.01"
-              max="100000000.00"
-              step="0.01"
-              placeholder="0,00"
-              required
-              onBlur={(e) => setTransaction(checkInput(e.target.value))}
-              value={transaction}
-              onChange={(e) => {
-                setStyleTransaction("none");
-                setTransaction(checkInput(e.target.value));
-              }}
-            /> */}
+          {loading === "error" ? <span className="error_message">Что то пошло не так, попробуйте позже...</span> : null}
           <button className="modal_form_submit" type="submit" disabled={loading === "loading" ? true : false}>
             {loading === "loading" ? <Spinner size="sm" /> : "Перевести"}
           </button>

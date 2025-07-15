@@ -11,7 +11,7 @@ export interface ICardProps {
   currency: TCurrency;
   amount: number | null;
   number: string | null;
-  name: string | null;
+  name?: string | null;
   date?: string | null;
   cvv?: number | null;
   system: TSystems;

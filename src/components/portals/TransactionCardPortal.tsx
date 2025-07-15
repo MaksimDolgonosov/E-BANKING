@@ -4,12 +4,16 @@ import { motion } from "framer-motion";
 import CardItemMini from "../CardItem/CardItemMini";
 import { depositCard, remittanceCard } from "../../reducers/cardReducer";
 import Portal from "./Portal";
-import Dropdown from "react-bootstrap/Dropdown";
+import InputSum from "../InputSum/InputSum";
 import { useState } from "react";
 import { LoadingStatus } from "../../types/types";
 import { Spinner } from "react-bootstrap";
 import useExchange from "../../hooks/exchange";
-
+import { TStyle } from "./TransactionByAccountCardPortal";
+import DropdownCardList from "../DropdownCardList/DropdownCardList";
+import { useCallback } from "react";
+import { ICardProps } from "../../types/types";
+import { checkInput } from "../../hooks/checkInput";
 interface ITransactionCardProps {
   setTransactionPortal: (state: boolean) => void;
 }
@@ -19,24 +23,51 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
   const [loading, setLoading] = useState<LoadingStatus>("idle");
   const [cardStateFrom, setCardStateFrom] = useState(<CardItemDefaltFrom />);
   const [cardStateTo, setCardStateTo] = useState(<CardItemDefaltTo />);
-  const [transaction, setTransaction] = useState<number>(0);
+  const [transaction, setTransaction] = useState<string>("");
   const [activeCurrency, setActiveCurrency] = useState<string | undefined>(undefined);
+  const [styleFrom, setStyleFrom] = useState<TStyle>("none");
+  const [styleTo, setStyleTo] = useState<TStyle>("none");
+  const [styleTransaction, setStyleTransaction] = useState<TStyle>("none");
   // const [activeCardId, setActiveCardId] = useState<number | null>(null);
   // const [user_id, setUser_id] = useState<number | null>(null);
   // const [id, setId] = useState<number | null>(null);
   const dispatch = useAppDispatch();
   const exchange = useExchange();
 
-  // console.log(activeCurrency);
-  // console.log(cardStateFrom.props.currency, cardStateTo.props.currency);
+  const setTransactionHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setStyleTransaction("none");
+    setTransaction(checkInput(e.target.value));
+  }, []);
+
+  const onChangeCardFrom = useCallback((item: ICardProps) => {
+    setActiveCurrency(item.currency ? item.currency : undefined);
+    setStyleFrom("none");
+    setCardStateFrom(<CardItemMini key={item.number} {...item} />);
+  }, []);
+
+  const onChangeCardTo = useCallback((item: ICardProps) => {
+    setActiveCurrency(item.currency ? item.currency : undefined);
+    setStyleTo("none");
+    setCardStateTo(<CardItemMini key={item.number} {...item} />);
+  }, []);
 
   const onSubmitDepositForm = (e: React.FormEvent) => {
-    setLoading("loading");
     e.preventDefault();
+    if (!cardStateFrom.props.currency) {
+      setStyleFrom("1px solid red");
+      return;
+    } else if (!cardStateTo.props.currency) {
+      setStyleTo("1px solid red");
+      return;
+    } else if (+transaction < 0.01) {
+      setStyleTransaction("1px solid red");
+      return;
+    }
+    setLoading("loading");
     const { minus, plus } = exchange(
       cardStateFrom.props.currency,
       cardStateTo.props.currency,
-      transaction,
+      +transaction,
       activeCurrency
     );
 
@@ -50,7 +81,7 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
             remittanceResolve.meta.requestStatus === "fulfilled"
           ) {
             setLoading("idle");
-            setTransaction(0);
+            setTransaction("");
             setCardStateFrom(<CardItemDefaltFrom />);
             setCardStateTo(<CardItemDefaltTo />);
             setTransactionPortal(false);
@@ -67,133 +98,69 @@ const TransactionCardPortal = ({ setTransactionPortal }: ITransactionCardProps) 
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <form onSubmit={onSubmitDepositForm}>
-          <div className="modal_form">
-            <Dropdown className="modal_form_dropdown">
-              <Dropdown.Toggle variant="white" id="dropdown-basic" style={{ width: "100%", height: "55px" }}>
-                {cardStateFrom}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {cards
-                  .filter((card) => card.id !== cardStateTo.props.id)
-                  .map((item) => (
-                    <Dropdown.Item
-                      onClick={() => {
-                        setActiveCurrency(item.currency ? item.currency : undefined);
-                        setCardStateFrom(
-                          <CardItemMini
-                            key={item.number}
-                            currency={item.currency}
-                            amount={item.amount}
-                            number={item.number}
-                            style={item.style}
-                            system={item.system}
-                            // user_id={item.user_id}
-                            // id={item.id}
-                          />
-                        );
-                      }}
-                      className={`depositCard_option ${item.style}`}
-                      key={item.number}
-                    >
-                      <CardItemMini
-                        key={item.number}
-                        currency={item.currency}
-                        amount={item.amount}
-                        number={item.number}
-                        style={item.style}
-                        system={item.system}
-                        // user_id={item.user_id}
-                        // id={item.id}
-                      />{" "}
-                    </Dropdown.Item>
-                  ))}
-              </Dropdown.Menu>
-            </Dropdown>
+        <form onSubmit={onSubmitDepositForm} className="modal_form">
+          <DropdownCardList
+            style={styleFrom}
+            cardState={cardStateFrom}
+            cards={cards}
+            onChangeCard={onChangeCardFrom}
+            filterElement={cardStateTo.props.id}
+          />
+          <DropdownCardList
+            style={styleTo}
+            cardState={cardStateTo}
+            cards={cards}
+            onChangeCard={onChangeCardTo}
+            filterElement={cardStateFrom.props.id}
+          />
+          <h4>
+            Введите сумму перевода
+            {cardStateFrom.props.currency &&
+            cardStateTo.props.currency &&
+            cardStateFrom.props.currency === cardStateTo.props.currency
+              ? ` в ${activeCurrency}`
+              : null}
+            {cardStateFrom.props.currency &&
+            cardStateTo.props.currency &&
+            cardStateFrom.props.currency !== cardStateTo.props.currency ? (
+              <>
+                <span> в </span>
 
-            <Dropdown className="modal_form_dropdown">
-              <Dropdown.Toggle variant="white" id="dropdown-basic" style={{ width: "100%", height: "55px" }}>
-                {cardStateTo}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {cards
-                  .filter((card) => card.id !== cardStateFrom.props.id)
-                  .map((item) => (
-                    <Dropdown.Item
-                      onClick={() => {
-                        setCardStateTo(
-                          <CardItemMini
-                            key={item.number}
-                            currency={item.currency}
-                            amount={item.amount}
-                            number={item.number}
-                            style={item.style}
-                            system={item.system}
-                            // user_id={item.user_id}
-                            // id={item.id}
-                          />
-                        );
-                      }}
-                      className={`depositCard_option ${item.style}`}
-                      key={item.number}
-                    >
-                      <CardItemMini
-                        key={item.number}
-                        currency={item.currency}
-                        amount={item.amount}
-                        number={item.number}
-                        style={item.style}
-                        system={item.system}
-                        // user_id={item.user_id}
-                        // id={item.id}
-                      />{" "}
-                    </Dropdown.Item>
-                  ))}
-              </Dropdown.Menu>
-            </Dropdown>
-            <h4>
-              Введите сумму перевода
-              {cardStateFrom.props.currency &&
-              cardStateTo.props.currency &&
-              cardStateFrom.props.currency === cardStateTo.props.currency
-                ? ` в ${activeCurrency}`
-                : null}
-              {cardStateFrom.props.currency &&
-              cardStateTo.props.currency &&
-              cardStateFrom.props.currency !== cardStateTo.props.currency ? (
-                <>
-                  <span> в </span>
+                <select
+                  id="select_currency_id"
+                  //defaultValue={cardStateFrom.props.currency}
+                  value={activeCurrency}
+                  className="select_currency"
+                  onChange={(e) => setActiveCurrency(e.target.value)}
+                >
+                  <option value={cardStateFrom.props.currency}>{cardStateFrom.props.currency}</option>
+                  <option value={cardStateTo.props.currency}>{cardStateTo.props.currency}</option>
+                </select>
+              </>
+            ) : null}
+            <> : </>
+          </h4>
 
-                  <select
-                    id="select_currency_id"
-                    //defaultValue={cardStateFrom.props.currency}
-                    value={activeCurrency}
-                    className="select_currency"
-                    onChange={(e) => setActiveCurrency(e.target.value)}
-                  >
-                    <option value={cardStateFrom.props.currency}>{cardStateFrom.props.currency}</option>
-                    <option value={cardStateTo.props.currency}>{cardStateTo.props.currency}</option>
-                  </select>
-                </>
-              ) : null}
-              <> : </>
-            </h4>
-            <input
-              type="number"
-              min="1,00"
-              max="100000000,00"
-              required
-              value={String(transaction)}
-              onChange={(e) => {
-                setTransaction(parseFloat(e.target.value));
-              }}
-            />
-            <button className="modal_form_submit" type="submit" disabled={loading === "loading" ? true : false}>
-              {loading === "loading" ? <Spinner size="sm" /> : "Перевести"}
-            </button>
+          <InputSum
+            styleTransaction={styleTransaction}
+            transaction={transaction}
+            setTransactionHandler={setTransactionHandler}
+          />
+          {/* <input
+            type="number"
+            min="1,00"
+            max="100000000,00"
+            required
+            value={String(transaction)}
+            onChange={(e) => {
+              setTransaction(parseFloat(e.target.value));
+            }}
+          /> */}
+          <button className="modal_form_submit" type="submit" disabled={loading === "loading" ? true : false}>
+            {loading === "loading" ? <Spinner size="sm" /> : "Перевести"}
+          </button>
 
-            <div className="modal_form_close" onClick={() => setTransactionPortal(false)}></div>
-          </div>
+          <div className="modal_form_close" onClick={() => setTransactionPortal(false)}></div>
         </form>
       </motion.div>
     </Portal>

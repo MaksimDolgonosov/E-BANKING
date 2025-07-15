@@ -118,6 +118,10 @@
         border-color: none;
       }
     }
+    .error_message {
+      color: #ff0000;
+      font-size: 15px;
+    }
     &_close {
       position: absolute;
       cursor: pointer;

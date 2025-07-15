@@ -2,7 +2,7 @@ import { TCurrenciesState } from "../reducers/currenciesReducer";
 import { TCurrency } from "../types/types";
 import { useAppSelector } from "./hook";
 
-type TExchange = Exclude<TCurrency, null>;
+export type TExchange = Exclude<TCurrency, null>;
 type TCurrencyExchangeFunction = { minus: number; plus: number };
 
 const useExchange = () => {

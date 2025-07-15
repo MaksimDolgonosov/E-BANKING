@@ -19,11 +19,16 @@ class CardController {
         return res.json(card)
     }
         async remittanceCard(req, res) {
-        // console.log(req.query)
+            if (req.query.user_id!=="undefined" && req.query.id!=="undefined" && req.query.deposit!=="undefined") {
         const amount = await syncConn.query(`SELECT amount FROM card where user_id = '${+req.query.user_id}' && id = '${+req.query.id}'`);
         const newAmount = await amount[0].amount - +req.query.deposit;
         const card = await syncConn.query(`UPDATE card SET amount='${newAmount}' where user_id = '${+req.query.user_id}' && id = '${+req.query.id}'`);
-        return res.json(card)
+                return res.json(card)
+            } else {
+                
+            return res.status(500).json({message: "No parametrs for fetching"})
+        }
+
     }
         async checkCard(req, res) {
         // console.log(req.query)

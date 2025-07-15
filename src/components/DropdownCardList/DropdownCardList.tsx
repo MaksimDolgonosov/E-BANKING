@@ -6,35 +6,40 @@ import { ReactNode } from "react";
 import { ICardProps } from "../../types/types";
 
 interface IDropdownCardList {
-  styleFrom: TStyle;
-  cardStateFrom: ReactNode;
+  style: TStyle;
+  cardState: ReactNode;
   cards: ICardProps[];
-  onChangeCardFrom: (item: ICardProps) => void;
+  onChangeCard: (item: ICardProps) => void;
+  filterElement: number;
 }
 
-const DropdownCardList = memo(({ styleFrom, cardStateFrom, cards, onChangeCardFrom }: IDropdownCardList) => {
+const DropdownCardList = memo(({ style, cardState, cards, onChangeCard, filterElement }: IDropdownCardList) => {
   return (
-    <Dropdown className="modal_form_dropdown" style={{ border: `${styleFrom}` }}>
+    <Dropdown className="modal_form_dropdown" style={{ border: `${style}` }}>
       <Dropdown.Toggle variant="white" id="dropdown-basic" style={{ width: "100%", height: "55px" }}>
-        {cardStateFrom}
+        {cardState}
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        {cards.map((item) => (
-          <Dropdown.Item
-            onClick={() => onChangeCardFrom(item)}
-            className={`depositCard_option ${item.style}`}
-            key={item.number}
-          >
-            <CardItemMini
+        {cards
+          .filter((card) => card.id !== filterElement)
+          .map((item) => (
+            <Dropdown.Item
+              onClick={() => onChangeCard(item)}
+              className={`depositCard_option ${item.style}`}
               key={item.number}
-              currency={item.currency}
-              amount={item.amount}
-              number={item.number}
-              style={item.style}
-              system={item.system}
-            />{" "}
-          </Dropdown.Item>
-        ))}
+            >
+              <CardItemMini
+                key={item.number}
+                currency={item.currency}
+                amount={item.amount}
+                number={item.number}
+                style={item.style}
+                system={item.system}
+                id={item.id}
+                user_id={item.user_id}
+              />{" "}
+            </Dropdown.Item>
+          ))}
       </Dropdown.Menu>
     </Dropdown>
   );

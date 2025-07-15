@@ -56,7 +56,7 @@ const AccountPage = () => {
     dispatch(fetchCurrencies(null));
     dispatch(fetchUserCards(id!));
     // }
-  }, [depositPortal, transactionPortal]);
+  }, [depositPortal, transactionPortal, transactionByAccountPortal]);
 
   return (
     // <div className="accountWrapper">
