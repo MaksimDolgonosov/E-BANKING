@@ -167,12 +167,12 @@ const AccountPage = () => {
               </div>
               <div className="accountPage_main_actions-item-descr">Оплатить мобильный</div>
             </div>
-            <div className="accountPage_main_actions-item">
+            <Link to="/issueCardPage" className="accountPage_main_actions-item">
               <div className="accountPage_main_actions-item-img">
-                <img src={smartphone} alt="smartphone" />
+                <img src={cardsLogo} alt="card" />
               </div>
               <div className="accountPage_main_actions-item-descr">Выпустить новую карту</div>
-            </div>
+            </Link>
           </div>
           <div className="accountPage_main_currencies">
             <div className="accountPage_main_currencies_header">Курсы валют</div>

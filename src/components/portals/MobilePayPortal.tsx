@@ -5,11 +5,11 @@ import CardItemMini from "../CardItem/CardItemMini";
 import { remittanceCard } from "../../reducers/cardReducer";
 import DropdownCardList from "../DropdownCardList/DropdownCardList";
 import { checkInput } from "../../hooks/checkInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoadingStatus } from "../../types/types";
 import { Spinner } from "react-bootstrap";
 import Portal from "./Portal";
-import InputSum from "../InputSum/InputSum";
+import InputSum, { InputMobileNumber } from "../InputSum/InputSum";
 import { DropdownRegion } from "../DropdownCardList/DropdownCardList";
 import { useCallback } from "react";
 import { TStyle } from "./TransactionByAccountCardPortal";
@@ -25,13 +25,23 @@ const MobilePayPortal = ({ setMobilePayPortal }: IMobilePayPortalProps) => {
   const [loading, setLoading] = useState<LoadingStatus>("idle");
   const [cardState, setCardState] = useState(<CardItemDefalt />);
   const [transaction, setTransaction] = useState<string>("");
+  const [mobilePhone, setMobilePhone] = useState<string>("+375(__) ___-__-__");
   const [region, setRegion] = useState<TRegion>("BLR");
   const [user_id, setUser_id] = useState<number | null>(null);
   const [id, setId] = useState<number | null>(null);
   const [currency, setCurrency] = useState<string | null>(null);
   const [styleFrom, setStyleFrom] = useState<TStyle>("none");
   const [styleInput, setStyleInput] = useState<TStyle>("none");
+  const [styleMobileInput, setStyleMobileInput] = useState<TStyle>("none");
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (region === "BLR") {
+      setMobilePhone("+375(__) ___-__-__");
+    } else {
+      setMobilePhone("+7(___) ___-__-__");
+    }
+  }, [region]);
 
   const onChangeCard = (item: ICardProps) => {
     setStyleFrom("none");
@@ -39,6 +49,11 @@ const MobilePayPortal = ({ setMobilePayPortal }: IMobilePayPortalProps) => {
     setUser_id(item.user_id);
     setCurrency(item.currency);
     setCardState(<CardItemMini key={item.number} {...item} />);
+  };
+
+  const onChangeMobilePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStyleMobileInput("none");
+    setMobilePhone(e.target.value);
   };
   const setMobilePaymentHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setStyleInput("none");
@@ -49,6 +64,9 @@ const MobilePayPortal = ({ setMobilePayPortal }: IMobilePayPortalProps) => {
     e.preventDefault();
     if (!cardState.props.currency) {
       setStyleFrom("1px solid red");
+      return;
+    } else if (mobilePhone.indexOf("_") >= 0) {
+      setStyleMobileInput("1px solid red");
       return;
     } else if (+transaction < 0.01) {
       setStyleInput("1px solid red");
@@ -84,21 +102,13 @@ const MobilePayPortal = ({ setMobilePayPortal }: IMobilePayPortalProps) => {
           />
           <h4>Введите номер телефона:</h4>
           <div className="modal_form__mobileWrapper">
-            <DropdownRegion />
-            {/* <select
-              id="select_region"
-              //defaultValue={cardStateFrom.props.currency}
-              value={region}
-              className="modal_form__mobileWrapper-select"
-              onChange={(e) => setRegion(e.target.value as TRegion)}
-            >
-              <option value="BLR">
-                <img src={BLR} alt="BLR-flag" />
-              </option>
-              <option value="RUS">
-                <img src={RUS} alt="RUS-flag" />
-              </option>
-            </select> */}
+            <DropdownRegion region={region} onChangeRegion={setRegion} />
+            <InputMobileNumber
+              style={styleMobileInput}
+              region={region}
+              phoneNumberInput={mobilePhone}
+              setPhoneNumberInput={onChangeMobilePhone}
+            />
           </div>
           <h4>Введите сумму{currency ? ` в ${currency}` : null}:</h4>
           <InputSum

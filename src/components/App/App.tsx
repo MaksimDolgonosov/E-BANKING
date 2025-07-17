@@ -3,6 +3,7 @@ import "./App.scss";
 import MainPage from "../../pages/Main/Main";
 import LoginPage from "../../pages/LoginPage/LoginPage";
 import AccountPage from "../../pages/AccountPage/AccountPage";
+import IssueCardPage from "../../pages/IssueCardPage/IssueCardPage";
 import { useEffect } from "react";
 import { checkUser, fetchUser } from "../../reducers/userReducer";
 import { useAppDispatch } from "../../hooks/hook";
@@ -31,6 +32,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/loginPage" element={<LoginPage />} />
         <Route path="/accountPage" element={<AccountPage />} />
+        <Route path="/issueCardPage" element={<IssueCardPage />} />
       </Routes>
     </BrowserRouter>
   );

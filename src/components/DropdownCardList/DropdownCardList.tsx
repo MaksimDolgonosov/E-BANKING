@@ -3,7 +3,7 @@ import { memo } from "react";
 import CardItemMini from "../CardItem/CardItemMini";
 import { TStyle } from "../portals/TransactionByAccountCardPortal";
 import { ReactNode } from "react";
-import { ICardProps } from "../../types/types";
+import { ICardProps, TRegion } from "../../types/types";
 import BLR from "../../assets/icons/flags/BLR-flag.svg";
 import RUS from "../../assets/icons/flags/RUS-flag.svg";
 interface IDropdownCardList {
@@ -46,17 +46,34 @@ const DropdownCardList = memo(({ style, cardState, cards, onChangeCard, filterEl
   );
 });
 
-export const DropdownRegion = (onChangeRegion: React.MouseEventHandler<HTMLElement>) => {
+interface IDropdownRegionProps {
+  region: TRegion;
+  onChangeRegion(e: TRegion): void;
+}
+
+export const DropdownRegion = ({ region, onChangeRegion }: IDropdownRegionProps) => {
   return (
-    <Dropdown className="modal_form_dropdown">
-      <Dropdown.Toggle variant="white" id="dropdown-basic" style={{ width: "60px", height: "35px" }}>
-        {/* {cardState} */}
+    <Dropdown className="modal_form_dropdown flag" style={{ borderColor: "none" }}>
+      <Dropdown.Toggle
+        variant="white"
+        id="dropdown-basic"
+        style={{ width: "62px", height: "55px", borderColor: "none", padding: "0" }}
+      >
+        {region === "BLR" ? <img src={BLR} alt="BLR-flag" /> : <img src={RUS} alt="RUS-flag" />}
       </Dropdown.Toggle>
-      <Dropdown.Menu>
-        <Dropdown.Item onClick={onChangeRegion} className="dropdown-flag-item">
+      <Dropdown.Menu style={{ width: "62px", padding: "0" }}>
+        <Dropdown.Item
+          style={{ width: "60px", padding: "0", height: "43px" }}
+          onClick={() => onChangeRegion("BLR")}
+          className="dropdown-flag-item"
+        >
           <img src={BLR} alt="BLR-flag" />
         </Dropdown.Item>
-        <Dropdown.Item onClick={onChangeRegion} className="dropdown-flag-item">
+        <Dropdown.Item
+          style={{ width: "60px", padding: "0", height: "43px" }}
+          onClick={() => onChangeRegion("RUS")}
+          className="dropdown-flag-item"
+        >
           <img src={RUS} alt="RUS-flag" />
         </Dropdown.Item>
       </Dropdown.Menu>

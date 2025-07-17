@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { InputMask } from "@react-input/mask";
 import { TStyle } from "../portals/TransactionByAccountCardPortal";
 import { TRegion } from "../../types/types";
@@ -32,33 +32,37 @@ const InputSum = memo(({ styleTransaction, transaction, setTransactionHandler }:
 });
 
 export const InputMobileNumber = ({ style, region, phoneNumberInput, setPhoneNumberInput }: IInputMobileNumber) => {
-  return region === "RUS" ? (
-    <InputMask
-      name="card-number_input"
-      className="card-number_input"
-      mask="+7(___) ___-__-__"
-      replacement={{ _: /\d/ }}
-      value={phoneNumberInput}
-      required
-      onChange={setPhoneNumberInput}
-      // placeholder="Введите номер карты"
-      style={{ border: `${style}` }}
-      showMask
-    />
-  ) : (
-    <InputMask
-      name="card-number_input"
-      className="card-number_input"
-      mask="+375(__) ___-__-__"
-      replacement={{ _: /\d/ }}
-      value={phoneNumberInput}
-      required
-      onChange={setPhoneNumberInput}
-      // placeholder="Введите номер карты"
-      style={{ border: `${style}` }}
-      showMask
-    />
-  );
+  if (region === "RUS") {
+    return (
+      <InputMask
+        name="phone-number_input"
+        className="phone-number_input"
+        mask="+7(___) ___-__-__"
+        replacement={{ _: /\d/ }}
+        value={phoneNumberInput}
+        required
+        onChange={setPhoneNumberInput}
+        style={{ border: `${style}`, maxWidth: "270px", margin: "0" }}
+        showMask
+        type="tel"
+      />
+    );
+  } else {
+    return (
+      <InputMask
+        name="phone-number_input"
+        className="phone-number_input"
+        mask="+375(__) ___-__-__"
+        replacement={{ _: /\d/ }}
+        value={phoneNumberInput}
+        required
+        onChange={setPhoneNumberInput}
+        style={{ border: `${style}`, maxWidth: "270px", margin: "0" }}
+        showMask
+        type="tel"
+      />
+    );
+  }
 };
 
 export default InputSum;

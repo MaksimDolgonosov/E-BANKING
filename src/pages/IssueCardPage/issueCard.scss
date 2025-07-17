@@ -1,0 +1,10 @@
+@import "../../styles/mixins.scss";
+.issueCardPage {
+  @include pageBackgroung;
+  &_wrapper {
+    @include pageWrapper;
+    &-header {
+      @include pageHeader;
+    }
+  }
+}
