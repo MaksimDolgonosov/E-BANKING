@@ -23,6 +23,7 @@ import TransactionCardPortal from "../../components/portals/TransactionCardPorta
 import TransactionByAccountCardPortal from "../../components/portals/TransactionByAccountCardPortal";
 import MobilePayPortal from "../../components/portals/MobilePayPortal";
 import CurrencyList from "../../components/Currency/CurrencyList";
+import AccauntUser from "../../components/AccauntUser/AccauntUser";
 
 const AccountPage = () => {
   const id = useAppSelector((state) => state.user.id);
@@ -39,10 +40,6 @@ const AccountPage = () => {
   const dispatch = useAppDispatch();
   const date = new Date().toLocaleDateString();
 
-  const exitAccountHandler: React.MouseEventHandler<HTMLElement> = () => {
-    dispatch(exitAccount());
-    navigate("/");
-  };
   const moveToSettingsPage = () => {
     dispatch(checkUser(null));
     // navigate("/settings")
@@ -82,23 +79,7 @@ const AccountPage = () => {
           </Link>
         </div>
         <div className="accountPage_header-account">
-          <div>{userName}</div>
-          <NavDropdown
-            title={<VscAccount />}
-            className="d-block header_black"
-            // id='dropdown-button-drop-down-centered'
-            align={{ lg: "end" }}
-            drop="down-centered"
-          >
-            <NavDropdown.Item style={{ fontSize: "13px", padding: "4px 10px" }} onClick={moveToSettingsPage}>
-              <IoSettingsOutline />
-              Перейти в настройки
-            </NavDropdown.Item>
-            <NavDropdown.Item style={{ fontSize: "13px", padding: "4px 10px" }} onClick={exitAccountHandler}>
-              <IoLogOutOutline />
-              Выйти
-            </NavDropdown.Item>
-          </NavDropdown>
+          <AccauntUser userName={userName} />
         </div>
       </div>
       <div className="accountPage_main">

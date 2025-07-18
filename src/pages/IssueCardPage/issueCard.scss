@@ -5,6 +5,15 @@
     @include pageWrapper;
     &-header {
       @include pageHeader;
+      a {
+        color: white;
+        text-decoration: none;
+      }
+    }
+    h3 {
+      color: white;
+      text-align: center;
+      margin-top: 20px;
     }
   }
 }
