@@ -24,6 +24,7 @@ import TransactionByAccountCardPortal from "../../components/portals/Transaction
 import MobilePayPortal from "../../components/portals/MobilePayPortal";
 import CurrencyList from "../../components/Currency/CurrencyList";
 import AccauntUser from "../../components/AccauntUser/AccauntUser";
+import CardItemMidle from "../../components/CardItem/CardItemMidle";
 
 const AccountPage = () => {
   const id = useAppSelector((state) => state.user.id);
@@ -87,7 +88,7 @@ const AccountPage = () => {
           {cards.length ? null : <div className="accountPage_main_noCards">У вас нет активных карт</div>}
           {cards.map((item) => {
             return (
-              <CardItem
+              <CardItemMidle
                 key={item.number}
                 currency={item.currency}
                 amount={item.amount}
@@ -97,6 +98,7 @@ const AccountPage = () => {
                 name={item.name}
                 user_id={item.user_id}
                 id={item.id}
+                date={item.date}
               />
             );
           })}

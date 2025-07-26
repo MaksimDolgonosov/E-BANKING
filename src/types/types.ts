@@ -2,12 +2,13 @@ import { RootState, AppDispatch } from "../store";
 import { TToken } from "../reducers/userReducer";
 
 export type TCurrency = "BYN" | "RUB" | "EUR" | "USD" | null;
-export type TSystems = "VISA" | "MasterCard" | "МИР" | "Pay" | null;
+export type TSystems = "VISA" | "MasterCard" | "МИР" | "UPay" | null;
 export type TRegion = "RUS" | "BLR";
+export type TStyles = "black" | "gold" | "platinum" | "standart" | null;
 export type LoadingStatus = "idle" | "loading" | "error";
 
 export interface ICardProps {
-  user_id: number;
+  user_id: number | null;
   id: number;
   currency: TCurrency;
   amount: number | null;
@@ -16,7 +17,7 @@ export interface ICardProps {
   date?: string | null;
   cvv?: number | null;
   system: TSystems;
-  style: "black" | "gold" | "platinum" | "standart" | null;
+  style: TStyles;
 }
 
 // export type TAnonymusCard = Pick<ICardProps, "number">;

@@ -8,6 +8,7 @@ router.patch("/remittanceCard", cardController.remittanceCard)
 router.get("/checkCard", cardController.checkCard)
 router.get("/getCards", cardController.getCard)
 
+
 router.delete("/")
 
 module.exports = router;

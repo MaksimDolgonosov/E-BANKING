@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { useHttp } from "../hooks/http.hook";
 import { RootState, AppDispatch } from "../store";
-import { ICardProps } from "../types/types";
+import { ICardProps, TCurrency, TSystems } from "../types/types";
 import { IUserState } from "./userReducer";
 import { LoadingStatus } from "../types/types";
 import { _apiBase } from "../services/getUserService";
+import { TStyle } from "../components/portals/TransactionByAccountCardPortal";
 // type TUserId = Pick<IUserState, "id">
 type TUserId = number;
 interface ICardsState extends ICardProps {
@@ -15,6 +16,12 @@ interface IDepositCardProps {
   id: number | null;
   user_id: number | null;
   deposit: number;
+}
+interface ICreateCardProps {
+  user_id: number | null;
+  style: TStyle;
+  system: TSystems;
+  currency: TCurrency;
 }
 
 export type ThunkApiConfig = {
@@ -48,6 +55,20 @@ export const remittanceCard = createAsyncThunk<ICardProps, IDepositCardProps, Th
     return (await request({
       url: `${_apiBase}/cards/remittanceCard?id=${id}&user_id=${user_id}&deposit=${deposit}`,
       method: "PATCH",
+    })) as ICardProps;
+  }
+);
+
+export const addCard = createAsyncThunk<ICardProps, ICardProps, ThunkApiConfig>(
+  "cards/addCard",
+  async ({ user_id, style, system, currency, name, amount, cvv, date, id, number }) => {
+    console.log(user_id, id);
+    const request = useHttp();
+    return (await request({
+      // url: `${_apiBase}/cards/addCard?&user_id=${user_id}&style=${style}&system=${system}&currency=${currency}&name=${name}&amount=${amount}&cvv=${cvv}&date=${date}&id=${id}&number=${number}`,
+      url: `${_apiBase}/cards/addCard`,
+      method: "POST",
+      body: JSON.stringify({ user_id, style, system, currency, name, amount, cvv, date, id, number }),
     })) as ICardProps;
   }
 );

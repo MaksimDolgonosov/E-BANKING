@@ -1,0 +1,127 @@
+@import "../../styles/mixins.scss";
+.bigCardForIssue_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bigCardForIssue {
+  width: 500px;
+  border-radius: 15px;
+  padding: 15px;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(255, 255, 255, 0.5);
+  #chip {
+    margin-top: 25px;
+  }
+  &.gold {
+    @include gold;
+  }
+  &.black {
+    @include black;
+  }
+  &.platinum {
+    @include platinum;
+  }
+  &.standart {
+    background: rgb(202, 202, 202);
+  }
+  &_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    img {
+      display: block;
+    }
+  }
+  &_number {
+    margin-top: 15px;
+    font-size: 35px;
+    letter-spacing: 4px;
+  }
+  &_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    img {
+      display: block;
+      width: 100px;
+    }
+    &-info {
+      &-valid {
+        margin-top: 5px;
+        margin-left: 200px;
+        width: 110px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &-text {
+          font-size: 10px;
+          line-height: 10px;
+        }
+        &-date {
+          font-size: 20px;
+        }
+      }
+      &-name {
+        font-size: 20px;
+        letter-spacing: 3px;
+      }
+    }
+    &-system {
+      font-size: 37px;
+      // margin: auto 0;
+      align-self: self-end;
+    }
+  }
+}
+
+@media (max-width: 730px) {
+  .bigCardForIssue {
+    width: 300px;
+    height: 200px;
+    padding: 8px;
+    &_number {
+      margin-top: 5px;
+      font-size: 22px;
+      letter-spacing: 4px;
+    }
+    &_footer {
+      &-info {
+        &-valid {
+          margin-left: 80px;
+          font-size: 15px;
+          &-date {
+            font-size: 10px;
+          }
+        }
+        &-name {
+          font-size: 15px;
+          letter-spacing: 3px;
+        }
+      }
+      &-system {
+        font-size: 30px;
+        // margin: auto 0;
+        align-self: self-end;
+        img {
+          width: 70px;
+          height: 44px;
+        }
+      }
+    }
+    #chip {
+      margin-top: 5px;
+      width: 40px;
+      height: 40px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+}
+
+@media (max-width: 429px) {
+}
+
+@media (max-width: 391px) {
+}

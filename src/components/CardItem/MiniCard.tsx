@@ -1,5 +1,4 @@
 import { ICardProps } from "../../types/types";
-import { FaCcMastercard } from "react-icons/fa6";
 import masterCardIcon from "../../assets/icons/masterCard.png";
 
 type TCardMini = Pick<ICardProps, "number" | "style" | "system">;

@@ -11,7 +11,7 @@
   min-height: 645px;
   background: radial-gradient(81.65% 96.53% at 100% 100%, #a481e8 0%, rgba(164, 129, 232, 0) 100%), #6e44d9;
   border-radius: 0px 0px 40px 40px;
-  padding: 0 40px;
+  padding: 0 40px 20px 40px;
 }
 @mixin pageHeader {
   height: 80px;
@@ -21,4 +21,40 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid #ffffff;
+}
+@mixin black {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(45deg, rgb(73, 73, 73) 0%, rgb(61, 61, 61) 35%, rgb(12, 12, 12) 70%, rgb(0, 0, 0) 100%);
+}
+
+@mixin gold {
+  background: rgb(185, 166, 38);
+  background: linear-gradient(
+    45deg,
+    rgba(185, 166, 38, 1) 0%,
+    rgb(170, 147, 32) 35%,
+    rgb(189, 164, 25) 70%,
+    rgb(221, 200, 13) 100%
+  );
+}
+
+@mixin platinum {
+  background: rgb(202, 215, 218);
+  background: linear-gradient(
+    45deg,
+    rgb(190, 209, 208) 0%,
+    rgb(167, 194, 192) 35%,
+    rgb(151, 184, 181) 70%,
+    rgb(134, 184, 184) 100%
+  );
+}
+@mixin standart {
+  // background: rgb(190, 81, 81);
+  background: linear-gradient(
+    45deg,
+    rgb(92, 131, 175) 0%,
+    rgb(88, 94, 189) 35%,
+    rgb(74, 104, 187) 70%,
+    rgb(53, 78, 161) 100%
+  );
 }

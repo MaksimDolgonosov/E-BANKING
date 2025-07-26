@@ -108,7 +108,12 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-
+    &_cardList {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
     &_actions {
       width: 692px;
       height: 100%;
@@ -305,7 +310,9 @@
           justify-content: space-between;
         }
 
-        &-item {
+        &-item,
+        a {
+          display: block;
           width: 140px;
           margin-right: 5px;
         }
@@ -326,10 +333,13 @@
         width: 100%;
 
         &-list {
-          justify-content: space-between;
+          // display: flex;
+          // flex-direction: column;
+          justify-content: flex-start;
         }
 
-        &-item {
+        &-item,
+        a {
           font-size: 13px;
           width: 125px;
           height: 95px;
